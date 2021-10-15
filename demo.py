@@ -139,7 +139,7 @@ class SnmpInstance:
         _res = self.session.get(self._oids)
         if self.session.ErrorStr:
             print(self.session.ErrorStr)
-        return self.varbinds_to_dict()
+        return self._varbinds_to_dicts()
 
     def walk(self):
         _res = self.session.walk(self._oids)
