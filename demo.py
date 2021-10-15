@@ -171,7 +171,7 @@ def main():
     input("Walk a table using cisco mibs. Press Enter to continue...")
     instance.set_oids(['ENTITY-MIB::entPhysicalTable'])
     result = instance.walk()
-    print(json.dumps(result, indent=4))
+    color_dump(result)
 
     input("Walk a table row by row. Press Enter to continue...")
     columns = [
