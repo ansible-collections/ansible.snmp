@@ -1,0 +1,11 @@
+all:
+  vars:
+    ansible_connection: ansible.snmp.v2
+    ansible_snmp_community: public
+    ansible_python_interpreter: python
+
+  children:
+    nxos:
+      hosts:
+        nxos101:
+ 
