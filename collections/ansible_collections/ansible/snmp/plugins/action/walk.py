@@ -8,7 +8,7 @@ from ansible_collections.ansible.snmp.plugins.plugin_utils.snmp_wrapper import (
     Snmpv2cConnection,
     SnmpInstance,
 )
-from ansible_collections.ansible.snmp.plugins.modules.get import (
+from ansible_collections.ansible.snmp.plugins.modules.walk import (
     DOCUMENTATION,
 )
 
@@ -63,7 +63,7 @@ class ActionModule(ActionBase):
         )
         instance.set_oids(self._task.args["oids"])
 
-        error, elapsed, result = instance.get()
+        error, elapsed, result = instance.walk()
 
         self._result.update({"changed": False})
 

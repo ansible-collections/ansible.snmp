@@ -1,6 +1,6 @@
 all:
   vars:
-    ansible_connection: ansible.snmp.v2
+    ansible_connection: ansible.snmp.v2c
     ansible_snmp_community: public
     ansible_python_interpreter: python
 

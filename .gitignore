@@ -1,6 +1,8 @@
 /tests/output/
 /changelogs/.plugin-cache.yaml
 
+/collections/ansible_collections/ansible/utils
+
 # tmux integration test logs
 .test_logs
 

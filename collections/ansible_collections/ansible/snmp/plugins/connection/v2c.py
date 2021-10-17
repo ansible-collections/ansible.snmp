@@ -8,10 +8,10 @@ __metaclass__ = type
 
 DOCUMENTATION = """
 author: Ansible Networking Team
-connection: v2
-short_description: Make SNMP v2 connections to a device
+connection: v2c
+short_description: Make SNMP v2c connections to a device
 description:
-- Make SNMP v2 connections to a device.
+- Make SNMP v2c connections to a device.
 version_added: 1.0.0
 requirements:
 - python bindings for netsnmp

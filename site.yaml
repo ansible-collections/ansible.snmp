@@ -2,9 +2,10 @@
   gather_facts: False
   tasks:
   - ansible.snmp.get:
-      use_enums: True
-      use_sprint_value: True
       oids:
       - "SNMPv2-MIB::sysDescr.0"
       - "SNMPv2-MIB::sysContact.0"
       - "SNMPv2-MIB::sysLocation.0"
+  - ansible.snmp.walk:
+      oids:
+      - IF-MIB::ifTable
