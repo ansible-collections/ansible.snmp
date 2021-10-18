@@ -8,10 +8,10 @@ __metaclass__ = type
 
 DOCUMENTATION = """
 author: Ansible Networking Team
-connection: v2c
-short_description: Make SNMP v2c connections to a device
+connection: v1
+short_description: Make SNMP v1 connections to a device
 description:
-- Make SNMP v2c connections to a device.
+- Make SNMP v1 connections to a device.
 version_added: 1.0.0
 requirements:
 - python bindings for netsnmp
@@ -19,7 +19,7 @@ requirements:
 options:
   community:
     description:
-    - Specifc the community string for SNMP v2c connections.
+    - Specifc the community string for SNMP v2 connections.
     default: public
     type: str
     ini:
@@ -60,7 +60,21 @@ options:
     env:
     - name: ANSIBLE_SNMP_RETRIES
     vars:
-    - name: ansible_snmp_RETRIES
+    - name: ansible_snmp_retries
+  retry_no_such:
+    description:
+    - If enabled NOSUCH errors in 'get' pdus will be repaired, removing the entry in error, and resent, 
+      undef will be returned for all NOSUCH varbinds, when set to `False` this feature is disabled 
+      and the entire get request will fail on any NOSUCH error.
+    type: bool
+    default: False
+    ini:
+    - section: ansible.snmp
+      key: retry_no_such
+    env:
+    - name: ANSIBLE_SNMP_RETRY_NO_SUCH
+    vars:
+    - name: ansible_snmp_retry_no_such
   timeout:
     description:
     - Specify the number of micro-seconds before a retry
@@ -80,7 +94,7 @@ options:
 
 
 from ansible_collections.ansible.snmp.plugins.plugin_utils.netsnmp_wrapper import (
-    Snmpv2cConnection,
+    Snmpv1Connection,
 )
 from ansible_collections.ansible.snmp.plugins.plugin_utils.snmp_connection_base import (
     SnmpConnectionBase,
@@ -97,10 +111,11 @@ class Connection(SnmpConnectionBase):
         super(Connection, self).__init__(*args, **kwargs)
 
     def _connect(self):
-        self._connection = Snmpv2cConnection(
+        self._connection = Snmpv1Connection(
             community=self.get_option("community"),
             dest_host=self.get_option("host"),
             retries=self.get_option("retries"),
+            retry_no_such=self.get_option("retry_no_such"),
             timeout=self.get_option("timeout"),
         )
         super()._connect()

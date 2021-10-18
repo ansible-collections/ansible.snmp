@@ -49,19 +49,26 @@ class SnmpConnectionParamMap(Enum):
     remote_port = "RemotePort"
     timeout = "Timeout"
     retries = "Retries"
-    retry_no_such = "RetryNoSuch"
+
+    # v1 only
+    # handled seperately because it's a setter not a arg/kwarg v1 only
+    # retry_no_such = "RetryNoSuch"
+
     # v1/v2c session
     community = "Community"
+
     # v3 session
     sec_name = "SecName"
     sec_level = "SecLevel"
     context_engine_id = "ContextEngineId"
     context = "Context"
+
     # v3 over TLS/DTLS
     our_identity = "OurIdentity"
     their_identity = "TheirIdentity"
     trust_cert = "TrustCert"
     their_hostname = "TheirHostname"
+    
     # v3 with USM
     sec_engine_id = "SecEngineId"
     auth_proto = "AuthProto"
@@ -96,6 +103,10 @@ class SnmpInstance:
                 args[attribute.value] = getattr(connection, attribute.name)
         self.session = netsnmp.Session(**args)
 
+        # Special case for a V1 only setter
+        if hasattr(connection, "retry_no_such"):
+            self.session.RetryNoSuch = getattr(connection, "retry_no_such")
+
         for attribute in SnmpConfigurationParamMap:
             if hasattr(configuration, attribute.name):
                 setattr(
@@ -103,6 +114,7 @@ class SnmpInstance:
                     attribute.value,
                     int(getattr(configuration, attribute.name)),
                 )
+        self.session.RetryNoSuch = 1
         self._oids: List
 
     def set_oids(self, oid_list) -> None:
