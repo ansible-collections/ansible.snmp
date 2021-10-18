@@ -1,0 +1,175 @@
+.. _ansible.snmp.v2c_connection:
+
+
+****************
+ansible.snmp.v2c
+****************
+
+**Make SNMP v2c connections to a device**
+
+
+Version added: 1.0.0
+
+.. contents::
+   :local:
+   :depth: 1
+
+
+Synopsis
+--------
+- Make SNMP v2c connections to a device.
+
+
+
+Requirements
+------------
+The below requirements are needed on the local Ansible controller node that executes this connection.
+
+- python bindings for netsnmp
+
+
+Parameters
+----------
+
+.. raw:: html
+
+    <table  border=0 cellpadding=0 class="documentation-table">
+        <tr>
+            <th colspan="1">Parameter</th>
+            <th>Choices/<font color="blue">Defaults</font></th>
+                <th>Configuration</th>
+            <th width="100%">Comments</th>
+        </tr>
+            <tr>
+                <td colspan="1">
+                    <div class="ansibleOptionAnchor" id="parameter-"></div>
+                    <b>community</b>
+                    <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
+                    <div style="font-size: small">
+                        <span style="color: purple">-</span>
+                    </div>
+                </td>
+                <td>
+                        <b>Default:</b><br/><div style="color: blue">"public"</div>
+                </td>
+                    <td>
+                            <div> ini entries:
+                                    <p>[ansible.snmp]<br>community = public</p>
+                            </div>
+                                <div>env:ANSIBLE_SNMP_COMMUNITY</div>
+                                <div>var: ansible_snmp_community</div>
+                    </td>
+                <td>
+                        <div>Specifc the community string for SNMP v2 connections.</div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1">
+                    <div class="ansibleOptionAnchor" id="parameter-"></div>
+                    <b>host</b>
+                    <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
+                    <div style="font-size: small">
+                        <span style="color: purple">-</span>
+                    </div>
+                </td>
+                <td>
+                        <b>Default:</b><br/><div style="color: blue">"inventory_hostname"</div>
+                </td>
+                    <td>
+                                <div>var: ansible_host</div>
+                    </td>
+                <td>
+                        <div>Specifies the remote device FQDN or IP address for the SNMP connection to.</div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1">
+                    <div class="ansibleOptionAnchor" id="parameter-"></div>
+                    <b>port</b>
+                    <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
+                    <div style="font-size: small">
+                        <span style="color: purple">integer</span>
+                    </div>
+                </td>
+                <td>
+                        <b>Default:</b><br/><div style="color: blue">161</div>
+                </td>
+                    <td>
+                            <div> ini entries:
+                                    <p>[defaults]<br>remote_port = 161</p>
+                            </div>
+                                <div>env:ANSIBLE_REMOTE_PORT</div>
+                                <div>var: ansible_port</div>
+                    </td>
+                <td>
+                        <div>Specifies the port on the remote device that listens for SNMP connections.</div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1">
+                    <div class="ansibleOptionAnchor" id="parameter-"></div>
+                    <b>retries</b>
+                    <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
+                    <div style="font-size: small">
+                        <span style="color: purple">integer</span>
+                    </div>
+                </td>
+                <td>
+                        <b>Default:</b><br/><div style="color: blue">3</div>
+                </td>
+                    <td>
+                            <div> ini entries:
+                                    <p>[ansible.snmp]<br>retries = 3</p>
+                            </div>
+                                <div>env:ANSIBLE_SNMP_RETRIES</div>
+                                <div>var: ansible_snmp_RETRIES</div>
+                    </td>
+                <td>
+                        <div>Specify the number retries before failure</div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1">
+                    <div class="ansibleOptionAnchor" id="parameter-"></div>
+                    <b>timeout</b>
+                    <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
+                    <div style="font-size: small">
+                        <span style="color: purple">integer</span>
+                    </div>
+                </td>
+                <td>
+                        <b>Default:</b><br/><div style="color: blue">500000</div>
+                </td>
+                    <td>
+                            <div> ini entries:
+                                    <p>[ansible.snmp]<br>timeout = 500000</p>
+                            </div>
+                                <div>env:ANSIBLE_SNMP_TIMEOUT</div>
+                                <div>var: ansible_snmp_timeout</div>
+                    </td>
+                <td>
+                        <div>Specify the number of micro-seconds before a retry</div>
+                </td>
+            </tr>
+    </table>
+    <br/>
+
+
+
+
+
+
+
+
+Status
+------
+
+
+Authors
+~~~~~~~
+
+- Ansible Networking Team
+
+
+.. hint::
+    Configuration entries for each entry type have a low to high priority order. For example, a variable that is lower in the list will override a variable that is higher up.
