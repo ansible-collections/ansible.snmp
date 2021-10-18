@@ -10,11 +10,13 @@ sudo dnf uninstall net-snmp net-snmp-libs net-snmp-utils net-snmp-python
 
 or 
 
-#### Using source
+#### Using source (fedora)
 - download https://sourceforge.net/projects/net-snmp/files/net-snmp/5.9.1/net-snmp-5.9.1.tar.gz/download
 - extract `tar -xvf net-snmp-5.9.1.tar.gz`
+- as root `sudo su -`
 - cd `cd net-snmp-5.9.1`
-- configure `./configure`
+- set the path to system python 
+- configure `./configure --with-python-modules --libdir=/usr/lib64 --enable-shared`
 - make `make`
 - install `sudo make install`
 - add the install path to ld
@@ -26,7 +28,7 @@ more /etc/ld.so.conf.d/netsnmp.conf
 
 - cd `python`
 - build `python setup.py build`
-- install `python setup.py install --user`
+- install `python setup.py install` or `python setup.py install --user`
 - confirm `python -c 'import netsnmp'`
 - It's installed in system python
 
