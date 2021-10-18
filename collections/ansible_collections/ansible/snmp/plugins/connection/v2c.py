@@ -17,25 +17,6 @@ requirements:
 - python bindings for netsnmp
 
 options:
-  host:
-    description:
-    - Specifies the remote device FQDN or IP address for the SNMP connection
-      to.
-    default: inventory_hostname
-    vars:
-    - name: ansible_host
-  port:
-    type: int
-    description:
-    - Specifies the port on the remote device that listens for SNMP connections.
-    default: 161
-    ini:
-    - section: defaults
-      key: remote_port
-    env:
-    - name: ANSIBLE_REMOTE_PORT
-    vars:
-    - name: ansible_port
   community:
     description:
     - Specifc the community string for SNMP v2 connections.
@@ -47,13 +28,66 @@ options:
     - name: ANSIBLE_SNMP_COMMUNITY
     vars:
     - name: ansible_snmp_community
+  host:
+    description:
+    - Specifies the remote device FQDN or IP address for the SNMP connection
+      to.
+    default: inventory_hostname
+    vars:
+    - name: ansible_host
+  port:
+    description:
+    - Specifies the port on the remote device that listens for SNMP connections.
+    type: int
+    default: 161
+    ini:
+    - section: defaults
+      key: remote_port
+    env:
+    - name: ANSIBLE_REMOTE_PORT
+    vars:
+    - name: ansible_port
+  retries:
+    description:
+    - Specify the number retries before failure
+    type: int
+    default: 3
+    ini:
+    - section: ansible.snmp
+      key: retries
+    env:
+    - name: ANSIBLE_SNMP_RETRIES
+    vars:
+    - name: ansible_snmp_RETRIES
+  timeout:
+    description:
+    - Specify the number of micro-seconds before a retry
+    type: int
+    default: 500000
+    ini:
+    - section: ansible.snmp
+      key: timeout
+    env:
+    - name: ANSIBLE_SNMP_TIMEOUT
+    vars:
+    - name: ansible_snmp_timeout
+
+
+  
 """
 
-from ansible.plugins.connection import ConnectionBase
+
+from ansible_collections.ansible.snmp.plugins.plugin_utils.netsnmp_wrapper import (
+    Snmpv2cConnection,
+)
+from ansible_collections.ansible.snmp.plugins.plugin_utils.snmp_connection_base import (
+    SnmpConnectionBase,
+)
 
 
-class Connection(ConnectionBase):
-    """Local based connections"""
+
+class Connection(SnmpConnectionBase):
+    """SNMP v2 based connections"""
 
     transport = "v2"
     has_pipelining = False
@@ -62,18 +96,9 @@ class Connection(ConnectionBase):
         super(Connection, self).__init__(*args, **kwargs)
 
     def _connect(self):
-        if not self._connected:
-            self._connected = True
-        return self
+        self._connection = Snmpv2cConnection(
+                community=self.get_option("community"), dest_host=self.get_option("host"),  retries=self.get_option("retries"), timeout=self.get_option("timeout")
+            )
+        super()._connect()
+        
 
-    def exec_command(self, cmd, in_data=None, sudoable=True):
-        pass
-
-    def put_file(self, in_path, out_path):
-        pass
-
-    def fetch_file(self, in_path, out_path):
-        pass
-
-    def close(self):
-        self._connected = False

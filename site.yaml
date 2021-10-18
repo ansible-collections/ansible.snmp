@@ -1,11 +1,14 @@
 - hosts: nxos101
   gather_facts: False
   tasks:
-  - ansible.snmp.get:
+  - name: Retreive several individual OIDs
+    ansible.snmp.get:
       oids:
       - "SNMPv2-MIB::sysDescr.0"
       - "SNMPv2-MIB::sysContact.0"
       - "SNMPv2-MIB::sysLocation.0"
-  - ansible.snmp.walk:
+  - name: Retrieve an entire table, cell by cell
+    ansible.snmp.walk:
       oids:
       - IF-MIB::ifTable
+  
