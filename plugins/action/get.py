@@ -12,7 +12,6 @@ from ansible_collections.ansible.snmp.plugins.plugin_utils.snmp_action_base impo
 )
 
 
-
 class ActionModule(SnmpActionBase):
     """action module"""
 
@@ -23,18 +22,16 @@ class ActionModule(SnmpActionBase):
         self._check_argspec()
         if self._result.get("failed"):
             return self._result
-        
+
         self._connection.configure(self._task.args)
 
-        error, elapsed, result = self._connection.walk()
+        error, elapsed, result = self._connection.get()
 
         self._result.update({"changed": False})
 
         if error:
-            self._result.update(
-                {"failed": True, "msg": error}
-            )
+            self._result.update({"failed": True, "msg": error})
         else:
             self._result.update({"elapsed": elapsed, "result": result})
-        
+
         return self._result

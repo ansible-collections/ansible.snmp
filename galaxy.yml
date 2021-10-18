@@ -1,0 +1,12 @@
+---
+authors:
+  - Ansible Network
+license_file: LICENSE
+name: snmp
+namespace: ansible
+description: The Ansible ansible.snmp collection includes a variety of plugins for using SNMP on the control node to make SNMP connections to a device.
+readme: README.md
+repository: https://github.com/ansible-collections/ansible.snmp
+issues: https://github.com/ansible-collections/ansible.snmp/issues
+tags: [linux, networking, security, cloud, utilities, data, validation, utils]
+version: null

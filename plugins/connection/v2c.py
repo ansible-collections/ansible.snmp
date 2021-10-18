@@ -85,7 +85,6 @@ from ansible_collections.ansible.snmp.plugins.plugin_utils.snmp_connection_base 
 )
 
 
-
 class Connection(SnmpConnectionBase):
     """SNMP v2 based connections"""
 
@@ -97,8 +96,9 @@ class Connection(SnmpConnectionBase):
 
     def _connect(self):
         self._connection = Snmpv2cConnection(
-                community=self.get_option("community"), dest_host=self.get_option("host"),  retries=self.get_option("retries"), timeout=self.get_option("timeout")
-            )
+            community=self.get_option("community"),
+            dest_host=self.get_option("host"),
+            retries=self.get_option("retries"),
+            timeout=self.get_option("timeout"),
+        )
         super()._connect()
-        
-

@@ -93,9 +93,7 @@ class SnmpInstance:
         args = {}
         for attribute in SnmpConnectionParamMap:
             if hasattr(connection, attribute.name):
-                args[attribute.value] = getattr(
-                    connection, attribute.name
-                )
+                args[attribute.value] = getattr(connection, attribute.name)
         self.session = netsnmp.Session(**args)
 
         for attribute in SnmpConfigurationParamMap:

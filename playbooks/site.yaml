@@ -1,0 +1,36 @@
+- hosts: nxos101
+  gather_facts: False
+  tasks:
+  - name: Retreive several individual OIDs
+    ansible.snmp.get:
+      oids:
+      - "SNMPv2-MIB::sysDescr.0"
+      - "SNMPv2-MIB::sysContact.0"
+      - "SNMPv2-MIB::sysLocation.0"
+  - name: Retrieve an entire table, cell by cell
+    ansible.snmp.walk:
+      oids:
+      - IF-MIB::ifTable
+  - name: Retrieve an entire table, row by row
+    ansible.snmp.walk:
+      oids:
+      - IF-MIB::ifIndex
+      - IF-MIB::ifDescr
+      - IF-MIB::ifType
+      - IF-MIB::ifMtu
+      - IF-MIB::ifSpeed
+      - IF-MIB::ifPhysAddress
+      - IF-MIB::ifAdminStatus
+      - IF-MIB::ifOperStatus
+      - IF-MIB::ifLastChange
+      - IF-MIB::ifInOctets
+      - IF-MIB::ifInUcastPkts
+      - IF-MIB::ifInDiscards
+      - IF-MIB::ifInErrors
+      - IF-MIB::ifInUnknownProtos
+      - IF-MIB::ifOutOctets
+      - IF-MIB::ifOutUcastPkts
+      - IF-MIB::ifOutDiscards
+      - IF-MIB::ifOutErrors
+      - IF-MIB::ifSpecific
+  

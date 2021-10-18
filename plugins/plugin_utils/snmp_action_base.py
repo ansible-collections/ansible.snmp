@@ -13,7 +13,6 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_valid
 )
 
 
-
 class SnmpActionBase(ActionBase):
     """action module"""
 
@@ -28,5 +27,3 @@ class SnmpActionBase(ActionBase):
         if not valid:
             self._result["failed"] = True
             self._result["msg"] = errors
-
-   
