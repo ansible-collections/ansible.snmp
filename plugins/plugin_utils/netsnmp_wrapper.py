@@ -33,11 +33,13 @@ class Snmpv2cConnection(SnmpConnectionBase):
     community: str = "public"
     version: int = 2
 
+
 class Snmpv3Connection(SnmpConnectionBase):
     context_engine_id: str
     sec_name: str = "initial"
     sec_level: str = "noAuthPriv"
     context: str = ""
+
 
 class Snmpv3UsmConnection(Snmpv3Connection):
     sec_engine_id: str
@@ -45,7 +47,8 @@ class Snmpv3UsmConnection(Snmpv3Connection):
     priv_pass: str
     auth_proto: str = "MD5"
     priv_proto: str = "DES"
-  
+
+
 class SnmpConfigurationParamMap(Enum):
     use_long_names = "UseLongNames"
     use_sprint_value = "UseSprintValue"

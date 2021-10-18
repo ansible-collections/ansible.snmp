@@ -206,16 +206,32 @@ class Connection(SnmpConnectionBase):
         super(Connection, self).__init__(*args, **kwargs)
 
     def _connect(self):
-        params_with_defaults = ['auth_proto', 'context', 'host', "port", "priv_proto", "retries", "sec_name", "sec_level", "timeout"]
-        params_no_defaults = ['auth_pass', 'context_engine_id', 'priv_pass', 'sec_engine_id']
-        kwargs = {"dest_host": self.get_option('host')}
+        kwargs = {"dest_host": self.get_option("host")}
+
+        params_with_defaults = [
+            "auth_proto",
+            "context",
+            "host",
+            "port",
+            "priv_proto",
+            "retries",
+            "sec_name",
+            "sec_level",
+            "timeout",
+        ]
         for param in params_with_defaults:
-          import q; q(param, self.get_option(param))
-          kwargs[param] = self.get_option(param)
-        for param in params_no_defaults:
-          value = self.get_option(param)
-          if value is not None:
             kwargs[param] = self.get_option(param)
-        
+
+        params_no_defaults = [
+            "auth_pass",
+            "context_engine_id",
+            "priv_pass",
+            "sec_engine_id",
+        ]
+        for param in params_no_defaults:
+            value = self.get_option(param)
+            if value is not None:
+                kwargs[param] = self.get_option(param)
+
         self._connection = Snmpv3UsmConnection(**kwargs)
         super()._connect()
