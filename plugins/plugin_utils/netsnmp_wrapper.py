@@ -68,7 +68,7 @@ class SnmpConnectionParamMap(Enum):
     their_identity = "TheirIdentity"
     trust_cert = "TrustCert"
     their_hostname = "TheirHostname"
-    
+
     # v3 with USM
     sec_engine_id = "SecEngineId"
     auth_proto = "AuthProto"

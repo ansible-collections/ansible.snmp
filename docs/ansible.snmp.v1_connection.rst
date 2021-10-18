@@ -1,11 +1,11 @@
-.. _ansible.snmp.v2c_connection:
+.. _ansible.snmp.v1_connection:
 
 
-****************
-ansible.snmp.v2c
-****************
+***************
+ansible.snmp.v1
+***************
 
-**Make SNMP v2c connections to a device**
+**Make SNMP v1 connections to a device**
 
 
 Version added: 1.0.0
@@ -17,7 +17,7 @@ Version added: 1.0.0
 
 Synopsis
 --------
-- Make SNMP v2c connections to a device.
+- Make SNMP v1 connections to a device.
 
 
 
@@ -60,7 +60,7 @@ Parameters
                                 <div>var: ansible_snmp_community</div>
                     </td>
                 <td>
-                        <div>Specifc the community string for SNMP v2c connections.</div>
+                        <div>Specifc the community string for SNMP v2 connections.</div>
                 </td>
             </tr>
             <tr>
@@ -122,10 +122,36 @@ Parameters
                                     <p>[ansible.snmp]<br>retries = 3</p>
                             </div>
                                 <div>env:ANSIBLE_SNMP_RETRIES</div>
-                                <div>var: ansible_snmp_RETRIES</div>
+                                <div>var: ansible_snmp_retries</div>
                     </td>
                 <td>
                         <div>Specify the number retries before failure</div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1">
+                    <div class="ansibleOptionAnchor" id="parameter-"></div>
+                    <b>retry_no_such</b>
+                    <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
+                    <div style="font-size: small">
+                        <span style="color: purple">boolean</span>
+                    </div>
+                </td>
+                <td>
+                        <ul style="margin: 0; padding: 0"><b>Choices:</b>
+                                    <li><div style="color: blue"><b>no</b>&nbsp;&larr;</div></li>
+                                    <li>yes</li>
+                        </ul>
+                </td>
+                    <td>
+                            <div> ini entries:
+                                    <p>[ansible.snmp]<br>retry_no_such = no</p>
+                            </div>
+                                <div>env:ANSIBLE_SNMP_RETRY_NO_SUCH</div>
+                                <div>var: ansible_snmp_retry_no_such</div>
+                    </td>
+                <td>
+                        <div>If enabled NOSUCH errors in &#x27;get&#x27; pdus will be repaired, removing the entry in error, and resent, undef will be returned for all NOSUCH varbinds, when set to `False` this feature is disabled and the entire get request will fail on any NOSUCH error.</div>
                 </td>
             </tr>
             <tr>
