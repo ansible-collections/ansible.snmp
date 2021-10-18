@@ -1,8 +1,24 @@
 all:
   vars:
-    ansible_connection: ansible.snmp.v2c
-    ansible_snmp_community: public
+    # basic
     ansible_snmp_timeout: 5000000
+
+    # v1
+    # ansible_snmp_community: public
+    # ansible_snmp_retry_no_such: 1
+
+    # v2
+    # ansible_snmp_community: public
+    # ansible_snmp_retry_no_such: 1
+
+    # v3
+    ansible_connection: ansible.snmp.v3_usm
+    ansible_snmp_sec_name: bthornto
+    ansible_snmp_auth_pass: password
+    ansible_snmp_priv_pass: password
+    ansible_snmp_sec_level: authPriv
+
+    # other
     ansible_python_interpreter: python
 
   children:

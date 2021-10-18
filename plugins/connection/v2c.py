@@ -19,7 +19,7 @@ requirements:
 options:
   community:
     description:
-    - Specifc the community string for SNMP v2c connections.
+    - Specify the community string for SNMP v2c connections.
     default: public
     type: str
     ini:

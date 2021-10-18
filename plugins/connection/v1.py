@@ -19,7 +19,7 @@ requirements:
 options:
   community:
     description:
-    - Specifc the community string for SNMP v2 connections.
+    - Specifc the community string for SNMP v1 connections.
     default: public
     type: str
     ini:
@@ -104,7 +104,7 @@ from ansible_collections.ansible.snmp.plugins.plugin_utils.snmp_connection_base 
 class Connection(SnmpConnectionBase):
     """SNMP v2 based connections"""
 
-    transport = "v2"
+    transport = "v1"
     has_pipelining = False
 
     def __init__(self, *args, **kwargs):
