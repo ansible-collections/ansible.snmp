@@ -348,6 +348,26 @@ Parameters
                         <div>Specify the number of micro-seconds before a retry</div>
                 </td>
             </tr>
+            <tr>
+                <td colspan="1">
+                    <div class="ansibleOptionAnchor" id="parameter-"></div>
+                    <b>version</b>
+                    <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
+                    <div style="font-size: small">
+                        <span style="color: purple">integer</span>
+                    </div>
+                </td>
+                <td>
+                        <ul style="margin: 0; padding: 0"><b>Choices:</b>
+                                    <li><div style="color: blue"><b>3</b>&nbsp;&larr;</div></li>
+                        </ul>
+                </td>
+                    <td>
+                    </td>
+                <td>
+                        <div>Specify the SNMP version</div>
+                </td>
+            </tr>
     </table>
     <br/>
 
