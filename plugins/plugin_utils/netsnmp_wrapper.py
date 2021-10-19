@@ -1,30 +1,35 @@
+# Note:
+#   It is importtant that these class defintions stay in sync with 
+#   their respective module and connection docstrings
+#   These classes are introspected for defautl and non-default values
+#   and the attributes are subsequently pulled from the
+#   connection options and task args
+#   The default values here are not used, but serve as an indication
+#   of whether or not the argspec value of None should be used
+#   as ansible provides None for an optional value in the argspec
+#   because the netsnmp Session cannot be updated with a None value
+
 import netsnmp
 import time
 from enum import Enum
 
 from types import SimpleNamespace
+from typing import Dict
 from typing import List
 from typing import Union
 
-
-class SnmpConfiguration(SimpleNamespace):
-    # Note: these will all get cast as an int later
-    # here as a bool for convenience
-    use_long_names: bool = False
-    use_sprint_value: bool = False
-    use_enums: bool = False
-    use_numeric: bool = False
-    best_guess: int = 0
-
-
-class SnmpConnectionBase(SimpleNamespace):
-    host: str = "localhost"
-    port: int = 161
-    timeout: int = 500000
-    retries: int = 3
+class IntrospectableSimpleNamespace(SimpleNamespace):
+    """ A modifed SimpleNamespace that allows for introspection
+    for attributes that have a value or not. Used immediately
+    after instantion, indicates attrbutes that had a default value set"""
 
     @classmethod
-    def _describe(cls):
+    def _describe(cls) -> Dict:
+        """ Produce a dict of all annotations, including parent classes
+        
+        :return: A dict of attr:type
+        :rtype: dict
+        """
         d = {}
         for c in cls.mro():
             try:
@@ -34,25 +39,71 @@ class SnmpConnectionBase(SimpleNamespace):
         return d
     
     @property
-    def set(self):
+    def set(self) -> List[str]:
+        """ Produce a list of attributes that have a value
+        
+        :return: A list of attr w/ a value set
+        :rtype: List
+        """
         return [k for k in self._describe().keys() if hasattr(self, k)]
     
     @property
-    def not_set(self):
+    def not_set(self) -> List[str]:
+        """ Produce a list of attributes that do not have a value
+        
+        :return: A list of attr w/o a value set
+        :rtype: List
+        """
         return [k for k in self._describe().keys() if not hasattr(self, k)]
 
 
+class SnmpConfiguration(IntrospectableSimpleNamespace):
+    """ The netsnmp configuration attributes
+
+    Note: these will all get cast as an int later
+    here as a bool for convenience
+    """
+    best_guess: int = 0
+    enums: bool = False
+    long_names: bool = False
+    numeric: bool = False
+    sprint_value: bool = False
+
+
+class SnmpConnectionBase(IntrospectableSimpleNamespace):
+    """ The SNMP base class
+    
+    This contains attributes common to all SNMP connection types
+    """
+    host: str = "localhost"
+    port: int = 161
+    timeout: int = 500000
+    retries: int = 3
+
+
 class Snmpv1Connection(SnmpConnectionBase):
+    """ The SNMP v1 connection class
+    
+    This contains attributes unique to the SNMP v1 connection
+    """
     version: int = 1
     retry_no_such: int = 0
 
 
 class Snmpv2cConnection(SnmpConnectionBase):
+    """ The SNMP v2 connection class
+    
+    This contains attributes unique to the SNMP v2c connection
+    """
     community: str = "public"
     version: int = 2
 
 
 class Snmpv3Connection(SnmpConnectionBase):
+    """ The SNMP v3 connection base class
+    
+    This contains attributes common to all SNMP v3 connections
+    """
     context_engine_id: str
     sec_name: str = "initial"
     sec_level: str = "noAuthPriv"
@@ -60,6 +111,9 @@ class Snmpv3Connection(SnmpConnectionBase):
 
 
 class Snmpv3UsmConnection(Snmpv3Connection):
+    """ The SNMP v3 user secutiry model class
+    
+    This contains attributes for the SNMP v3 USM connection"""
     sec_engine_id: str
     auth_pass: str
     priv_pass: str
@@ -68,14 +122,24 @@ class Snmpv3UsmConnection(Snmpv3Connection):
 
 
 class SnmpConfigurationParamMap(Enum):
-    use_long_names = "UseLongNames"
-    use_sprint_value = "UseSprintValue"
-    use_enums = "UseEnums"
-    use_numeric = "UseNumeric"
+    """ Map the configuration attributes to their netsnmp conterparts
+
+    attributes should map to docstring/argspec attributes
+    values should coorespond to netsnmp attributes
+    """
+    long_names = "UseLongNames"
+    sprint_value = "UseSprintValue"
+    enums = "UseEnums"
+    numeric = "UseNumeric"
     best_guess = "BestGuess"
 
 
 class SnmpConnectionParamMap(Enum):
+    """ Map the connection attributes to thei netsnmp counterparts
+
+    attributes should map to connection options
+    values should coorespond to netsnmp attributes
+    """
     # base session
     host = "DestHost"
     version = "Version"
@@ -147,8 +211,9 @@ class SnmpInstance:
                     attribute.value,
                     int(getattr(configuration, attribute.name)),
                 )
-        self.session.RetryNoSuch = 1
+      
         self._oids: List
+       
 
     def set_oids(self, oid_list) -> None:
         self._oids = netsnmp.VarList()

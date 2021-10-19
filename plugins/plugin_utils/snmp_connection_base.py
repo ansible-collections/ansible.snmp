@@ -78,13 +78,16 @@ class SnmpConnectionBase(ConnectionBase):
         pass
 
     def configure(self, task_args):
-        self._configuration = SnmpConfiguration(
-            best_guess=task_args["best_guess"],
-            use_enums=task_args["enums"],
-            use_long_names=task_args["long_names"],
-            use_numeric=task_args["numeric"],
-            use_sprint_value=task_args["sprint_value"],
-        )
+        self._configuration = SnmpConfiguration()
+
+        for param in self._configuration.set:
+            setattr(self._configuration, param, task_args[param])
+            
+        for param in self._configuration.not_set:
+            value = task_args[param]
+            if value is not None:
+                setattr(self._configuration, param, value)
+       
         self._oids = task_args["oids"]
 
     @ensure_connect
