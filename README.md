@@ -23,6 +23,7 @@ Name | Description
 --- | ---
 [ansible.snmp.v1](https://github.com/ansible-collections/ansible.snmp/blob/main/docs/ansible.snmp.v1_connection.rst)|Make SNMP v1 connections to a device
 [ansible.snmp.v2c](https://github.com/ansible-collections/ansible.snmp/blob/main/docs/ansible.snmp.v2c_connection.rst)|Make SNMP v2c connections to a device
+[ansible.snmp.v3_usm](https://github.com/ansible-collections/ansible.snmp/blob/main/docs/ansible.snmp.v3_usm_connection.rst)|Make SNMP v3 user-based security model (USM) connections to a device.
 
 ### Modules
 Name | Description
@@ -169,6 +170,7 @@ or install again after sourcing venv
 - dump MIBs into other formats, including python classes [libsmi](https://www.ibr.cs.tu-bs.de/projects/libsmi/smidump.html?lang=de)
 - Cisco MIB ftp details [here](https://www.cisco.com/c/en/us/support/docs/ip/simple-network-management-protocol-snmp/9226-mibs-9226.html#q2)
 - SNMP table traversal [here](https://datatracker.ietf.org/doc/html/rfc1187#page-2)
+
 
 
 

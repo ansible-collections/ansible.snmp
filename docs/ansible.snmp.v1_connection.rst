@@ -60,7 +60,7 @@ Parameters
                                 <div>var: ansible_snmp_community</div>
                     </td>
                 <td>
-                        <div>Specifc the community string for SNMP v2 connections.</div>
+                        <div>Specifc the community string for SNMP v1 connections.</div>
                 </td>
             </tr>
             <tr>
