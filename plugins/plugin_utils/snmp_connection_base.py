@@ -77,7 +77,7 @@ class SnmpConnectionBase(ConnectionBase):
     def put_file(self, in_path, out_path):
         pass
 
-    def configure(self, task_args):
+    def configure(self, task_args, method):
         self._configuration = SnmpConfiguration()
 
         for param in self._configuration.set:
@@ -87,12 +87,28 @@ class SnmpConnectionBase(ConnectionBase):
             value = task_args[param]
             if value is not None:
                 setattr(self._configuration, param, value)
-       
-        self._oids = task_args["oids"]
+        if method in ['get', 'walk']:
+            self._oids = [{"tag": oid} for oid in task_args["oids"]]
+        elif method in ["set"]:
+            self._oids = []
+            for entry in task_args["oids"]:
+                _entry = {}
+                _entry['tag'] = entry['oid']
+                _entry['iid'] = entry['iid']
+                _entry['val'] = entry['value']
+                if "type" in entry:
+                    _entry['type_arg'] = entry['type']
+                self._oids.append(_entry)
+               
+
 
     @ensure_connect
     def get(self):
         return self._instance.get()
+    
+    @ensure_connect
+    def set(self):
+        return self._instance.set()
 
     @ensure_connect
     def walk(self):

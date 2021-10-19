@@ -23,7 +23,7 @@ class ActionModule(SnmpActionBase):
         if self._result.get("failed"):
             return self._result
 
-        self._connection.configure(self._task.args)
+        self._connection.configure(self._task.args, "walk")
 
         error, elapsed, result = self._connection.walk()
 

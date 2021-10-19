@@ -23,15 +23,17 @@ class ActionModule(SnmpActionBase):
         if self._result.get("failed"):
             return self._result
 
-        self._connection.configure(self._task.args, "get")
+        
+        self._connection.configure(self._task.args, "set")
 
-        error, elapsed, result = self._connection.get()
+        error, elapsed = self._connection.set()
 
-        self._result.update({"changed": False})
+        self._result.update({"changed": True})
 
         if error:
             self._result.update({"failed": True, "msg": error})
+
         else:
-            self._result.update({"elapsed": elapsed, "result": result})
+            self._result.update({"elapsed": elapsed})
 
         return self._result

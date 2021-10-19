@@ -218,7 +218,7 @@ class SnmpInstance:
     def set_oids(self, oid_list) -> None:
         self._oids = netsnmp.VarList()
         for oid in oid_list:
-            self._oids.append(netsnmp.Varbind(oid))
+            self._oids.append(netsnmp.Varbind(**oid))
         return vars
 
     def _varbinds_to_dicts(self) -> List:
@@ -248,6 +248,15 @@ class SnmpInstance:
         if self.session.ErrorStr:
             error = self.session.ErrorStr
         return error, end - start, self._varbinds_to_dicts()
+    
+    def set(self):
+        start = time.time()
+        res = self.session.set(self._oids)
+        end = time.time()
+        error = None
+        if self.session.ErrorStr:
+            error = self.session.ErrorStr
+        return error, end - start
 
     def walk(self):
         start = time.time()
