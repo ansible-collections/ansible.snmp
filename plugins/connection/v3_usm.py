@@ -182,7 +182,13 @@ options:
     - name: ANSIBLE_SNMP_TIMEOUT
     vars:
     - name: ansible_snmp_timeout
-
+  version:
+    description:
+    - Specify the SNMP version
+    type: int
+    default: 3
+    choices:
+    - 3
 
   
 """
@@ -206,32 +212,5 @@ class Connection(SnmpConnectionBase):
         super(Connection, self).__init__(*args, **kwargs)
 
     def _connect(self):
-        kwargs = {"dest_host": self.get_option("host")}
-
-        params_with_defaults = [
-            "auth_proto",
-            "context",
-            "host",
-            "port",
-            "priv_proto",
-            "retries",
-            "sec_name",
-            "sec_level",
-            "timeout",
-        ]
-        for param in params_with_defaults:
-            kwargs[param] = self.get_option(param)
-
-        params_no_defaults = [
-            "auth_pass",
-            "context_engine_id",
-            "priv_pass",
-            "sec_engine_id",
-        ]
-        for param in params_no_defaults:
-            value = self.get_option(param)
-            if value is not None:
-                kwargs[param] = self.get_option(param)
-
-        self._connection = Snmpv3UsmConnection(**kwargs)
+        self._connection = Snmpv3UsmConnection()
         super()._connect()

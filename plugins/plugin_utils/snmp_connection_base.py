@@ -33,29 +33,40 @@ class SnmpConnectionBase(ConnectionBase):
             )
 
     def _connect(self):
+        if not self._connected:
+            for param in self._connection.set:
+                setattr(self._connection, param, self.get_option(param))
+            
+            for param in self._connection.not_set:
+                value = self.get_option(param)
+                if value is not None:
+                    setattr(self._connection, param, value)
+            display.vvv(
+                u"ESTABLISHED SNMP v{version} CONNECTION: {host}".format(
+                    host=self._play_context.remote_addr,
+                    version=self.get_option('version')
+                )
+            )
+            self._connected = True
+            
+
         self._instance = SnmpInstance(
             connection=self._connection,
             configuration=self._configuration,
         )
         self._instance.set_oids(self._oids)
-        if not self._connected:
-            display.vvv(
-                u"ESTABLISHED SNMPv2c CONNECTION: {host}".format(
-                    host=self._play_context.remote_addr
-                )
-            )
-        if not self._connected:
-            self._connected = True
+            
         return self
 
     def close(self):
         if self._connected:
             display.vvv(
-                u"CLOSED SNMPv2c CONNECTION: {host}".format(
-                    host=self._play_context.remote_addr
+                u"CLOSED SNMP v{version} CONNECTION: {host}".format(
+                    host=self._play_context.remote_addr,
+                    version=self.get_option('version')
                 )
             )
-        self._connected = False
+            self._connected = False
 
     def exec_command(self, cmd, in_data=None, sudoable=True):
         pass

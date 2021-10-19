@@ -87,6 +87,13 @@ options:
     - name: ANSIBLE_SNMP_TIMEOUT
     vars:
     - name: ansible_snmp_timeout
+  version:
+    description:
+    - Specify the SNMP version
+    type: int
+    default: 1
+    choices:
+    - 1
 
 
   
@@ -111,11 +118,6 @@ class Connection(SnmpConnectionBase):
         super(Connection, self).__init__(*args, **kwargs)
 
     def _connect(self):
-        self._connection = Snmpv1Connection(
-            community=self.get_option("community"),
-            dest_host=self.get_option("host"),
-            retries=self.get_option("retries"),
-            retry_no_such=self.get_option("retry_no_such"),
-            timeout=self.get_option("timeout"),
-        )
-        super()._connect()
+      self._connection = Snmpv1Connection()
+      super()._connect()
+

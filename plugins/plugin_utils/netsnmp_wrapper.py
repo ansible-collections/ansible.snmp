@@ -18,10 +18,28 @@ class SnmpConfiguration(SimpleNamespace):
 
 
 class SnmpConnectionBase(SimpleNamespace):
-    dest_host: str = "localhost"
-    remote_port: int = 161
+    host: str = "localhost"
+    port: int = 161
     timeout: int = 500000
     retries: int = 3
+
+    @classmethod
+    def _describe(cls):
+        d = {}
+        for c in cls.mro():
+            try:
+                d.update(**c.__annotations__)
+            except AttributeError:
+                pass
+        return d
+    
+    @property
+    def set(self):
+        return [k for k in self._describe().keys() if hasattr(self, k)]
+    
+    @property
+    def not_set(self):
+        return [k for k in self._describe().keys() if not hasattr(self, k)]
 
 
 class Snmpv1Connection(SnmpConnectionBase):
@@ -59,9 +77,9 @@ class SnmpConfigurationParamMap(Enum):
 
 class SnmpConnectionParamMap(Enum):
     # base session
-    dest_host = "DestHost"
+    host = "DestHost"
     version = "Version"
-    remote_port = "RemotePort"
+    port = "RemotePort"
     timeout = "Timeout"
     retries = "Retries"
 
