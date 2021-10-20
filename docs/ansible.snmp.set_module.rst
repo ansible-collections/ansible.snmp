@@ -82,6 +82,7 @@ Parameters
                 </td>
                 <td>
                         <div>The OID to update.</div>
+                        <div style="font-size: small; color: darkgreen"><br/>aliases: tag</div>
                 </td>
             </tr>
             <tr>
@@ -129,6 +130,7 @@ Parameters
                 </td>
                 <td>
                         <div>The value to be set for the OID.</div>
+                        <div style="font-size: small; color: darkgreen"><br/>aliases: val</div>
                 </td>
             </tr>
 
