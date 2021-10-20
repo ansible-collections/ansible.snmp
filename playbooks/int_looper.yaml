@@ -1,20 +1,19 @@
 - hosts: all
   gather_facts: False
   tasks:
-  - name: Retreive several individual OIDs
+  - name: Retreive the index and name from the interface table
     ansible.snmp.walk:
       oids:
       - oid: IF-MIB::ifIndex
       - oid: IF-MIB::ifDescr
     register: if_indicies
   
-  - name: Set a couple facts
+  - name: Set a timestamp and the regex to use for matching interface names
     set_fact:
       ts: "{{ lookup('pipe', 'date -u +\"%Y-%m-%dT%H:%M:%SZ\"') }}"
-      regex: "[Ethernet|GigabitIntel].*"
-
-  
-  - name: Update all Eth interfaces
+      regex: "(Ethernet|Gigabit|Intel).*"
+ 
+  - name: Update all matching interfaces
     ansible.snmp.set:
       oids:
       - oid: IF-MIB::ifAlias

@@ -165,7 +165,6 @@ Examples
         ts: "{{ lookup('pipe', 'date -u +\"%Y-%m-%dT%H:%M:%SZ\"') }}"
 
     # Update the description of all interfaces matching a regex
-
     - name: Retreive the index and name from the interface table
       ansible.snmp.walk:
         oids:
@@ -176,7 +175,7 @@ Examples
     - name: Set a timestamp and the regex to use for matching interface names
       set_fact:
         ts: "{{ lookup('pipe', 'date -u +\"%Y-%m-%dT%H:%M:%SZ\"') }}"
-        regex: "[Ethernet|GigabitIntel].*"
+        regex: "(Ethernet|Gigabit|Intel).*"
 
     - name: Update all matching interfaces
       ansible.snmp.set:
