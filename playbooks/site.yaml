@@ -81,7 +81,7 @@
     set_fact:
       set_values: "{{ get_result.raw }}"
     
-  - name: Update the set_load
+  - name: Update the set_values
     ansible.utils.update_fact:
       updates:
       - path: set_values.0.val
