@@ -33,6 +33,11 @@ class SnmpConnectionBase(ConnectionBase):
             )
 
     def _connect(self):
+        """ Make the connection
+        
+        Note: We never set self._connected true because the netsnmp session cannont be reused
+        this forces task executor to create a new connection for every task, or looped task
+        """
         if not self._connected:
             for param in self._connection.set:
                 setattr(self._connection, param, self.get_option(param))
@@ -47,7 +52,6 @@ class SnmpConnectionBase(ConnectionBase):
                     version=self.get_option("version"),
                 )
             )
-            self._connected = True
 
         self._instance = SnmpInstance(
             connection=self._connection,
