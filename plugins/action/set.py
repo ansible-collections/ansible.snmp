@@ -24,7 +24,7 @@ class ActionModule(SnmpActionBase):
         if self._result.get("failed"):
             return self._result
 
-        self._result.update({'elapsed': {}})
+        self._result.update({'elapsed': {"total": 0}})
 
     
         # pre set get
@@ -33,6 +33,7 @@ class ActionModule(SnmpActionBase):
         self._connection.configure(self._task.args, "set")
         error, elapsed, pre_set_result = self._connection.get()
         self._result['elapsed']['pre_set_get'] = elapsed
+        self._result['elapsed']['total'] += elapsed
 
         if error:
             final_error = f"SNMP get (pre-set)failed. The error was: '{error}'"
@@ -48,6 +49,7 @@ class ActionModule(SnmpActionBase):
         self._connection.configure(self._task.args, "set")
         error, elapsed = self._connection.set()
         self._result['elapsed']['set'] = elapsed
+        self._result['elapsed']['total'] += elapsed
 
         if error:
             final_error = f"SNMP set failed. The error was: '{error}'"
@@ -64,6 +66,7 @@ class ActionModule(SnmpActionBase):
         self._connection.configure(self._task.args, "set")
         error, elapsed, post_set_result = self._connection.get()
         self._result['elapsed']['post_set_get'] = elapsed
+        self._result['elapsed']['total'] += elapsed
 
         if error:
             final_error = f"SNMP get (post-set)failed. The error was: '{error}'"
