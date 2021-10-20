@@ -41,10 +41,20 @@ options:
     default: False
   oids:
     description:
-      - A list of OIDS to query on the remote device
+      - A dictionary of entries to walk on the remote device
     type: list
-    entries: str
+    elements: dict
     required: True
+    suboptions:
+      oid:
+        description:
+        - The OID to retrieve.
+        type: str
+        required: True
+      iid:
+        description:
+        - the dotted-decimal, instance idenfier, for scalar MIB objects use '0'
+        type: str
   numeric:
     description:
       - Set to `True to have `oids` returned untranslated (i.e. dotted-decimal).

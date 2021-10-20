@@ -4,7 +4,7 @@
 
 from copy import deepcopy
 
-from ansible_collections.ansible.snmp.plugins.modules.get import (
+from ansible_collections.ansible.snmp.plugins.modules.set import (
     DOCUMENTATION,
 )
 
@@ -20,7 +20,7 @@ class ActionModule(SnmpActionBase):
         self._result = super(ActionModule, self).run(tmp, task_vars)
         self._task_vars = task_vars
 
-        self._check_argspec()
+        self._check_argspec(DOCUMENTATION)
         if self._result.get("failed"):
             return self._result
 
@@ -30,7 +30,7 @@ class ActionModule(SnmpActionBase):
         # pre set get
         # Note: although we are doing a get, the netsnmp varbind _can_ have values
         # they are disregarded when doing a get
-        self._connection.configure(self._task.args, "set")
+        self._connection.configure(self._task.args)
         error, elapsed, pre_set_result = self._connection.get()
         self._result['elapsed']['pre_set_get'] = elapsed
         self._result['elapsed']['total'] += elapsed
@@ -46,7 +46,7 @@ class ActionModule(SnmpActionBase):
 
 
         # set
-        self._connection.configure(self._task.args, "set")
+        self._connection.configure(self._task.args)
         error, elapsed = self._connection.set()
         self._result['elapsed']['set'] = elapsed
         self._result['elapsed']['total'] += elapsed
@@ -63,7 +63,7 @@ class ActionModule(SnmpActionBase):
         # post set get
         # Note: although we are doing a get, the netsnmp varbind _can_ have values
         # they are disregarded when doing a get
-        self._connection.configure(self._task.args, "set")
+        self._connection.configure(self._task.args)
         error, elapsed, post_set_result = self._connection.get()
         self._result['elapsed']['post_set_get'] = elapsed
         self._result['elapsed']['total'] += elapsed

@@ -77,28 +77,30 @@ class SnmpConnectionBase(ConnectionBase):
     def put_file(self, in_path, out_path):
         pass
 
-    def configure(self, task_args, method):
+    def configure(self, task_args):
         self._configuration = SnmpConfiguration()
 
         for param in self._configuration.set:
-            setattr(self._configuration, param, task_args[param])
+            if param in task_args:
+                setattr(self._configuration, param, task_args[param])
             
         for param in self._configuration.not_set:
-            value = task_args[param]
-            if value is not None:
-                setattr(self._configuration, param, value)
-        if method in ['get', 'walk']:
-            self._oids = [{"tag": oid} for oid in task_args["oids"]]
-        elif method in ["set"]:
-            self._oids = []
-            for entry in task_args["oids"]:
-                _entry = {}
-                _entry['tag'] = entry['oid']
+            if param in task_args:
+                value = task_args[param]
+                if value is not None:
+                    setattr(self._configuration, param, value)
+       
+        self._oids = []
+        for entry in task_args["oids"]:
+            _entry = {}
+            _entry['tag'] = entry['oid']
+            if 'iid' in entry:
                 _entry['iid'] = entry['iid']
+            if 'value' in entry:
                 _entry['val'] = entry['value']
-                if "type" in entry:
-                    _entry['type_arg'] = entry['type']
-                self._oids.append(_entry)
+            if "type" in entry:
+                _entry['type_arg'] = entry['type']
+            self._oids.append(_entry)
                
 
 

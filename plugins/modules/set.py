@@ -31,8 +31,8 @@ options:
         required: True
       iid:
         description:
-        - the dotted-decimal, instance idenfier, for scalar MIB objects use 0
-        type: raw
+        - The dotted-decimal, instance idenfier, for scalar MIB objects use '0'
+        type: str
         required: True
       type:
         description:

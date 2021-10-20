@@ -16,10 +16,10 @@ from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_valid
 class SnmpActionBase(ActionBase):
     """action module"""
 
-    def _check_argspec(self):
+    def _check_argspec(self, documentation):
         aav = AnsibleArgSpecValidator(
             data=self._task.args,
-            schema=DOCUMENTATION,
+            schema=documentation,
             schema_format="doc",
             name=self._task.action,
         )

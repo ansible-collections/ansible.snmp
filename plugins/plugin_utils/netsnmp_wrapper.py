@@ -241,28 +241,37 @@ class SnmpInstance:
         return list(results.values())
 
     def get(self):
-        start = time.time()
-        _res = self.session.get(self._oids)
-        end = time.time()
         error = None
+        start = time.time()
+        try:
+            _res = self.session.get(self._oids)
+        except Exception as exc:
+            error = str(exc)
+        end = time.time()
         if self.session.ErrorStr:
             error = self.session.ErrorStr
         return error, end - start, self._varbinds_to_dicts()
     
     def set(self):
-        start = time.time()
-        res = self.session.set(self._oids)
-        end = time.time()
         error = None
+        start = time.time()
+        try:
+            res = self.session.set(self._oids)
+        except Exception as exc:
+            error = str(exc)
+        end = time.time()
         if self.session.ErrorStr:
             error = self.session.ErrorStr
         return error, end - start
 
     def walk(self):
-        start = time.time()
-        _res = self.session.walk(self._oids)
-        end = time.time()
         error = None
+        start = time.time()
+        try:
+            _res = self.session.walk(self._oids)
+        except Exception as exc:
+            error = str(exc)
+        end = time.time()
         if self.session.ErrorStr:
             error = self.session.ErrorStr
         return error, end - start, self._varbinds_to_dicts()

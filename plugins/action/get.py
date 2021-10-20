@@ -19,7 +19,7 @@ class ActionModule(SnmpActionBase):
         self._result = super(ActionModule, self).run(tmp, task_vars)
         self._task_vars = task_vars
 
-        self._check_argspec()
+        self._check_argspec(DOCUMENTATION)
         if self._result.get("failed"):
             return self._result
         
@@ -27,7 +27,7 @@ class ActionModule(SnmpActionBase):
         self._result.update({"changed": False})
 
 
-        self._connection.configure(self._task.args, "get")
+        self._connection.configure(self._task.args)
         error, elapsed, result = self._connection.get()
         self._result['elapsed']['get'] = elapsed
         self._result['elapsed']['total'] += elapsed
