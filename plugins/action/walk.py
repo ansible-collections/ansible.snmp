@@ -22,20 +22,20 @@ class ActionModule(SnmpActionBase):
         self._check_argspec(DOCUMENTATION)
         if self._result.get("failed"):
             return self._result
-        
-        self._result.update({'elapsed': {"total": 0}})
+
+        self._result.update({"elapsed": {"total": 0}})
         self._result.update({"changed": False})
 
-
         self._connection.configure(self._task.args)
-        error, elapsed, result = self._connection.walk()
-        self._result['elapsed']['walk'] = elapsed
-        self._result['elapsed']['total'] += elapsed
+        response = self._connection.walk()
+        self._result["elapsed"]["walk"] = response.elapsed
+        self._result["elapsed"]["total"] += response.elapsed
 
-
-        if error:
-            self._result.update({"failed": True, "msg": error})
+        if response.error:
+            self._result.update({"failed": True, "msg": response.error})
         else:
-            self._result.update({"result": result})
+            self._result.update(
+                {"result": response.result, "raw": response.raw}
+            )
 
         return self._result

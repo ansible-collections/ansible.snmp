@@ -82,4 +82,98 @@ EXAMPLES = r"""
 
 
 RETURN = """
+before:
+  description: The result of an SNMP get for the OIDs prior to set
+  returned: always
+  type: dict
+  keys:
+    raw:
+      description: The raw result from the snmp walk
+      returned: always
+      type: list
+      elements: dict
+      entries:
+        iid:
+          description: The instance id
+          returned: always
+          type: str
+        tag:
+          description: The OID
+          returned: always
+          type: str
+        type:
+          description: The type of the value
+          returned: always
+          type: str
+        value:
+          description: The currently set value for the oid
+          returned: always
+          type: raw
+    result:
+      description: The transformed result from the snmp walk
+      returned: always
+      type: list
+      elements: dict
+      entries:
+        _raw: 
+          description: The individual oid entry and the currently set value
+          returned: always
+after:
+  description: The result of an SNMP get for the OIDs after the set
+  returned: always
+  type: dict
+  keys:
+    raw:
+      description: The raw result from the snmp walk
+      returned: always
+      type: list
+      elements: dict
+      entries:
+        iid:
+          description: The instance id
+          returned: always
+          type: str
+        tag:
+          description: The OID
+          returned: always
+          type: str
+        type:
+          description: The type of the value
+          returned: always
+          type: str
+        value:
+          description: The currently set value for the oid
+          returned: always
+          type: raw
+    result:
+      description: The transformed result from the snmp walk
+      returned: always
+      type: list
+      elements: dict
+      entries:
+        _raw: 
+          description: The individual oid entry and the currently set value
+          returned: always
+elapsed:
+  description: The amount of time in seconds spent for the snmp calls
+  returned: always
+  type: dict
+  entries:
+    post_set_get:
+      description: The amount of time spent in seconds for the get after the set
+      type: float
+      returned: always
+    pre_set_get:
+      description: The amount of time spent in seconds for the get prior to the set
+      type: float
+      returned: always
+    set:
+      description: The amount of time spent in seconds for the set
+      type: float
+      returned: always
+    total:
+      description: the amount of time spent on all snmp calls
+      type: float
+      returned: always
+
 """

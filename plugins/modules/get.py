@@ -63,7 +63,8 @@ options:
   sprint_value:
     description:
       - Set to `True` to have return values formatted with netsnmp's sprint_value function. 
-      - This will result in certain data types being returned in non-canonical format 
+      - This will result in certain data types being returned in non-canonical format.
+      - Values returned with this option set may not be appropriate for 'set' operations 
     type: bool
     default: True
 
@@ -78,4 +79,48 @@ EXAMPLES = r"""
 
 
 RETURN = """
+elapsed:
+  description: The amount of time in seconds spent for the snmp calls
+  returned: always
+  type: dict
+  entries:
+    get:
+      description: The amount of time spent in seconds for the get
+      type: float
+      returned: always
+    total:
+      description: the amount of time spent on all snmp calls
+      type: float
+      returned: always
+raw:
+  description: The raw result from the snmp get
+  returned: always
+  type: list
+  elements: dict
+  entries:
+    iid:
+      description: The instance id
+      returned: always
+      type: str
+    tag:
+      description: The OID
+      returned: always
+      type: str
+    type:
+      description: The type of the value
+      returned: always
+      type: str
+    value:
+      description: The currently set value for the oid
+      returned: always
+      type: raw
+result:
+  description: The transformed result from the snmp walk
+  returned: always
+  type: list
+  elements: dict
+  entries:
+    _raw: 
+      description: The individual oid entry and the currently set value
+      returned: always
 """

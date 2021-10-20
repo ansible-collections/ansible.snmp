@@ -24,59 +24,70 @@ class ActionModule(SnmpActionBase):
         if self._result.get("failed"):
             return self._result
 
-        self._result.update({'elapsed': {"total": 0}})
+        self._result.update({"elapsed": {"total": 0}})
 
-    
         # pre set get
         # Note: although we are doing a get, the netsnmp varbind _can_ have values
         # they are disregarded when doing a get
         self._connection.configure(self._task.args)
-        error, elapsed, pre_set_result = self._connection.get()
-        self._result['elapsed']['pre_set_get'] = elapsed
-        self._result['elapsed']['total'] += elapsed
+        pre_set_response = self._connection.get()
+        self._result["elapsed"]["pre_set_get"] = pre_set_response.elapsed
+        self._result["elapsed"]["total"] += pre_set_response.elapsed
 
-        if error:
-            final_error = f"SNMP get (pre-set)failed. The error was: '{error}'"
+        if pre_set_response.error:
+            final_error = f"SNMP get (pre-set)failed. The error was: '{pre_set_response.error}'"
             self._result.update({"failed": True, "msg": final_error})
             return self._result
         else:
-            self._result.update({"before": pre_set_result})
+            self._result.update(
+                {
+                    "before": {
+                        "result": pre_set_response.result,
+                        "raw": pre_set_response.raw,
+                    }
+                }
+            )
         # close the connection, because the netsnmp session cannot be reused
         self._connection.close()
 
-
         # set
         self._connection.configure(self._task.args)
-        error, elapsed = self._connection.set()
-        self._result['elapsed']['set'] = elapsed
-        self._result['elapsed']['total'] += elapsed
+        set_response = self._connection.set()
+        self._result["elapsed"]["set"] = set_response.elapsed
+        self._result["elapsed"]["total"] += set_response.elapsed
 
-        if error:
-            final_error = f"SNMP set failed. The error was: '{error}'"
+        if set_response.error:
+            final_error = (
+                f"SNMP set failed. The error was: '{set_response.error}'"
+            )
             self._result.update({"failed": True, "msg": final_error})
             return self._result
         # close the connection, because the netsnmp session cannot be reused
         self._connection.close()
 
-        
-        
         # post set get
         # Note: although we are doing a get, the netsnmp varbind _can_ have values
         # they are disregarded when doing a get
         self._connection.configure(self._task.args)
-        error, elapsed, post_set_result = self._connection.get()
-        self._result['elapsed']['post_set_get'] = elapsed
-        self._result['elapsed']['total'] += elapsed
+        post_set_response = self._connection.get()
+        self._result["elapsed"]["post_set_get"] = post_set_response.elapsed
+        self._result["elapsed"]["total"] += post_set_response.elapsed
 
-        if error:
-            final_error = f"SNMP get (post-set)failed. The error was: '{error}'"
+        if post_set_response.error:
+            final_error = f"SNMP get (post-set)failed. The error was: '{post_set_response.error}'"
             self._result.update({"failed": True, "msg": final_error})
             return self._result
         else:
-            self._result.update({"after": post_set_result})
+            self._result.update(
+                {
+                    "after": {
+                        "result": post_set_response.result,
+                        "raw": post_set_response.raw,
+                    }
+                }
+            )
 
-
-        if pre_set_result != post_set_result:
+        if pre_set_response.raw != post_set_response.raw:
             self._result.update({"changed": True})
 
         return self._result

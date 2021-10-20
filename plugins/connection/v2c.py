@@ -106,4 +106,3 @@ class Connection(SnmpConnectionBase):
     def _connect(self):
         self._connection = Snmpv2cConnection()
         super()._connect()
-

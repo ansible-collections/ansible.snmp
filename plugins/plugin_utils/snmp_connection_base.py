@@ -36,7 +36,7 @@ class SnmpConnectionBase(ConnectionBase):
         if not self._connected:
             for param in self._connection.set:
                 setattr(self._connection, param, self.get_option(param))
-            
+
             for param in self._connection.not_set:
                 value = self.get_option(param)
                 if value is not None:
@@ -44,18 +44,17 @@ class SnmpConnectionBase(ConnectionBase):
             display.vvv(
                 u"ESTABLISHED SNMP v{version} CONNECTION: {host}".format(
                     host=self._play_context.remote_addr,
-                    version=self.get_option('version')
+                    version=self.get_option("version"),
                 )
             )
             self._connected = True
-            
 
         self._instance = SnmpInstance(
             connection=self._connection,
             configuration=self._configuration,
         )
         self._instance.set_oids(self._oids)
-            
+
         return self
 
     def close(self):
@@ -63,7 +62,7 @@ class SnmpConnectionBase(ConnectionBase):
             display.vvv(
                 u"CLOSED SNMP v{version} CONNECTION: {host}".format(
                     host=self._play_context.remote_addr,
-                    version=self.get_option('version')
+                    version=self.get_option("version"),
                 )
             )
             self._connected = False
@@ -83,31 +82,29 @@ class SnmpConnectionBase(ConnectionBase):
         for param in self._configuration.set:
             if param in task_args:
                 setattr(self._configuration, param, task_args[param])
-            
+
         for param in self._configuration.not_set:
             if param in task_args:
                 value = task_args[param]
                 if value is not None:
                     setattr(self._configuration, param, value)
-       
+
         self._oids = []
         for entry in task_args["oids"]:
             _entry = {}
-            _entry['tag'] = entry['oid']
-            if 'iid' in entry:
-                _entry['iid'] = entry['iid']
-            if 'value' in entry:
-                _entry['val'] = entry['value']
+            _entry["tag"] = entry["oid"]
+            if "iid" in entry:
+                _entry["iid"] = entry["iid"]
+            if "value" in entry:
+                _entry["val"] = entry["value"]
             if "type" in entry:
-                _entry['type_arg'] = entry['type']
+                _entry["type_arg"] = entry["type"]
             self._oids.append(_entry)
-               
-
 
     @ensure_connect
     def get(self):
         return self._instance.get()
-    
+
     @ensure_connect
     def set(self):
         return self._instance.set()

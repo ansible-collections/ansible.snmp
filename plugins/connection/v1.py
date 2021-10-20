@@ -118,6 +118,5 @@ class Connection(SnmpConnectionBase):
         super(Connection, self).__init__(*args, **kwargs)
 
     def _connect(self):
-      self._connection = Snmpv1Connection()
-      super()._connect()
-
+        self._connection = Snmpv1Connection()
+        super()._connect()
