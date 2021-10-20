@@ -29,6 +29,8 @@ options:
         - The OID to update.
         type: str
         required: True
+        aliases:
+        - tag
       iid:
         description:
         - The dotted-decimal, instance idenfier, for scalar MIB objects use '0'
@@ -56,6 +58,8 @@ options:
         - The value to be set for the OID.
         type: raw
         required: True
+        aliases:
+        - val
 
  
 

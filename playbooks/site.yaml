@@ -65,3 +65,41 @@
       - oid: RFC1213-MIB::ipRouteMask
       - oid: RFC1213-MIB::ipRouteMetric5
       - oid: RFC1213-MIB::ipRouteInfo
+
+  # Round trip set get demonstration follows
+
+  - name: Roundtrip get/set (get)
+    ansible.snmp.get:
+      oids:
+      - oid: "SNMPv2-MIB::sysContact.0"
+      - oid: "SNMPv2-MIB::sysLocation"
+        iid: '0'
+      sprint_value: False
+    register: get_result
+  
+  - name: Set a fact for the result
+    set_fact:
+      set_values: "{{ get_result.raw }}"
+    
+  - name: Update the set_load
+    ansible.utils.update_fact:
+      updates:
+      - path: set_values.0.val
+        value:  "Brad Thornton @ {{ ts }}"
+      - path: set_values.1.val
+        value: "Basement @ {{ ts }}"
+    vars:
+      ts: "{{ lookup('pipe', 'date -u +\"%Y-%m-%dT%H:%M:%SZ\"') }}"
+    register: updated
+
+
+  - name: Roundtrip get/set (set)
+    ansible.snmp.set:
+      oids: "{{ updated.set_values }}"
+    register: set_result
+  
+  - name: Compare the before and after
+    ansible.utils.fact_diff:
+      before: "{{ set_result.before|ansible.utils.to_paths }}"
+      after: "{{ set_result.after|ansible.utils.to_paths }}"
+
