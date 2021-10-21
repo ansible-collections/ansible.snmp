@@ -102,4 +102,3 @@
     ansible.utils.fact_diff:
       before: "{{ set_result.before|ansible.utils.to_paths }}"
       after: "{{ set_result.after|ansible.utils.to_paths }}"
-

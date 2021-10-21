@@ -1,18 +1,21 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
-# Copyright 2020 Red Hat
+# Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
-"""The set module
-"""
+
+# pylint: disable=missing-module-docstring
 
 from __future__ import absolute_import, division, print_function
 
-__metaclass__ = type  # pylint: disable=invalid-name
-
+# pylint: disable=invalid-name
+__metaclass__ = type
+# pylint: enable=invalid-name
 
 DOCUMENTATION = r"""
 ---
 module: set
+author: Bradley Thornton (@cidrblock)
 short_description: Perform an SNMP set against a remote device for one or more OIDs
 version_added: "1.0.0"
 description:
@@ -43,7 +46,7 @@ options:
         type: str
         choices:
         - OBJECTID
-        - OCTETSTR 
+        - OCTETSTR
         - INTEGER
         - NETADDR
         - IPADDR
@@ -62,16 +65,14 @@ options:
         aliases:
         - val
 
- 
+
 
 notes:
 - The SNMP set task will always return 'changed'
-
-author: Ansible Networking Team
-
 """
 
 EXAMPLES = r"""
+---
 # Update 2 individual entries
 - name: Set several individual OIDs
   ansible.snmp.set:
@@ -124,49 +125,13 @@ EXAMPLES = r"""
 
 """
 
-
 RETURN = """
-before:
-  description: The result of an SNMP get for the OIDs prior to set
-  returned: always
-  type: dict
-  keys:
-    raw:
-      description: The raw result from the snmp walk
-      returned: always
-      type: list
-      elements: dict
-      entries:
-        iid:
-          description: The instance id
-          returned: always
-          type: str
-        tag:
-          description: The OID
-          returned: always
-          type: str
-        type:
-          description: The type of the value
-          returned: always
-          type: str
-        value:
-          description: The currently set value for the oid
-          returned: always
-          type: raw
-    result:
-      description: The transformed result from the snmp walk
-      returned: always
-      type: list
-      elements: dict
-      entries:
-        _raw: 
-          description: The individual oid entry and the currently set value
-          returned: always
+---
 after:
   description: The result of an SNMP get for the OIDs after the set
   returned: always
   type: dict
-  keys:
+  sample:
     raw:
       description: The raw result from the snmp walk
       returned: always
@@ -195,14 +160,51 @@ after:
       type: list
       elements: dict
       entries:
-        _raw: 
+        _raw:
           description: The individual oid entry and the currently set value
           returned: always
+before:
+  description: The result of an SNMP get for the OIDs prior to set
+  returned: always
+  type: dict
+  sample:
+    raw:
+      description: The raw result from the snmp walk
+      returned: always
+      type: list
+      elements: dict
+      entries:
+        iid:
+          description: The instance id
+          returned: always
+          type: str
+        tag:
+          description: The OID
+          returned: always
+          type: str
+        type:
+          description: The type of the value
+          returned: always
+          type: str
+        value:
+          description: The currently set value for the oid
+          returned: always
+          type: raw
+    result:
+      description: The transformed result from the snmp walk
+      returned: always
+      type: list
+      elements: dict
+      entries:
+        _raw:
+          description: The individual oid entry and the currently set value
+          returned: always
+
 elapsed:
   description: The amount of time in seconds spent for the snmp calls
   returned: always
   type: dict
-  entries:
+  sample:
     post_set_get:
       description: The amount of time spent in seconds for the get after the set
       type: float
