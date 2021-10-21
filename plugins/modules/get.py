@@ -1,28 +1,31 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
-# Copyright 2020 Red Hat
+# Copyright 2021 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
-"""The get module
-"""
+
+# pylint: disable=missing-module-docstring
 
 from __future__ import absolute_import, division, print_function
 
-__metaclass__ = type  # pylint: disable=invalid-name
+# pylint: disable=invalid-name
+__metaclass__ = type
+# pylint: enable=invalid-name
 
-
-DOCUMENTATION = r"""
+DOCUMENTATION = """
 ---
 module: get
+author: Bradley Thornton (@cidrblock)
 short_description: Perform an SNMP get against a remote device for one or more OIDs
 version_added: "1.0.0"
 description:
   - Perform an SNMP get against a remote device for one or more OIDs
 options:
   best_guess:
-    description: 
-    - This setting controls how return value oids are parsed. 
-    - Setting to 0 causes a regular lookup.  
-    - Setting to 1 causes a regular expression match (defined as -Ib in snmpcmd). 
+    description:
+    - This setting controls how return value oids are parsed.
+    - Setting to 0 causes a regular lookup.
+    - Setting to 1 causes a regular expression match (defined as -Ib in snmpcmd).
     - Setting to 2 causes a random access lookup (defined as -IR in snmpcmd).
     type: int
     choices:
@@ -63,28 +66,27 @@ options:
     default: False
   sprint_value:
     description:
-      - Set to `True` to have return values formatted with netsnmp's sprint_value function. 
+      - Set to `True` to have return values formatted with netsnmp's sprint_value function.
       - This will result in certain data types being returned in non-canonical format.
-      - Values returned with this option set may not be appropriate for 'set' operations 
+      - Values returned with this option set may not be appropriate for 'set' operations
     type: bool
     default: True
 
 notes:
 
-author: Ansible Networking Team
-
 """
 
 EXAMPLES = r"""
+---
 """
 
-
 RETURN = """
+---
 elapsed:
   description: The amount of time in seconds spent for the snmp calls
   returned: always
   type: dict
-  entries:
+  sample:
     get:
       description: The amount of time spent in seconds for the get
       type: float
@@ -98,7 +100,7 @@ raw:
   returned: always
   type: list
   elements: dict
-  entries:
+  sample:
     iid:
       description: The instance id
       returned: always
@@ -120,8 +122,8 @@ result:
   returned: always
   type: list
   elements: dict
-  entries:
-    _raw: 
+  sample:
+    _raw:
       description: The individual oid entry and the currently set value
       returned: always
 """

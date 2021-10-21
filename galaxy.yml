@@ -9,4 +9,4 @@ readme: README.md
 repository: https://github.com/ansible-collections/ansible.snmp
 issues: https://github.com/ansible-collections/ansible.snmp/issues
 tags: [linux, networking, security, cloud, utilities, data, validation, utils]
-version: null
+version: 0.0.1

@@ -1,10 +1,18 @@
-# (c) 2021 Red Hat Inc.
-# (c) 2021 Ansible Project
-# GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
+# -*- coding: utf-8 -*-
+# Copyright 2021 Red Hat
+# GNU General Public License v3.0+
+# (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 """ The base class for SNMP action plugins
 """
 
+from __future__ import absolute_import, division, print_function
+
+# pylint: disable=invalid-name
+__metaclass__ = type
+# pylint: enable=invalid-name
+
 from typing import Dict
+from typing import Union
 from ansible.plugins.action import ActionBase
 
 # pylint: disable=import-error
@@ -21,6 +29,7 @@ class SnmpActionBase(ActionBase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._result: Dict
+        self._task_vars: Union[Dict, None]
 
     def _check_argspec(self, documentation):
         aav = AnsibleArgSpecValidator(

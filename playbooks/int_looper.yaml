@@ -36,5 +36,3 @@
       loop_var: interface
       index_var: idx
       label: "{{ idx }}"
-
-
