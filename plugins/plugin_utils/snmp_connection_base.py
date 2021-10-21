@@ -6,12 +6,10 @@ from ansible.module_utils.basic import missing_required_lib
 from ansible.errors import AnsibleError
 from ansible.utils.display import Display
 
-try:
-    from .netsnmp_wrapper import (
-        SnmpConfiguration,
-        SnmpInstance,
-    )
+from .netsnmp_defs import SnmpConfiguration
 
+try:
+    from .netsnmp_instance import SnmpInstance
     HAS_NETSNMP = True
 except ImportError:
     HAS_NETSNMP = False

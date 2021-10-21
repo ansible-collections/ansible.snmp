@@ -1,22 +1,22 @@
-# Note:
-#   It is importtant that these class defintions stay in sync with
-#   their respective module and connection docstrings
-#   These classes are introspected for defautl and non-default values
-#   and the attributes are subsequently pulled from the
-#   connection options and task args
-#   The default values here are not used, but serve as an indication
-#   of whether or not the argspec value of None should be used
-#   as ansible provides None for an optional value in the argspec
-#   because the netsnmp Session cannot be updated with a None value
+"""
+Note:
+  It is importtant that these class defintions stay in sync with
+  their respective module and connection docstrings
+  These classes are introspected for defautl and non-default values
+  and the attributes are subsequently pulled from the
+  connection options and task args
+  The default values here are not used, but serve as an indication
+  of whether or not the argspec value of None should be used
+  as ansible provides None for an optional value in the argspec
+  because the netsnmp Session cannot be updated with a None value
+"""
 
-import netsnmp
-import time
 from enum import Enum
 
 from types import SimpleNamespace
-from typing import NamedTuple
 from typing import Dict
 from typing import List
+from typing import NamedTuple
 from typing import Union
 
 
@@ -189,116 +189,3 @@ class SnmpResponse(NamedTuple):
     error: str
     result: Union[List, Dict] = {}
     raw: List = []
-
-
-class SnmpInstance:
-
-    SNMP_INT_TYPES = [
-        "INTEGER32",
-        "INTEGER",
-        "COUNTER32",
-        "GAUGE32",
-        "TIMETICKS",
-        "COUNTER64",
-        "UNSIGNED32",
-        "COUNTER",
-        "GAUGE",
-    ]
-
-    def __init__(
-        self,
-        connection: Union[Snmpv1Connection, Snmpv2cConnection],
-        configuration: SnmpConfiguration,
-    ):
-
-        args = {}
-        for attribute in SnmpConnectionParamMap:
-            if hasattr(connection, attribute.name):
-                args[attribute.value] = getattr(connection, attribute.name)
-        self.session = netsnmp.Session(**args)
-
-        # Special case for a V1 only setter
-        if hasattr(connection, "retry_no_such"):
-            self.session.RetryNoSuch = getattr(connection, "retry_no_such")
-
-        for attribute in SnmpConfigurationParamMap:
-            if hasattr(configuration, attribute.name):
-                setattr(
-                    self.session,
-                    attribute.value,
-                    int(getattr(configuration, attribute.name)),
-                )
-
-        self._oids: List
-
-    def set_oids(self, oid_list) -> None:
-        self._oids = netsnmp.VarList()
-        for oid in oid_list:
-            self._oids.append(netsnmp.Varbind(**oid))
-        return vars
-
-    def _varbinds_to_dicts(self) -> List:
-        results = {}
-
-        for entry in self._oids.varbinds:
-            if entry.iid not in results:
-                results[entry.iid] = {}
-            value = entry.val
-            if entry.type in self.SNMP_INT_TYPES:
-                try:
-                    value = int(value)
-                except ValueError:
-                    pass
-            # This does not handle OCTETSTR correctly
-            # but al leat it will be a string
-            # OCTETSTR is best handled with "use_sprint_value"
-            if isinstance(entry.val, bytes):
-                value = str(value)
-            results[entry.iid][entry.tag] = value
-        return list(results.values())
-
-    def get(self):
-        error = None
-        start = time.time()
-        try:
-            _res = self.session.get(self._oids)
-        except Exception as exc:
-            error = str(exc)
-        end = time.time()
-        if self.session.ErrorStr:
-            error = self.session.ErrorStr
-        return SnmpResponse(
-            error=error,
-            elapsed=end - start,
-            result=self._varbinds_to_dicts(),
-            raw=[vb.__dict__ for vb in self._oids.varbinds],
-        )
-
-    def set(self):
-        error = None
-        start = time.time()
-        try:
-            res = self.session.set(self._oids)
-        except Exception as exc:
-            error = str(exc)
-        end = time.time()
-        if self.session.ErrorStr:
-            error = self.session.ErrorStr
-        return SnmpResponse(error=error, elapsed=end - start)
-
-    def walk(self):
-        error = None
-        start = time.time()
-        try:
-            _res = self.session.walk(self._oids)
-        except Exception as exc:
-            error = str(exc)
-        end = time.time()
-        if self.session.ErrorStr:
-            error = self.session.ErrorStr
-        return SnmpResponse(
-            error=error,
-            elapsed=end - start,
-            result=self._varbinds_to_dicts(),
-            raw=[vb.__dict__ for vb in self._oids.varbinds],
-        )
