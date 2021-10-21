@@ -1,3 +1,10 @@
+# (c) 2021 Red Hat Inc.
+# (c) 2021 Ansible Project
+# GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
+"""The base class for SNMP connections
+"""
+
+from typing import Dict
 from typing import List
 
 from ansible.plugins.connection import ConnectionBase, ensure_connect
@@ -7,6 +14,7 @@ from ansible.errors import AnsibleError
 from ansible.utils.display import Display
 
 from .netsnmp_defs import SnmpConfiguration
+from .netsnmp_defs import SnmpResponse
 
 try:
     from .netsnmp_instance import SnmpInstance
@@ -15,23 +23,27 @@ try:
 except ImportError:
     HAS_NETSNMP = False
 
-display = Display()
-
 
 class SnmpConnectionBase(ConnectionBase):
+    """The base class for SNMP connections"""
+
+    transport = None
+
     def __init__(self, *args, **kwargs):
-        super(SnmpConnectionBase, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self._connection: SnmpConnectionBase
         self._configuration: SnmpConfiguration
+        self._display = Display()
+        self._instance: SnmpInstance
         self._oids: List
         if not HAS_NETSNMP:
-            raise AnsibleError(
-                missing_required_lib(
-                    "python bindings for netsnmp (See the README for the ansible.snmp collection for details.)"
-                )
+            msg = "python bindings for netsnmp "
+            msg += (
+                "(See the README for the ansible.snmp collection for details."
             )
+            raise AnsibleError(missing_required_lib(msg))
 
-    def _connect(self):
+    def _connect(self) -> None:
         """Make the connection
 
         Note: We never set self._connected true because the netsnmp session cannont be reused
@@ -45,11 +57,10 @@ class SnmpConnectionBase(ConnectionBase):
                 value = self.get_option(param)
                 if value is not None:
                     setattr(self._connection, param, value)
-            display.vvv(
-                u"ESTABLISHED SNMP v{version} CONNECTION: {host}".format(
-                    host=self._play_context.remote_addr,
-                    version=self.get_option("version"),
-                )
+            host = self._play_context.remote_addr
+            version = self.get_option("version")
+            self._display.vvv(
+                f"ESTABLISHED SNMP v{version} CONNECTION: {host}"
             )
 
         self._instance = SnmpInstance(
@@ -60,14 +71,11 @@ class SnmpConnectionBase(ConnectionBase):
 
         return self
 
-    def close(self):
+    def close(self) -> None:
         if self._connected:
-            display.vvv(
-                u"CLOSED SNMP v{version} CONNECTION: {host}".format(
-                    host=self._play_context.remote_addr,
-                    version=self.get_option("version"),
-                )
-            )
+            host = self._play_context.remote_addr
+            version = self.get_option("version")
+            self._display.vvv(f"CLOSED SNMP v{version} CONNECTION: {host}")
             self._connected = False
 
     def exec_command(self, cmd, in_data=None, sudoable=True):
@@ -79,7 +87,12 @@ class SnmpConnectionBase(ConnectionBase):
     def put_file(self, in_path, out_path):
         pass
 
-    def configure(self, task_args):
+    def configure(self, task_args: Dict) -> None:
+        """Confgiure the SNMP connection
+
+        :param task_args: The args passed to the task
+        :type task_args: dict
+        """
         self._configuration = SnmpConfiguration()
 
         for param in self._configuration.set:
@@ -105,13 +118,16 @@ class SnmpConnectionBase(ConnectionBase):
             self._oids.append(_entry)
 
     @ensure_connect
-    def get(self):
+    def get(self) -> SnmpResponse:
+        """Perform the SNMP get"""
         return self._instance.get()
 
     @ensure_connect
-    def set(self):
+    def set(self) -> SnmpResponse:
+        """Perform the SNMP set"""
         return self._instance.set()
 
     @ensure_connect
-    def walk(self):
+    def walk(self) -> SnmpResponse:
+        """Perform the SNMP walk"""
         return self._instance.walk()

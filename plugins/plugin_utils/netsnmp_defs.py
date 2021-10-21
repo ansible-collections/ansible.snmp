@@ -1,4 +1,8 @@
-"""
+# (c) 2021 Red Hat Inc.
+# (c) 2021 Ansible Project
+# GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
+"""The SNMP v1 connection
+
 Note:
   It is importtant that these class defintions stay in sync with
   their respective module and connection docstrings
@@ -32,13 +36,13 @@ class IntrospectableSimpleNamespace(SimpleNamespace):
         :return: A dict of attr:type
         :rtype: dict
         """
-        d = {}
+        dyct = {}
         for c in cls.mro():
             try:
-                d.update(**c.__annotations__)
+                dyct.update(**c.__annotations__)
             except AttributeError:
                 pass
-        return d
+        return dyct
 
     @property
     def set(self) -> List[str]:
@@ -47,7 +51,7 @@ class IntrospectableSimpleNamespace(SimpleNamespace):
         :return: A list of attr w/ a value set
         :rtype: List
         """
-        return [k for k in self._describe().keys() if hasattr(self, k)]
+        return [k for k in self._describe() if hasattr(self, k)]
 
     @property
     def not_set(self) -> List[str]:
@@ -56,7 +60,7 @@ class IntrospectableSimpleNamespace(SimpleNamespace):
         :return: A list of attr w/o a value set
         :rtype: List
         """
-        return [k for k in self._describe().keys() if not hasattr(self, k)]
+        return [k for k in self._describe() if not hasattr(self, k)]
 
 
 class SnmpConfiguration(IntrospectableSimpleNamespace):
@@ -129,12 +133,17 @@ class Snmpv3UsmConnection(Snmpv3Connection):
     priv_proto: str = "DES"
 
 
+# Note: If there is a better implementation here
+#       that doesn't violate the UPPER_CASE convention for enum
+#       it wasn't obvious
 class SnmpConfigurationParamMap(Enum):
     """Map the configuration attributes to their netsnmp conterparts
 
     attributes should map to docstring/argspec attributes
     values should coorespond to netsnmp attributes
     """
+
+    # pylint: disable=invalid-name
 
     long_names = "UseLongNames"
     sprint_value = "UseSprintValue"
@@ -149,6 +158,8 @@ class SnmpConnectionParamMap(Enum):
     attributes should map to connection options
     values should coorespond to netsnmp attributes
     """
+
+    # pylint: disable=invalid-name
 
     # base session
     host = "DestHost"
@@ -185,7 +196,9 @@ class SnmpConnectionParamMap(Enum):
 
 
 class SnmpResponse(NamedTuple):
-    elapsed: str
+    """Simple structure for the response from an snmp call"""
+
+    elapsed: Dict
     error: str
     result: Union[List, Dict] = {}
     raw: List = []

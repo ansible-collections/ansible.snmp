@@ -1,11 +1,23 @@
-""" An instance of netsnmp"""
+# (c) 2021 Red Hat Inc.
+# (c) 2021 Ansible Project
+# GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
+"""An instance of netsnmp
+"""
 
-import netsnmp
 import time
-
 
 from typing import List
 from typing import Union
+
+
+# Note: HAS_SNMP is checked in snmp_connection_base
+try:
+    import netsnmp
+
+    HAS_NETSNMP = True
+except ImportError:
+    HAS_NETSNMP = False
+
 
 from .netsnmp_defs import SnmpConfiguration
 from .netsnmp_defs import SnmpConfigurationParamMap
@@ -17,6 +29,7 @@ from .netsnmp_defs import Snmpv3UsmConnection
 
 
 class SnmpInstance:
+    """An instance of netsnmp"""
 
     SNMP_INT_TYPES = [
         "INTEGER32",
@@ -58,13 +71,23 @@ class SnmpInstance:
 
         self._oids: List
 
-    def set_oids(self, oid_list) -> None:
+    def set_oids(self, oid_list: List) -> None:
+        """Transform the list of oid dicts into a VarList
+
+        :param oid_list: The list of oid dicts
+        :type oid_list: list
+        """
         self._oids = netsnmp.VarList()
         for oid in oid_list:
             self._oids.append(netsnmp.Varbind(**oid))
         return vars
 
     def _varbinds_to_dicts(self) -> List:
+        """Convert the varbind into a list of dicts
+        use the iid as the key to group attributes
+
+        In the case of an int type, convert it
+        """
         results = {}
 
         for entry in self._oids.varbinds:
@@ -77,19 +100,20 @@ class SnmpInstance:
                 except ValueError:
                     pass
             # This does not handle OCTETSTR correctly
-            # but al leat it will be a string
+            # but al least it will be a string
             # OCTETSTR is best handled with "use_sprint_value"
             if isinstance(entry.val, bytes):
                 value = str(value)
             results[entry.iid][entry.tag] = value
         return list(results.values())
 
-    def get(self):
+    def get(self) -> SnmpResponse:
+        """Perform the SNMP get"""
         error = None
         start = time.time()
         try:
             _res = self.session.get(self._oids)
-        except Exception as exc:
+        except Exception as exc:  # pylint: disable=broad-except
             error = str(exc)
         end = time.time()
         if self.session.ErrorStr:
@@ -101,24 +125,26 @@ class SnmpInstance:
             raw=[vb.__dict__ for vb in self._oids.varbinds],
         )
 
-    def set(self):
+    def set(self) -> SnmpResponse:
+        """Perform the SNMP set"""
         error = None
         start = time.time()
         try:
-            res = self.session.set(self._oids)
-        except Exception as exc:
+            _res = self.session.set(self._oids)
+        except Exception as exc:  # pylint: disable=broad-except
             error = str(exc)
         end = time.time()
         if self.session.ErrorStr:
             error = self.session.ErrorStr
         return SnmpResponse(error=error, elapsed=end - start)
 
-    def walk(self):
+    def walk(self) -> SnmpResponse:
+        """Perform the SNMP walk"""
         error = None
         start = time.time()
         try:
             _res = self.session.walk(self._oids)
-        except Exception as exc:
+        except Exception as exc:  # pylint: disable=broad-except
             error = str(exc)
         end = time.time()
         if self.session.ErrorStr:
