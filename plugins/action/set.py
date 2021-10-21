@@ -1,23 +1,46 @@
 # (c) 2021 Red Hat Inc.
 # (c) 2021 Ansible Project
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
+""" The set action plugin
+"""
 
-from copy import deepcopy
+from __future__ import absolute_import, division, print_function
 
+__metaclass__ = type #pylint: disable=invalid-name
+
+from typing import Dict
+
+# pylint: disable=import-error
 from ansible_collections.ansible.snmp.plugins.modules.set import (
     DOCUMENTATION,
 )
-
 from ansible_collections.ansible.snmp.plugins.plugin_utils.snmp_action_base import (
     SnmpActionBase,
 )
+# pylint: enable=import-error
 
 
 class ActionModule(SnmpActionBase):
-    """action module"""
+    """ action module
+    """
+
+    # pylint: disable=too-few-public-methods
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._result: Dict
+        self._task_vars: Dict
 
     def run(self, tmp=None, task_vars=None):
-        self._result = super(ActionModule, self).run(tmp, task_vars)
+        """ The std execution entry pt for an action plugin
+
+        :param tmp: no longer used
+        :type tmp: none
+        :param task_vars: The vars provided when the task is run
+        :type task_vars: dict
+        :return: The results from the plugin
+        :rtype: dict
+        """
+        self._result = super().run(tmp, task_vars)
         self._task_vars = task_vars
 
         self._check_argspec(DOCUMENTATION)
@@ -38,15 +61,15 @@ class ActionModule(SnmpActionBase):
             final_error = f"SNMP get (pre-set)failed. The error was: '{pre_set_response.error}'"
             self._result.update({"failed": True, "msg": final_error})
             return self._result
-        else:
-            self._result.update(
-                {
-                    "before": {
-                        "result": pre_set_response.result,
-                        "raw": pre_set_response.raw,
-                    }
+
+        self._result.update(
+            {
+                "before": {
+                    "result": pre_set_response.result,
+                    "raw": pre_set_response.raw,
                 }
-            )
+            }
+        )
         # close the connection, because the netsnmp session cannot be reused
         self._connection.close()
 
@@ -77,15 +100,15 @@ class ActionModule(SnmpActionBase):
             final_error = f"SNMP get (post-set)failed. The error was: '{post_set_response.error}'"
             self._result.update({"failed": True, "msg": final_error})
             return self._result
-        else:
-            self._result.update(
-                {
-                    "after": {
-                        "result": post_set_response.result,
-                        "raw": post_set_response.raw,
-                    }
+
+        self._result.update(
+            {
+                "after": {
+                    "result": post_set_response.result,
+                    "raw": post_set_response.raw,
                 }
-            )
+            }
+        )
 
         if pre_set_response.raw != post_set_response.raw:
             self._result.update({"changed": True})

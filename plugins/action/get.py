@@ -1,22 +1,46 @@
 # (c) 2021 Red Hat Inc.
 # (c) 2021 Ansible Project
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
+""" The get action plugin
+"""
 
+from __future__ import absolute_import, division, print_function
 
+__metaclass__ = type #pylint: disable=invalid-name
+
+from typing import Dict
+
+# pylint: disable=import-error
 from ansible_collections.ansible.snmp.plugins.modules.get import (
     DOCUMENTATION,
 )
-
 from ansible_collections.ansible.snmp.plugins.plugin_utils.snmp_action_base import (
     SnmpActionBase,
 )
+# pylint: enable=import-error
 
 
 class ActionModule(SnmpActionBase):
-    """action module"""
+    """ action module
+    """
+
+    # pylint: disable=too-few-public-methods
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._result: Dict
+        self._task_vars: Dict
 
     def run(self, tmp=None, task_vars=None):
-        self._result = super(ActionModule, self).run(tmp, task_vars)
+        """ The std execution entry pt for an action plugin
+
+        :param tmp: no longer used
+        :type tmp: none
+        :param task_vars: The vars provided when the task is run
+        :type task_vars: dict
+        :return: The results from the plugin
+        :rtype: dict
+        """
+        self._result = super().run(tmp, task_vars)
         self._task_vars = task_vars
 
         self._check_argspec(DOCUMENTATION)

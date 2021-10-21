@@ -10,6 +10,7 @@ from .netsnmp_defs import SnmpConfiguration
 
 try:
     from .netsnmp_instance import SnmpInstance
+
     HAS_NETSNMP = True
 except ImportError:
     HAS_NETSNMP = False
@@ -31,8 +32,8 @@ class SnmpConnectionBase(ConnectionBase):
             )
 
     def _connect(self):
-        """ Make the connection
-        
+        """Make the connection
+
         Note: We never set self._connected true because the netsnmp session cannont be reused
         this forces task executor to create a new connection for every task, or looped task
         """
