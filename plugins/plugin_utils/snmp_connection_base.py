@@ -16,12 +16,8 @@ from ansible.utils.display import Display
 from .netsnmp_defs import SnmpConfiguration
 from .netsnmp_defs import SnmpResponse
 
-try:
-    from .netsnmp_instance import SnmpInstance
-
-    HAS_NETSNMP = True
-except ImportError:
-    HAS_NETSNMP = False
+from .netsnmp_instance import SnmpInstance
+from .netsnmp_instance import HAS_NETSNMP
 
 
 class SnmpConnectionBase(ConnectionBase):
