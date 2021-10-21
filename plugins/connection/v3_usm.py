@@ -194,7 +194,7 @@ options:
 """
 
 
-from ansible_collections.ansible.snmp.plugins.plugin_utils.netsnmp_wrapper import (
+from ansible_collections.ansible.snmp.plugins.plugin_utils.netsnmp_defs import (
     Snmpv3UsmConnection,
 )
 from ansible_collections.ansible.snmp.plugins.plugin_utils.snmp_connection_base import (
