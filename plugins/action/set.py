@@ -1,14 +1,15 @@
 # (c) 2021 Red Hat Inc.
 # (c) 2021 Ansible Project
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
-""" The set action plugin
+"""The set action plugin
 """
 
 from __future__ import absolute_import, division, print_function
 
-__metaclass__ = type #pylint: disable=invalid-name
+__metaclass__ = type  # pylint: disable=invalid-name
 
 from typing import Dict
+from typing import Union
 
 # pylint: disable=import-error
 from ansible_collections.ansible.snmp.plugins.modules.set import (
@@ -17,12 +18,12 @@ from ansible_collections.ansible.snmp.plugins.modules.set import (
 from ansible_collections.ansible.snmp.plugins.plugin_utils.snmp_action_base import (
     SnmpActionBase,
 )
+
 # pylint: enable=import-error
 
 
 class ActionModule(SnmpActionBase):
-    """ action module
-    """
+    """action module"""
 
     # pylint: disable=too-few-public-methods
     def __init__(self, *args, **kwargs):
@@ -30,8 +31,10 @@ class ActionModule(SnmpActionBase):
         self._result: Dict
         self._task_vars: Dict
 
-    def run(self, tmp=None, task_vars=None):
-        """ The std execution entry pt for an action plugin
+    def run(
+        self, tmp: None = None, task_vars: Union[Dict, None] = None
+    ) -> Dict:
+        """The std execution entry pt for an action plugin
 
         :param tmp: no longer used
         :type tmp: none
@@ -40,8 +43,7 @@ class ActionModule(SnmpActionBase):
         :return: The results from the plugin
         :rtype: dict
         """
-        self._result = super().run(tmp, task_vars)
-        self._task_vars = task_vars
+        super().run(tmp, task_vars)
 
         self._check_argspec(DOCUMENTATION)
         if self._result.get("failed"):

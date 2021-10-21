@@ -6,7 +6,7 @@
 
 from __future__ import absolute_import, division, print_function
 
-__metaclass__ = type #pylint: disable=invalid-name
+__metaclass__ = type  # pylint: disable=invalid-name
 
 DOCUMENTATION = """
 author: Ansible Networking Team
@@ -109,14 +109,15 @@ from ansible_collections.ansible.snmp.plugins.plugin_utils.netsnmp_defs import (
 from ansible_collections.ansible.snmp.plugins.plugin_utils.snmp_connection_base import (
     SnmpConnectionBase,
 )
+
 # pylint: enable=wrong-import-position
 # pylint: enable=import-error
 
 
-
 class Connection(SnmpConnectionBase):
     """SNMP v1 based connections"""
-    #pylint: disable=too-few-public-methods
+
+    # pylint: disable=too-few-public-methods
 
     transport = "v1"
     has_pipelining = False
