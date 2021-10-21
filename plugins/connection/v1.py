@@ -1,10 +1,12 @@
 # (c) 2021 Red Hat Inc.
 # (c) 2021 Ansible Project
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
+""" The SNMP v1 connection
+"""
 
 from __future__ import absolute_import, division, print_function
 
-__metaclass__ = type
+__metaclass__ = type #pylint: disable=invalid-name
 
 DOCUMENTATION = """
 author: Ansible Networking Team
@@ -99,23 +101,29 @@ options:
   
 """
 
-
+# pylint: disable=wrong-import-position
+# pylint: disable=import-error
 from ansible_collections.ansible.snmp.plugins.plugin_utils.netsnmp_defs import (
     Snmpv1Connection,
 )
 from ansible_collections.ansible.snmp.plugins.plugin_utils.snmp_connection_base import (
     SnmpConnectionBase,
 )
+# pylint: enable=wrong-import-position
+# pylint: enable=import-error
+
 
 
 class Connection(SnmpConnectionBase):
-    """SNMP v2 based connections"""
+    """SNMP v1 based connections"""
+    #pylint: disable=too-few-public-methods
 
     transport = "v1"
     has_pipelining = False
 
     def __init__(self, *args, **kwargs):
-        super(Connection, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
+        self._connection: Snmpv1Connection
 
     def _connect(self):
         self._connection = Snmpv1Connection()

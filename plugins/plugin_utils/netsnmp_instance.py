@@ -11,9 +11,10 @@ from .netsnmp_defs import SnmpConfiguration
 from .netsnmp_defs import SnmpConfigurationParamMap
 from .netsnmp_defs import SnmpConnectionParamMap
 from .netsnmp_defs import SnmpResponse
-from .netsnmp_defs import Snmpv1Connection 
+from .netsnmp_defs import Snmpv1Connection
 from .netsnmp_defs import Snmpv2cConnection
 from .netsnmp_defs import Snmpv3UsmConnection
+
 
 class SnmpInstance:
 
@@ -31,7 +32,9 @@ class SnmpInstance:
 
     def __init__(
         self,
-        connection: Union[Snmpv1Connection, Snmpv2cConnection, Snmpv3UsmConnection],
+        connection: Union[
+            Snmpv1Connection, Snmpv2cConnection, Snmpv3UsmConnection
+        ],
         configuration: SnmpConfiguration,
     ):
 
