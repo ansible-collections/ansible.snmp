@@ -34,11 +34,11 @@
   become: True
   run_once: True
 
-- name: Run the snmpd daemon
-  ansible.builtin.command: snmpwalk -v 2c -c public 127.0.0.1 .1.3.6.1.2.1
+- name: Restart the snmpd daemon after add user in conf
+  ansible.builtin.service: 
+    name: snmpd
+    state: restarted
   vars:
     ansible_connection: local
   become: True
   run_once: True
-
-
