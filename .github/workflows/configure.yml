@@ -29,21 +29,14 @@ jobs:
       - name: Install netsnmp
         run: sudo apt-get install -y snmpd snmp libsnmp-dev python-netsnmp
       
-      # 
+      # Collection test
       - name: Install navigator
-        run: pip3 install ansible-navigator ansible-core
+        run: pip3 install -r test-requirements.txt
       
       # Install the collection
-      - run: ansible-galaxy collection install .
+      - run: ansible-galaxy collection install . -p /usr/share/ansible/collections/ansible_collections
 
-      # Move to collection path
-      - name: Make collection namespace directory
-        run: mkdir -p /usr/share/ansible/collections/ansible_collections/${{ steps.collection_namespace.outputs.value }}
-      - run: echo $GITHUB_WORKSPACE
-      - name: Link the collection as colleciton name
-        run: ln -s $GITHUB_WORKSPACE /usr/share/ansible/collections/ansible_collections/${{ steps.collection_namespace.outputs.value }}/${{ steps.collection_name.outputs.value }}
       
-      - run: ls /usr/share/ansible/collections/ansible_collections/
       - name: Run
         run: ansible-navigator run playbooks/site.yaml --ee false --mode stdout
       
