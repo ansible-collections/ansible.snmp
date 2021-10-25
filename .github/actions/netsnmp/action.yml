@@ -2,10 +2,13 @@ name: netsnmp build
 description: Build netsnmp
 
 inputs:
-  version:
+  netsnmp-version:
     description: the netsnmp version
     required: true
-    default: 5.9.1
+
+  python-version:
+    description: the python version
+    required: true
 
 runs:
 
@@ -13,11 +16,11 @@ runs:
   steps:
   
     - name: Download the netsnmp source
-      run: wget http://sourceforge.net/projects/net-snmp/files/net-snmp/${{ inputs.version }}/net-snmp-${{ inputs.version }}.tar.gz
+      run: wget http://sourceforge.net/projects/net-snmp/files/net-snmp/${{ inputs.netsnmp-version }}/net-snmp-${{ inputs.netsnmp-version }}.tar.gz
       shell: bash
 
     - name: Extract the contents
-      run: tar -xvf net-snmp-${{ inputs.version }}.tar.gz
+      run: tar -xvf net-snmp-${{ inputs.netsnmp-version }}.tar.gz
       shell: bash
 
     - name: Install dependancies
@@ -27,37 +30,37 @@ runs:
     - name: Configure the source
       run: ./configure --with-python-modules --libdir=/usr/lib64 --enable-shared
       shell: bash
-      working-directory: net-snmp-${{ inputs.version }}
+      working-directory: net-snmp-${{ inputs.netsnmp-version }}
 
     - name: Make snmp
       run: make
       shell: bash
-      working-directory: net-snmp-${{ inputs.version }}
+      working-directory: net-snmp-${{ inputs.netsnmp-version }}
 
     - name: Install netsnmp
       run: sudo make install
       shell: bash
-      working-directory: net-snmp-${{ inputs.version }}
+      working-directory: net-snmp-${{ inputs.netsnmp-version }}
 
     - name: Confrim version 
       run: snmpget --version
       shell: bash
 
     - name: Build the python bindings
-      run: python3 setup.py build
+      run: python${{ inputs.python-version }} setup.py build
       shell: bash
-      working-directory: net-snmp-${{ inputs.version }}/python
+      working-directory: net-snmp-${{ inputs.netsnmp-version }}/python
 
     - name: Ensure setuptools is installed for sudo
-      run: sudo pip3.8 install setuptools
+      run: sudo python${{ inputs.python-version }} -m pip install setuptools
       shell: bash
 
     - name: Install the python bindings
-      run: sudo python3.8 setup.py install
+      run: sudo python${{ inputs.python-version }} setup.py install
       shell: bash
-      working-directory: net-snmp-${{ inputs.version }}/python
+      working-directory: net-snmp-${{ inputs.netsnmp-version }}/python
     
     - name: Confim python binding available
-      run: python3 -c 'import netsnmp'
+      run: python${{ inputs.python-version }} -c 'import netsnmp'
       shell: bash
 
