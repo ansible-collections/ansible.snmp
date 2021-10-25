@@ -27,7 +27,7 @@
   run_once: True
 
 - name: Run the snmpd daemon
-  ansible.builtin.command: systemctl status snmpd
+  ansible.builtin.command: snmpwalk -v 2c -c public localhost .1.3.6.1.2.1
   vars:
     ansible_connection: local
   become: True
