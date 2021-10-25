@@ -41,7 +41,7 @@ runs:
       working-directory: net-snmp-${{ inputs.version }}/python
 
     - name: Ensure setuptools is installed for sudo
-      run: pip3 install setuptools
+      run: sudo pip3 install setuptools
       shell: bash
 
     - run: sudo python3 setup.py install
