@@ -6,10 +6,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      
-      - name: Uninstall ansible from the runner
-        run: sudo apt remove ansible
-
+   
       - uses: actions/setup-python@v2
         with:
           python-version: 3.8
@@ -29,11 +26,15 @@ jobs:
       - run: echo ::notice title=Collection namespace::${{ steps.collection_namespace.outputs.value }}
       - run: echo ::notice title=Collection name::${{ steps.collection_name.outputs.value }}
 
-      - run: sudo apt-get remove ansible
-      - run: which ansible-playbook
       # Collection system dependancies
       - name: Install netsnmp
         run: sudo apt-get install -y snmpd snmp libsnmp-dev python-netsnmp
+
+      - name: venv
+        run: python -m venv venv --system-site-packages
+      
+      - run: source venv/bin/activate
+
       
       # Collection test
       - name: Install navigator
