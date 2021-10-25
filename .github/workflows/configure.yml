@@ -25,7 +25,7 @@ jobs:
       - run: echo ::notice title=Collection namespace::${{ steps.collection_namespace.outputs.value }}
       - run: echo ::notice title=Collection name::${{ steps.collection_name.outputs.value }}
 
-
+      - run: sudo apt-get remove ansible
       - run: which ansible-playbook
       # Collection system dependancies
       - name: Install netsnmp
