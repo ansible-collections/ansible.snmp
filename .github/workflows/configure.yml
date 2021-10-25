@@ -26,21 +26,28 @@ jobs:
         id: prepare_collection
         uses: ./.github/actions/ansible_collection
 
-      # Collection test
       - name: Install navigator
         run: pip3 install -r test-requirements.txt
       
-      - name: Run
+      - name: Run integration tests
         run: ansible-navigator 
         env:
           ANSIBLE_VERBOSITY: 4
           ANSIBLE_NAVIGATOR_APP: run
           ANSIBLE_NAVIGATOR_MODE: stdout
+          ANSIBLE_NAVIGATOR_LOG_FILE: gh-action-logs/navigator-integration-log.json
+          ANSIBLE_NAVIGATOR_LOG_LEVEL: debug
           ANSIBLE_NAVIGATOR_PLAYBOOK: tests/integration/integration_runner.yaml
+          ANSIBLE_NAVIGATOR_PLAYBOOK_ARTIFACT_SAVE_AS: gh-action-logs/navigator-integration-artifact.json
           ANSIBLE_NAVIGATOR_INVENTORIES: tests/integration/integration_inventory.yaml
           ANSIBLE_NAVIGATOR_EXECUTION_ENVIRONMENT: False
           COLLECTION_NAMESPACE:  ${{ steps.prepare_collection.outputs.collection_namespace }}
           COLLECTION_NAME: ${{ steps.prepare_collection.outputs.collection_name }}
           INTEGRATION_TESTS_PATTERN: "snmp_*"
 
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: navigator-artifacts
+          path: gh-action-logs/**
           

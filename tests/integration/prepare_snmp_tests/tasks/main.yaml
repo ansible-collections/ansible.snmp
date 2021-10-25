@@ -13,3 +13,12 @@
     ansible_connection: local
   become: True
   run_once: True
+
+- name: Run the snmpd daemon
+  ansible.builtin.command: ps -ef | grep snmpd
+  vars:
+    ansible_connection: local
+  become: True
+  run_once: True
+
+
