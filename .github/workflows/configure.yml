@@ -14,14 +14,17 @@ jobs:
       - name: Extract collection namespace
         id: collection_namespace
         run: |
-          echo "::set-output name=value::$(cat galaxy.yml | yq .name)"
+          echo "::set-output name=value::$(cat galaxy.yml | yq .namespace)"
       - name: Extract collection name
         id: collection_name
         run: |
-          echo "::set-output name=value::$(cat galaxy.yml | yq .namespace)"
+          echo "::set-output name=value::$(cat galaxy.yml | yq .name)"
       
-      - run: echo "Collection namespace set to '${{ steps.collection_namespace.outputs.value }}'"
-      - run: echo "Collection name set to '${{ steps.collection_name.outputs.value }}'"
+      - run: echo ::notice title={Collection namespace)::{{ steps.collection_namespace.outputs.value }}
+      - run: echo ::notice title={Collection name)::{{ steps.collection_name.outputs.value }}
+
+
+      # - run: echo "Collection name set to '${{ steps.collection_name.outputs.value }}'"
 
       # Collection dependancies
       - name: Install netsnmp
@@ -32,6 +35,7 @@ jobs:
       # Move to collection path
       - name: Make collection directory
         run: mkdir -p /usr/share/ansible/collections/ansible_collections/${{ steps.collection_namespace.outputs.value }}/${{ steps.collection_name.outputs.value }}
+      - run: echo $GITHUB_WORKSPACE
       - name: Link
         run: ln -s $GITHUB_WORKSPACE /usr/share/ansible/collections/ansible_collections/${{ steps.collection_namespace.outputs.value }}/${{ steps.collection_name.outputs.value }}
       - name: Run
