@@ -14,7 +14,7 @@ jobs:
       - name: Extract collection namespace
         id: collection_namespace
         run: |
-          echo "::set-output name=value::$(python -c 'import yaml, sys; obj=yaml.safe_load(sys.stdin); print(obj[\'name\'])' < galaxy.yml)"
+          echo "::set-output name=value::$(python -c 'import yaml, sys; obj=yaml.safe_load(sys.stdin); print(obj[\\'name\\'])' < galaxy.yml)"
       - name: Extract collection name
         id: collection_name
         run: |
