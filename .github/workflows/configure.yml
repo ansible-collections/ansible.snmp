@@ -33,10 +33,10 @@ jobs:
         run: pip3 install ansible-navigator ansible-core
       
       # Move to collection path
-      - name: Make collection directory
-        run: mkdir -p /usr/share/ansible/collections/ansible_collections/${{ steps.collection_namespace.outputs.value }}/${{ steps.collection_name.outputs.value }}
+      - name: Make collection namespace directory
+        run: mkdir -p /usr/share/ansible/collections/ansible_collections/${{ steps.collection_namespace.outputs.value }}
       - run: echo $GITHUB_WORKSPACE
-      - name: Link
+      - name: Link the collection as colleciton name
         run: ln -s $GITHUB_WORKSPACE /usr/share/ansible/collections/ansible_collections/${{ steps.collection_namespace.outputs.value }}/${{ steps.collection_name.outputs.value }}
       
       - run: ls /usr/share/ansible/collections/ansible_collections/${{ steps.collection_namespace.outputs.value }}/${{ steps.collection_name.outputs.value }}
