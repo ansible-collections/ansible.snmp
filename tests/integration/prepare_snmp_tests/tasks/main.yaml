@@ -1,7 +1,7 @@
 - name: Copy snmp configuration file
   ansible.builtin.copy:
     src: snmpd.conf
-    dest: /etc/snmp/snmpd.conf
+    dest: /usr/local/etc/snmp/snmpd.conf
   vars:
     ansible_connection: local
   become: True
