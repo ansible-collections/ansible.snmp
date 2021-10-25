@@ -4,3 +4,4 @@ flake8
 pytest-xdist
 yamllint
 ansible-navigator
+ansible-core
