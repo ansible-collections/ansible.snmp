@@ -41,5 +41,6 @@ jobs:
       
       - name: Run
         run: ansible-navigator run tests/integration/run.yml --ee false --mode stdout -e collection_namespace=${{ steps.collection_namespace.outputs.value }} -e collection_name=${{ steps.collection_name.outputs.value }}
-      
+        env:
+          ANSIBLE_VERBOSITY: 4
           
