@@ -6,7 +6,7 @@
     collection_namespace: "{{ collection_namespace }}"
     collection_name: "{{ collection_name }}"
     integration_tests_path: "{{ collection_path }}/{{ collection_namespace }}/{{ collection_name }}/tests/integration/targets"
-    integration_tests_pattern: "{{ collection_name }}_*"
+    integration_tests_pattern: "{{ integration_tests_pattern|default('*') }}"
     integration_target_failures: []
   tasks:
     - set_fact:
