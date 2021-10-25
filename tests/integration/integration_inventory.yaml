@@ -1,0 +1,38 @@
+all:
+  hosts:
+    localhost-v1:
+      ansible_host: localhost
+      ansible_connection: ansible.snmp.v1
+      ansible_snmp_community: public
+    
+
+  vars:
+    ansible_snmp_timeout: 5000000
+
+  #   # v1
+  #   # ansible_connection: ansible.snmp.v1
+  #   # ansible_snmp_community: public
+  #   # ansible_snmp_retry_no_such: 1
+
+  #   # other
+  #   ansible_python_interpreter: python
+
+  # children:
+  #   nxos:
+  #     hosts:
+  #       localhost-v1:
+
+  #     vars:
+  #       # v3
+  #       ansible_connection: ansible.snmp.v3_usm
+  #       ansible_snmp_sec_name: bthornto
+  #       ansible_snmp_auth_pass: password
+  #       ansible_snmp_priv_pass: password
+  #       ansible_snmp_sec_level: authPriv
+  #   vyos:
+  #     hosts:
+  #       vyos101:
+  #     vars:
+  #       # v2
+  #       ansible_connection: ansible.snmp.v2c
+  #       ansible_snmp_community: private
