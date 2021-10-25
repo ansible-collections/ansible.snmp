@@ -12,42 +12,52 @@ runs:
   using: "composite"
   steps:
   
-    - run: wget http://sourceforge.net/projects/net-snmp/files/net-snmp/${{ inputs.version }}/net-snmp-${{ inputs.version }}.tar.gz
+    - name: Download the netsnmp source
+      run: wget http://sourceforge.net/projects/net-snmp/files/net-snmp/${{ inputs.version }}/net-snmp-${{ inputs.version }}.tar.gz
       shell: bash
 
-    - run: tar -xvf net-snmp-${{ inputs.version }}.tar.gz
+    - name: Extract the contents
+      run: tar -xvf net-snmp-${{ inputs.version }}.tar.gz
       shell: bash
 
-    - run: sudo apt-get install libperl-dev
+    - name: Install dependancies
+      run: sudo apt-get install libperl-dev
       shell: bash
 
-    - run: ./configure --with-python-modules --libdir=/usr/lib64 --enable-shared
-      shell: bash
-      working-directory: net-snmp-${{ inputs.version }}
-
-    - run: make
-      shell: bash
-      working-directory: net-snmp-${{ inputs.version }}
-
-    - run: sudo make install
+    - name: Configure the source
+      run: ./configure --with-python-modules --libdir=/usr/lib64 --enable-shared
       shell: bash
       working-directory: net-snmp-${{ inputs.version }}
 
-    - run: snmpget --version
+    - name: Make snmp
+      run: make
+      shell: bash
+      working-directory: net-snmp-${{ inputs.version }}
+
+    - name: Install netsnmp
+      run: sudo make install
+      shell: bash
+      working-directory: net-snmp-${{ inputs.version }}
+
+    - name: Confrim version 
+      run: snmpget --version
       shell: bash
 
-    - run: python3 setup.py build
+    - name: Build the python bindings
+      run: python3 setup.py build
       shell: bash
       working-directory: net-snmp-${{ inputs.version }}/python
 
     - name: Ensure setuptools is installed for sudo
-      run: sudo pip3 install setuptools
+      run: sudo pip3.8 install setuptools
       shell: bash
 
-    - run: sudo python3 setup.py install
+    - name: Install the python bindings
+      run: sudo python3.8 setup.py install
       shell: bash
       working-directory: net-snmp-${{ inputs.version }}/python
     
-    - run: python3 -c 'import netsnmp'
+    - name: Confim python binding available
+      run: python3 -c 'import netsnmp'
       shell: bash
 
