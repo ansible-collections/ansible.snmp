@@ -12,7 +12,7 @@ After=syslog.target network.target
 [Service]
 # Type=notify is also supported. It should be set when snmpd.socket is not used.
 Type=simple
-ExecStart=/usr/sbin/snmpd -f
+ExecStart=/usr/local/sbin/snmpd -f
 
 [Install]
 WantedBy=multi-user.target
