@@ -20,8 +20,8 @@ jobs:
         run: |
           echo "::set-output name=value::$(cat galaxy.yml | yq .name)"
       
-      - run: echo ::notice title={Collection namespace)::{{ steps.collection_namespace.outputs.value }}
-      - run: echo ::notice title={Collection name)::{{ steps.collection_name.outputs.value }}
+      - run: echo ::notice title=Collection namespace::{{ steps.collection_namespace.outputs.value }}
+      - run: echo ::notice title=Collection name::{{ steps.collection_name.outputs.value }}
 
 
       # - run: echo "Collection name set to '${{ steps.collection_name.outputs.value }}'"
