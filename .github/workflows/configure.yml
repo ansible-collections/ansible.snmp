@@ -46,8 +46,8 @@ jobs:
           INTEGRATION_TESTS_PATTERN: "snmp_*"
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: navigator-artifacts
-          path: gh-action-logs/**
+          path: gh-action-logs/
           
