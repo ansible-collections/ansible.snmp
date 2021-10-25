@@ -1,4 +1,4 @@
-name: Install deps
+name: Collection integration tests
 on: [push]
 jobs:
   deps:
@@ -12,7 +12,7 @@ jobs:
 
       - name: Github action python requirements
         run: pip3 install yq
-        
+
       - name: Extract collection namespace
         id: collection_namespace
         run: |
@@ -33,7 +33,7 @@ jobs:
       
       # Collection test
       - name: Install navigator
-        run: pip3 install -r test-requirements.
+        run: pip3 install -r test-requirements.txt
       
       # Install the collection
       - run: ansible-galaxy collection install . -p /usr/share/ansible/collections/ansible_collections
