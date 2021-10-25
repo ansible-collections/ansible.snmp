@@ -3,10 +3,10 @@
   gather_facts: no
   vars:
     collection_path: /usr/share/ansible/collections/ansible_collections
-    collection_namespace: "{{ collection_namespace }}"
-    collection_name: "{{ collection_name }}"
+    collection_namespace: "{{ lookup('env', 'COLLECTION_NAMESPACE') }}"
+    collection_name: "{{ lookup('env', 'COLLECTION_NAME') }}"
     integration_tests_path: "{{ collection_path }}/{{ collection_namespace }}/{{ collection_name }}/tests/integration/targets"
-    integration_tests_pattern: "*"
+    integration_tests_pattern: "{{ lookup('env', 'INTEGRATION_TESTS_PATTERN') }}"
     integration_target_failures: []
   tasks:
     - set_fact:

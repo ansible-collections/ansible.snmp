@@ -50,5 +50,6 @@ jobs:
           ANSIBLE_NAVIGATOR_EXECUTION_ENVIRONMENT: False
           COLLECTION_NAMESPACE:  ${{ steps.collection_namespace.outputs.value }}
           COLLECTION_NAME: ${{ steps.collection_name.outputs.value }}
+          INTEGRATION_TESTS_PATTERN: "*"
 
           
