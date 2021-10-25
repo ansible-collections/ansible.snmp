@@ -16,11 +16,11 @@ jobs:
       - name: Extract collection namespace
         id: collection_namespace
         run: |
-          echo '::set-output name=value::$(cat galaxy.yml | yq .namespace)'
+          echo "::set-output name=value::$(cat galaxy.yml | yq .namespace)"
       - name: Extract collection name
         id: collection_name
         run: |
-          echo '::set-output name=value::$(cat galaxy.yml | yq .name)'
+          echo "::set-output name=value::$(cat galaxy.yml | yq .name)"
       
       - run: echo ::notice title=Collection namespace::${{ steps.collection_namespace.outputs.value }}
       - run: echo ::notice title=Collection name::${{ steps.collection_name.outputs.value }}
