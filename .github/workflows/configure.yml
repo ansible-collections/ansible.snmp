@@ -40,10 +40,7 @@ jobs:
 
       
       - name: Run
-        run: |
-          ansible-navigator \
-          -e collection_namespace=${{ steps.collection_namespace.outputs.value }} \
-          -e collection_name=${{ steps.collection_name.outputs.value }}
+        run: ansible-navigator 
         env:
           ANSIBLE_VERBOSITY: 4
           ANSIBLE_NAVIGATOR_APP: run
@@ -51,5 +48,7 @@ jobs:
           ANSIBLE_NAVIGATOR_PLAYBOOK: tests/integration/integration_runner.yaml
           ANSIBLE_NAVIGATOR_INVENTORIES: tests/integration/integration_inventory.yaml
           ANSIBLE_NAVIGATOR_EXECUTION_ENVIRONMENT: False
+          COLLECTION_NAMESPACE:  ${{ steps.collection_namespace.outputs.value }}
+          COLLECTION_NAME: ${{ steps.collection_name.outputs.value }}
 
           
