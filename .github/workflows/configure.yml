@@ -45,6 +45,10 @@ jobs:
           COLLECTION_NAME: ${{ steps.prepare_collection.outputs.collection_name }}
           INTEGRATION_TESTS_PATTERN: "snmp_*"
 
+      - run: mkdir -p gh-action-logs
+
+      - run: echo hello > gh-action-logs/world.txt
+
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
