@@ -1,5 +1,6 @@
 name: netsnmp build
 description: Build netsnmp
+
 inputs:
   version:
     description: the netsnmp version
@@ -10,13 +11,7 @@ runs:
 
   using: "composite"
   steps:
-    # - run: echo Hello ${{ inputs.who-to-greet }}.
-    #   shell: bash
-    # - id: random-number-generator
-    #   run: echo "::set-output name=random-id::$(echo $RANDOM)"
-    #   shell: bash
-    # - run: ${{ github.action_path }}/goodbye.sh
-    #   shell: bash
+  
     - run: wget http://sourceforge.net/projects/net-snmp/files/net-snmp/${{ inputs.version }}/net-snmp-${{ inputs.version }}.tar.gz
       shell: bash
 
@@ -41,7 +36,7 @@ runs:
     - run: snmpget --version
       shell: bash
 
-    - run: pip3 install setuptools
+    - run: sudo pip3 install setuptools
       shell: bash
 
     - run: python3 setup.py build
