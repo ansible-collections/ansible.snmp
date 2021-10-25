@@ -14,7 +14,6 @@ jobs:
       - name: Install navigator
         run: pip3 install ansible-navigator ansible-core
       - name: Run
-        run: ansible-navigator run $PB_PATH/site.yaml --ee false --mode stdout
-        env:
-          pb_path: ${{ github.workspace }}/playbooks
+        run: ansible-navigator run playbooks/site.yaml --ee false --mode stdout
+      
           
