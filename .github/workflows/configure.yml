@@ -26,9 +26,9 @@ jobs:
       
       # Move to collection path
       - name: Make collection directory
-        run: mkdir -P /usr/share/ansible/collections/ansible_collections/$COLLECTION_NAMESPACE/$COLLECTION_NAME
+        run: mkdir -p /usr/share/ansible/collections/ansible_collections/$COLLECTION_NAMESPACE/$COLLECTION_NAME
       - name: Link
-        run: ln -s ansible.snmp /usr/share/ansible/collections/ansible_collections/$COLLECTION_NAMESPACE/$COLLECTION_NAME
+        run: ln -s $GITHUB_WORKSPACE /usr/share/ansible/collections/ansible_collections/$COLLECTION_NAMESPACE/$COLLECTION_NAME
       - name: Run
         run: ansible-navigator run playbooks/site.yaml --ee false --mode stdout
       
