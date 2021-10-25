@@ -1,0 +1,19 @@
+all:
+  hosts:
+    localhost-v1:
+      ansible_host: localhost
+      ansible_connection: ansible.snmp.v2c
+      ansible_snmp_community: private
+    localhost-v2c:
+      ansible_host: localhost
+      ansible_connection: ansible.snmp.v2c
+      ansible_snmp_community: private
+    # localhost-v3usm:
+    #   ansible_host: localhost
+    #   ansible_connection: ansible.snmp.v3_usm
+    #   ansible_snmp_sec_name: test
+    #   ansible_snmp_auth_pass: password
+    #   ansible_snmp_priv_pass: password
+    #   ansible_snmp_sec_level: authPriv
+  vars:
+    ansible_snmp_timeout: 5000000
