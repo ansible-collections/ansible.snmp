@@ -8,7 +8,7 @@ jobs:
         uses: actions/checkout@v2
       
       - name: Uninstall ansible from the runner
-        run: sudo pipx uninstall ansible-base
+        run: sudo apt remove ansible
 
       - uses: actions/setup-python@v2
         with:
