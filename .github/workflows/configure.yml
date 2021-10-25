@@ -36,24 +36,12 @@ jobs:
       - run: sudo make install
         working-directory: net-snmp-5.9.1
       - run: snmpget --version
-      - run: python setup.py build
+      - run: python3 setup.py build
         working-directory: net-snmp-5.9.1/python
-      - run: sudo python setup.py install
+      - run: sudo python3 setup.py install
         working-directory: net-snmp-5.9.1/python
 
 
-
-
-
-
-      # # Collection system dependancies
-      # - name: Install netsnmp
-      #   run: sudo apt-get install -y snmpd snmp libsnmp-dev python-netsnmp
-
-      # - name: venv
-      #   run: python -m venv venv --system-site-packages
-      
-      # - run: source venv/bin/activate
 
       
       # Collection test
