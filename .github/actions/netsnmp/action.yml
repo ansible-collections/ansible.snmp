@@ -42,6 +42,7 @@ runs:
       shell: bash
 
     - run: pip3 install setuptools
+      shell: bash
 
     - run: python3 setup.py build
       shell: bash
