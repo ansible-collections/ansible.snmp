@@ -8,7 +8,7 @@
   run_once: True
 
 - name: Copy the snmpd service file
-  ansible.builtin.cop:
+  ansible.builtin.copy:
     src: snmpd.service
     dest: /etc/systemd/system/snmpd.service
   vars:
