@@ -15,7 +15,7 @@
   run_once: True
 
 - name: Run the snmpd daemon
-  ansible.builtin.command: ps -aux
+  ansible.builtin.command: sudo netstat -tunlp
   vars:
     ansible_connection: local
   become: True
