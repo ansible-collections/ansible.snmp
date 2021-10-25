@@ -38,6 +38,8 @@ jobs:
       - run: echo $GITHUB_WORKSPACE
       - name: Link
         run: ln -s $GITHUB_WORKSPACE /usr/share/ansible/collections/ansible_collections/${{ steps.collection_namespace.outputs.value }}/${{ steps.collection_name.outputs.value }}
+      
+      - run: ls /usr/share/ansible/collections/ansible_collections/${{ steps.collection_namespace.outputs.value }}/${{ steps.collection_name.outputs.value }}
       - name: Run
         run: ansible-navigator run playbooks/site.yaml --ee false --mode stdout
       
