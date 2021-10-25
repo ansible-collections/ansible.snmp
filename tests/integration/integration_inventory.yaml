@@ -2,7 +2,7 @@ all:
   hosts:
     localhost-v1:
       ansible_host: localhost
-      ansible_connection: ansible.snmp.v1
+      ansible_connection: ansible.snmp.v2c
       ansible_snmp_community: private
     localhost-v2c:
       ansible_host: localhost
