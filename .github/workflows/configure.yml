@@ -12,14 +12,16 @@ jobs:
       - name: Collection basics
         run: pip3 install pyyaml
       - name: Extract collection namespace
+        id: collection_namespace
         run: |
-          echo "::set-output name=collection_namespace::$(python -c 'import yaml, sys; obj=yaml.safe_load(sys.stdin); print(obj[\"namespace\"])' < galaxy.yml)"
+          echo "::set-output name=value::$(python -c 'import yaml, sys; obj=yaml.safe_load(sys.stdin); print(obj[\"namespace\"])' < galaxy.yml)"
       - name: Extract collection name
+        id: collection_name
         run: |
-          echo "::set-output name=collection_name::$(python -c 'import yaml, sys; obj=yaml.safe_load(sys.stdin); print(obj[\"name\"])' < galaxy.yml)"
+          echo "::set-output name=value::$(python -c 'import yaml, sys; obj=yaml.safe_load(sys.stdin); print(obj[\"name\"])' < galaxy.yml)"
       
-      - run: echo $COLLECTION_NAME
-      - run: echo $COLLECTION_NAMESPACE
+      - run: echo "${{ steps.collection_namespace.outputs.value }}"
+      - run: echo "${{ steps.collection_name.outputs.value }}"
       # Collection dependancies
       - name: Install netsnmp
         run: sudo apt-get install -y snmpd snmp libsnmp-dev python-netsnmp
