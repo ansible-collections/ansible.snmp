@@ -11,52 +11,18 @@ jobs:
         with:
           python-version: 3.8
       
-      - name: download and build netsnmp
+      - name: Download and build netsnmp
         uses: ./.github/actions/netsnmp
-
-
-      - name: Github action python requirements
-        run: pip3 install yq
-
-      - name: Extract collection namespace
-        id: collection_namespace
-        run: |
-          echo "::set-output name=value::$(cat galaxy.yml | yq -r .namespace)"
-      - name: Extract collection name
-        id: collection_name
-        run: |
-          echo "::set-output name=value::$(cat galaxy.yml | yq -r .name)"
       
-      - run: echo ::notice title=Collection namespace::${{ steps.collection_namespace.outputs.value }}
-      - run: echo ::notice title=Collection name::${{ steps.collection_name.outputs.value }}
+      - name: Prepare the collection
+        id: prepare_collection
+        uses: ./.github/actions/ansible_collection
 
-      # - run: wget http://sourceforge.net/projects/net-snmp/files/net-snmp/5.9.1/net-snmp-5.9.1.tar.gz
-      # - run: tar -xvf net-snmp-5.9.1.tar.gz
-      # - run: sudo apt-get install libperl-dev
-      # - run: ./configure --with-python-modules --libdir=/usr/lib64 --enable-shared
-      #   working-directory: net-snmp-5.9.1
-      # - run: make
-      #   working-directory: net-snmp-5.9.1
-      # - run: sudo make install
-      #   working-directory: net-snmp-5.9.1
-      # - run: snmpget --version
-      # - run: pip3 install setuptools
-      # - run: python3 setup.py build
-      #   working-directory: net-snmp-5.9.1/python
-      # - run: sudo python3 setup.py install
-      #   working-directory: net-snmp-5.9.1/python
-
-
-
-      
       # Collection test
       - name: Install navigator
         run: pip3 install -r test-requirements.txt
       
-      # Install the collection
-      - run: ansible-galaxy collection install . -p /usr/share/ansible/collections/ansible_collections
 
-      
       - name: Run
         run: ansible-navigator 
         env:
@@ -66,8 +32,8 @@ jobs:
           ANSIBLE_NAVIGATOR_PLAYBOOK: tests/integration/integration_runner.yaml
           ANSIBLE_NAVIGATOR_INVENTORIES: tests/integration/integration_inventory.yaml
           ANSIBLE_NAVIGATOR_EXECUTION_ENVIRONMENT: False
-          COLLECTION_NAMESPACE:  ${{ steps.collection_namespace.outputs.value }}
-          COLLECTION_NAME: ${{ steps.collection_name.outputs.value }}
+          COLLECTION_NAMESPACE:  ${{ steps.prepare_collection.outputs.collection_namespace }}
+          COLLECTION_NAME: ${{ steps.prepare_collection.outputs.collection_name }}
           INTEGRATION_TESTS_PATTERN: "*"
 
           
