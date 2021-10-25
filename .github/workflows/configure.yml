@@ -1,0 +1,11 @@
+name: learn-github-actions
+on: [push]
+jobs:
+  check-bats-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install netsnmp
+        run: sudo apt-get install -y snmpd snmp libsnmp-dev python-netsnmp snmp-mibs-download
+          
