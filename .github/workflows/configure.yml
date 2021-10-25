@@ -29,7 +29,7 @@ jobs:
       - run: wget http://sourceforge.net/projects/net-snmp/files/net-snmp/5.9.1/net-snmp-5.9.1.tar.gz
       - run: tar -xvf net-snmp-5.9.1.tar.gz
       - run: sudo apt-get install libperl-dev
-      - run: ./configure --with-python-modules
+      - run: ./configure --with-python-modules --libdir=/usr/lib64 --enable-shared
         working-directory: net-snmp-5.9.1
       - run: make
         working-directory: net-snmp-5.9.1
