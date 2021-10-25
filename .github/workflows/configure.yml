@@ -20,8 +20,9 @@ jobs:
         run: |
           echo "::set-output name=value::$(cat galaxy.yml | yq .namespace)"
       
-      - run: echo "${{ steps.collection_namespace.outputs.value }}"
-      - run: echo "${{ steps.collection_name.outputs.value }}"
+      - run: echo "Collection namespace set to: ${{ steps.collection_namespace.outputs.value }}"
+      - run: echo "Collection name set to: ${{ steps.collection_name.outputs.value }}"
+
       # Collection dependancies
       - name: Install netsnmp
         run: sudo apt-get install -y snmpd snmp libsnmp-dev python-netsnmp
@@ -30,9 +31,9 @@ jobs:
       
       # Move to collection path
       - name: Make collection directory
-        run: mkdir -p /usr/share/ansible/collections/ansible_collections/$COLLECTION_NAMESPACE/$COLLECTION_NAME
+        run: mkdir -p /usr/share/ansible/collections/ansible_collections/${{ steps.collection_namespace.outputs.value }}/${{ steps.collection_name.outputs.value }}
       - name: Link
-        run: ln -s $GITHUB_WORKSPACE /usr/share/ansible/collections/ansible_collections/$COLLECTION_NAMESPACE/$COLLECTION_NAME
+        run: ln -s $GITHUB_WORKSPACE /usr/share/ansible/collections/ansible_collections/${{ steps.collection_namespace.outputs.value }}/${{ steps.collection_name.outputs.value }}
       - name: Run
         run: ansible-navigator run playbooks/site.yaml --ee false --mode stdout
       
