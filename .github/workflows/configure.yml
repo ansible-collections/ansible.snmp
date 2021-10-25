@@ -6,19 +6,29 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        with:
-          path: ansible.snmp
       - uses: actions/setup-python@v2
         with:
           python-version: 3.8
+      - name: Collection basics
+        run: pip3 install -y pyyaml
+      - name: Extract collection namespace
+        run: |
+          echo "::set-output name=collection_namespace::$(python -c 'import yaml, sys; obj=yaml.safe_load(sys.stdin); print(obj[\"namespace\"])' < galaxy.yml)"
+      - name: Extract collection name
+        run: |
+          echo "::set-output name=collection_name::$(python -c 'import yaml, sys; obj=yaml.safe_load(sys.stdin); print(obj[\"name\"])' < galaxy.yml)"
+      
+      # Collection dependancies
       - name: Install netsnmp
         run: sudo apt-get install -y snmpd snmp libsnmp-dev python-netsnmp
       - name: Install navigator
         run: pip3 install ansible-navigator ansible-core
+      
+      # Move to collection path
       - name: Make collection directory
-        run: mkdir -P /usr/share/ansible/collections/ansible_collections/ansible/snmp
+        run: mkdir -P /usr/share/ansible/collections/ansible_collections/$COLLECTION_NAMESPACE/$COLLECTION_NAME
       - name: Link
-        run: ln -s ansible.snmp /usr/share/ansible/collections/ansible_collections/ansible/snmp
+        run: ln -s ansible.snmp /usr/share/ansible/collections/ansible_collections/$COLLECTION_NAMESPACE/$COLLECTION_NAME
       - name: Run
         run: ansible-navigator run playbooks/site.yaml --ee false --mode stdout
       
