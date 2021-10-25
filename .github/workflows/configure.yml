@@ -10,15 +10,15 @@ jobs:
         with:
           python-version: 3.8
       - name: Collection basics
-        run: pip3 install pyyaml
+        run: pip3 install pyyaml yq
       - name: Extract collection namespace
         id: collection_namespace
         run: |
-          echo "::set-output name=value::$(python -c 'import yaml, sys; obj=yaml.safe_load(sys.stdin); print(obj[\\\'name\\\'])' < galaxy.yml)"
+          echo "::set-output name=value::$(cat galaxy.yml | yq .name)"
       - name: Extract collection name
         id: collection_name
         run: |
-          echo "::set-output name=value::$(python -c 'import yaml, sys; obj=yaml.safe_load(sys.stdin); print(obj[\'name\'])' < galaxy.yml)"
+          echo "::set-output name=value::$(cat galaxy.yml | yq .namespace)"
       
       - run: echo "${{ steps.collection_namespace.outputs.value }}"
       - run: echo "${{ steps.collection_name.outputs.value }}"
