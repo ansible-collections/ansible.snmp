@@ -14,11 +14,11 @@ jobs:
       - name: Extract collection namespace
         id: collection_namespace
         run: |
-          echo "::set-output name=value::$(python -c 'import yaml, sys; obj=yaml.safe_load(sys.stdin); print(obj)' < galaxy.yml)"
+          echo "::set-output name=value::$(python -c 'import yaml, sys; obj=yaml.safe_load(sys.stdin); print(obj[\'name\'])' < galaxy.yml)"
       - name: Extract collection name
         id: collection_name
         run: |
-          echo "::set-output name=value::$(python -c \'import yaml, sys; obj=yaml.safe_load(sys.stdin); print(obj[\'name\'])' < galaxy.yml)"
+          echo "::set-output name=value::$(python -c 'import yaml, sys; obj=yaml.safe_load(sys.stdin); print(obj[\'name\'])' < galaxy.yml)"
       
       - run: echo "${{ steps.collection_namespace.outputs.value }}"
       - run: echo "${{ steps.collection_name.outputs.value }}"
