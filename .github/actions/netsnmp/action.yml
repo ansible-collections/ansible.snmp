@@ -39,7 +39,7 @@ runs:
       working-directory: net-snmp-${{ inputs.netsnmp-version }}
 
     - name: Add the netsnmp library install path to ldconfig
-      run: echo "/usr/local/lib" | sudo tee /etc/ld.so.conf.d/netsnmp.conf && sudo ldconfig -v | grep snmp
+      run: sudo ldconfig -v | grep snmp #echo "/usr/local/lib" | sudo tee /etc/ld.so.conf.d/netsnmp.conf && 
       shell: bash
 
     - name: Confirm version 
