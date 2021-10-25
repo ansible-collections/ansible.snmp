@@ -20,8 +20,8 @@ jobs:
         run: |
           echo "::set-output name=value::$(cat galaxy.yml | yq .namespace)"
       
-      - run: echo "Collection namespace set to: ${{ steps.collection_namespace.outputs.value }}"
-      - run: echo "Collection name set to: ${{ steps.collection_name.outputs.value }}"
+      - run: echo "Collection namespace set to '${{ steps.collection_namespace.outputs.value }}'"
+      - run: echo "Collection name set to '${{ steps.collection_name.outputs.value }}'"
 
       # Collection dependancies
       - name: Install netsnmp
