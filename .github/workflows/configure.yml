@@ -6,6 +6,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      
+      - run: pip uninstall ansible
       - uses: actions/setup-python@v2
         with:
           python-version: 3.8
