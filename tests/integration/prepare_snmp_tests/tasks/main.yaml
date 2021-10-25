@@ -24,7 +24,15 @@
     ansible_connection: local
   become: True
   run_once: True
-  
+
+- name: Create the snmpv3 user
+  ansible.builtin.shell:
+    command: net-snmp-create-v3-user -a password -x password -X DES test
+  vars:
+    ansible_connection: local
+  become: True
+  run_once: True
+
 - name: Run the snmpd daemon
   ansible.builtin.service: 
     name: snmpd
