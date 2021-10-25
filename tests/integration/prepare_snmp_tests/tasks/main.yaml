@@ -2,6 +2,10 @@
   file:
     path:  /usr/local/etc/snmp/
     state: directory
+  vars:
+    ansible_connection: local
+  become: True
+  run_once: True
 
 - name: Copy snmp configuration file
   ansible.builtin.copy:
@@ -21,7 +25,6 @@
   become: True
   run_once: True
   
-
 - name: Run the snmpd daemon
   ansible.builtin.service: 
     name: snmpd
