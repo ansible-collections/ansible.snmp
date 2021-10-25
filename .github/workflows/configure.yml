@@ -10,7 +10,7 @@ jobs:
         with:
           python-version: 3.8
       - name: Collection basics
-        run: pip3 install -y pyyaml
+        run: pip3 install pyyaml
       - name: Extract collection namespace
         run: |
           echo "::set-output name=collection_namespace::$(python -c 'import yaml, sys; obj=yaml.safe_load(sys.stdin); print(obj[\"namespace\"])' < galaxy.yml)"
