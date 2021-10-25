@@ -1,3 +1,8 @@
+- name: Build snmpd.conf directory
+  file:
+    path:  /usr/local/etc/snmp/
+    state: directory
+
 - name: Copy snmp configuration file
   ansible.builtin.copy:
     src: snmpd.conf
