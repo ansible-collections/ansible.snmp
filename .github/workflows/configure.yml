@@ -5,6 +5,7 @@ jobs:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
+        netsnmp-version: [5.9.1]
         python-version: [3.8]
     steps:
       - name: Checkout
@@ -18,7 +19,7 @@ jobs:
       - name: Download and build netsnmp
         uses: ./.github/actions/netsnmp
         with:
-          netsnmp-version: 5.9.1
+          netsnmp-version: ${{ matrix.netsnmp-version }}
           python-version: ${{ matrix.python-version }}
       
       - name: Prepare the collection
