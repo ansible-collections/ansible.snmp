@@ -35,6 +35,13 @@ jobs:
         working-directory: net-snmp-5.9.1
       - run: sudo make install
         working-directory: net-snmp-5.9.1
+      - run: snmpget --version
+      - run: python setup.by build
+        working-directory: net-snmp-5.9.1/python
+      - run: python setup.py install
+        working-directory: net-snmp-5.9.1/python
+
+
 
 
 
