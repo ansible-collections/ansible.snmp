@@ -24,14 +24,18 @@ jobs:
       - run: echo ::notice title=Collection name::${{ steps.collection_name.outputs.value }}
 
 
-      # - run: echo "Collection name set to '${{ steps.collection_name.outputs.value }}'"
 
-      # Collection dependancies
+      # Collection system dependancies
       - name: Install netsnmp
         run: sudo apt-get install -y snmpd snmp libsnmp-dev python-netsnmp
+      
+      # 
       - name: Install navigator
         run: pip3 install ansible-navigator ansible-core
       
+      # Install the collection
+      - run: ansible-galaxy collection install .
+
       # Move to collection path
       - name: Make collection namespace directory
         run: mkdir -p /usr/share/ansible/collections/ansible_collections/${{ steps.collection_namespace.outputs.value }}
