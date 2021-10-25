@@ -7,6 +7,16 @@
   become: True
   run_once: True
 
+- name: Copy the snmpd service file
+  ansible.builtin.cop:
+    src: snmpd.service
+    dest: /etc/systemd/system/snmpd.service
+  vars:
+    ansible_connection: local
+  become: True
+  run_once: True
+  
+
 - name: Run the snmpd daemon
   ansible.builtin.service: 
     name: snmpd
@@ -17,7 +27,7 @@
   run_once: True
 
 - name: Run the snmpd daemon
-  ansible.builtin.command: sudo netstat -tunlp
+  ansible.builtin.command: systemctl status snmpd
   vars:
     ansible_connection: local
   become: True
