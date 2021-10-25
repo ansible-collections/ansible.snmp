@@ -6,8 +6,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
       - name: Install netsnmp
         run: sudo apt-get install -y snmpd snmp libsnmp-dev python-netsnmp
       - name: Install navigator
-        run: pip3 install setuptools ansible-navigator ansible-core
+        run: pip3 install ansible-navigator ansible-core
           
