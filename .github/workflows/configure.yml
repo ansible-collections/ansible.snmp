@@ -1,5 +1,5 @@
 name: Collection integration tests
-on: [push]
+on: [push, pull_request]
 jobs:
   deps:
     runs-on: ubuntu-18.04
