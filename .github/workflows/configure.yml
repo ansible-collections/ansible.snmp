@@ -7,7 +7,7 @@ jobs:
       matrix:
         netsnmp-version: [5.9.1]
         python-version: [3.8]
-    name: netsnmp ${{ matrix.netsnmp }} - python ${{ matrix.python-version }}
+    name: netsnmp ${{ matrix.netsnmp-version }} - python ${{ matrix.python-version }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
