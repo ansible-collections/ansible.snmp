@@ -21,7 +21,6 @@ jobs:
         uses: ./.github/actions/netsnmp
         with:
           netsnmp-version: ${{ matrix.netsnmp-version }}
-          python-version: ${{ matrix.python-version }}
       
       - name: Prepare the collection
         id: prepare_collection
@@ -31,7 +30,6 @@ jobs:
       - name: Install navigator
         run: pip3 install -r test-requirements.txt
       
-
       - name: Run
         run: ansible-navigator 
         env:
@@ -43,6 +41,6 @@ jobs:
           ANSIBLE_NAVIGATOR_EXECUTION_ENVIRONMENT: False
           COLLECTION_NAMESPACE:  ${{ steps.prepare_collection.outputs.collection_namespace }}
           COLLECTION_NAME: ${{ steps.prepare_collection.outputs.collection_name }}
-          INTEGRATION_TESTS_PATTERN: "*"
+          INTEGRATION_TESTS_PATTERN: "snmp_*"
 
           
