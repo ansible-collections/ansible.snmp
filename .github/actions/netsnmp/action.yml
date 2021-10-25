@@ -36,13 +36,15 @@ runs:
     - run: snmpget --version
       shell: bash
 
-    - run: sudo pip3 install setuptools
-      shell: bash
 
     - run: python3 setup.py build
       shell: bash
       working-directory: net-snmp-${{ inputs.version }}/python
 
-    - run: sudo python3 setup.py install
+    - run: python3 setup.py install --user
       shell: bash
       working-directory: net-snmp-${{ inputs.version }}/python
+    
+    - run: python3 -c 'import netsnmp'
+      shell: bash
+
