@@ -10,6 +10,10 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: 3.8
+      
+      - name: download and build netsnmp
+        uses: ./.github/actions/netsnmp
+
 
       - name: Github action python requirements
         run: pip3 install yq
@@ -26,20 +30,21 @@ jobs:
       - run: echo ::notice title=Collection namespace::${{ steps.collection_namespace.outputs.value }}
       - run: echo ::notice title=Collection name::${{ steps.collection_name.outputs.value }}
 
-      - run: wget http://sourceforge.net/projects/net-snmp/files/net-snmp/5.9.1/net-snmp-5.9.1.tar.gz
-      - run: tar -xvf net-snmp-5.9.1.tar.gz
-      - run: sudo apt-get install libperl-dev
-      - run: ./configure --with-python-modules --libdir=/usr/lib64 --enable-shared
-        working-directory: net-snmp-5.9.1
-      - run: make
-        working-directory: net-snmp-5.9.1
-      - run: sudo make install
-        working-directory: net-snmp-5.9.1
-      - run: snmpget --version
-      - run: python3 setup.py build
-        working-directory: net-snmp-5.9.1/python
-      - run: sudo python3 setup.py install
-        working-directory: net-snmp-5.9.1/python
+      # - run: wget http://sourceforge.net/projects/net-snmp/files/net-snmp/5.9.1/net-snmp-5.9.1.tar.gz
+      # - run: tar -xvf net-snmp-5.9.1.tar.gz
+      # - run: sudo apt-get install libperl-dev
+      # - run: ./configure --with-python-modules --libdir=/usr/lib64 --enable-shared
+      #   working-directory: net-snmp-5.9.1
+      # - run: make
+      #   working-directory: net-snmp-5.9.1
+      # - run: sudo make install
+      #   working-directory: net-snmp-5.9.1
+      # - run: snmpget --version
+      # - run: pip3 install setuptools
+      # - run: python3 setup.py build
+      #   working-directory: net-snmp-5.9.1/python
+      # - run: sudo python3 setup.py install
+      #   working-directory: net-snmp-5.9.1/python
 
 
 
