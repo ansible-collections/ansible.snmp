@@ -52,11 +52,11 @@ runs:
       working-directory: net-snmp-${{ inputs.netsnmp-version }}/python
 
     - name: Ensure setuptools is installed for sudo
-      run: sudo python${{ inputs.python-version }} -m pip install setuptools
+      run: sudo env "PATH=$PATH" python -m pip install setuptools
       shell: bash
 
     - name: Install the python bindings
-      run: sudo python${{ inputs.python-version }} setup.py install
+      run: sudo env "PATH=$PATH" python setup.py install
       shell: bash
       working-directory: net-snmp-${{ inputs.netsnmp-version }}/python
     
