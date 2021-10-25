@@ -8,7 +8,9 @@
   run_once: True
 
 - name: Run the snmpd daemon
-  ansible.builtin.command: snmpd
+  ansible.builtin.service: 
+    name: snmpd
+    state: started
   vars:
     ansible_connection: local
   become: True

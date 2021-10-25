@@ -24,7 +24,7 @@ runs:
       shell: bash
 
     - name: Configure the source
-      run: ./configure --with-python-modules --enable-shared
+      run: ./configure --with-python-modules --enable-shared --with-systemd
       shell: bash
       working-directory: net-snmp-${{ inputs.netsnmp-version }}
 
