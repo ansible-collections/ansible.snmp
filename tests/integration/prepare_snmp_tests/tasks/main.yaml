@@ -7,10 +7,8 @@
   become: True
   run_once: True
 
-- name: Start service snmpd, if not started
-  ansible.builtin.service:
-    name: snmpd
-    state: started
+- name: Run the snmpd daemon
+  ansible.builtin.command: snmpd
   vars:
     ansible_connection: local
   become: True
