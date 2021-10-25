@@ -35,7 +35,7 @@ jobs:
           ANSIBLE_VERBOSITY: 4
           ANSIBLE_NAVIGATOR_APP: run
           ANSIBLE_NAVIGATOR_MODE: stdout
-          ANSIBLE_NAVIGATOR_LOG_FILE: gh-action-logs/navigator-integration-log.json
+          ANSIBLE_NAVIGATOR_LOG_FILE: gh-action-logs/navigator-integration.log
           ANSIBLE_NAVIGATOR_LOG_LEVEL: debug
           ANSIBLE_NAVIGATOR_PLAYBOOK: tests/integration/integration_runner.yaml
           ANSIBLE_NAVIGATOR_PLAYBOOK_ARTIFACT_SAVE_AS: gh-action-logs/navigator-integration-artifact.json

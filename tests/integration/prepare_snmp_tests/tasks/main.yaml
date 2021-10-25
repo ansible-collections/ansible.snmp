@@ -27,7 +27,7 @@
 
 - name: Create the snmpv3 user
   ansible.builtin.shell:
-    command: net-snmp-create-v3-user -a password -x password -X DES test
+    cmd: net-snmp-create-v3-user -a password -x password -X DES test
   vars:
     ansible_connection: local
   become: True
