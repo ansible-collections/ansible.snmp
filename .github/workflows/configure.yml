@@ -7,5 +7,5 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install netsnmp
-        run: sudo apt-get install -y snmpd snmp libsnmp-dev python-netsnmp snmp-mibs-download
+        run: sudo apt-get install -y snmpd snmp libsnmp-dev net-snmp-python
           
