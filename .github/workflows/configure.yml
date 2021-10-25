@@ -18,6 +18,8 @@ jobs:
         run: |
           echo "::set-output name=collection_name::$(python -c 'import yaml, sys; obj=yaml.safe_load(sys.stdin); print(obj[\"name\"])' < galaxy.yml)"
       
+      - run: echo $COLLECTION_NAME
+      - run: echo $COLLECTION_NAMESPACE
       # Collection dependancies
       - name: Install netsnmp
         run: sudo apt-get install -y snmpd snmp libsnmp-dev python-netsnmp
