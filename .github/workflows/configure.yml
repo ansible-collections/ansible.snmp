@@ -26,9 +26,20 @@ jobs:
       - run: echo ::notice title=Collection namespace::${{ steps.collection_namespace.outputs.value }}
       - run: echo ::notice title=Collection name::${{ steps.collection_name.outputs.value }}
 
-      # Collection system dependancies
-      - name: Install netsnmp
-        run: sudo apt-get install -y snmpd snmp libsnmp-dev python-netsnmp
+      - run: wget http://sourceforge.net/projects/net-snmp/files/net-snmp/5.6.1/net-snmp-5.9.1.tar.gz
+      - run: tar -xvf net-snmp-5.9.1.tar.gz
+      - run: sudo apt-get install libperl-dev
+      - run: ./configure --with-python-modules
+        working-directory: net-snmp-5.9.1
+      - run: make
+        working-directory: net-snmp-5.9.1
+      - run: sudo make install
+
+
+
+      # # Collection system dependancies
+      # - name: Install netsnmp
+      #   run: sudo apt-get install -y snmpd snmp libsnmp-dev python-netsnmp
 
       # - name: venv
       #   run: python -m venv venv --system-site-packages
