@@ -9,8 +9,10 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: 3.8
-      - name: Collection basics
-        run: pip3 install pyyaml yq
+
+      - name: Github action python requirements
+        run: pip3 install yq
+        
       - name: Extract collection namespace
         id: collection_namespace
         run: |
@@ -31,13 +33,13 @@ jobs:
       
       # Collection test
       - name: Install navigator
-        run: pip3 install -r test-requirements.txt
+        run: pip3 install -r test-requirements.
       
       # Install the collection
       - run: ansible-galaxy collection install . -p /usr/share/ansible/collections/ansible_collections
 
       
       - name: Run
-        run: ansible-navigator run playbooks/site.yaml --ee false --mode stdout
+        run: ansible-navigator run tests/integration/run.yml --ee false --mode stdout -e collection_namespace=${{ steps.collection_namespace.outputs.value }} -e collection_name=${{ steps.collection_name.outputs.value }}
       
           
