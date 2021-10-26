@@ -1,0 +1,34 @@
+name: Collection lint tests
+on: [push, pull_request]
+jobs:
+  deps:
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        python-version: [3.8]
+    name: "Lint: python ${{ matrix.python-version }}"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+   
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      
+      - name: Prepare the collection
+        id: prepare_collection
+        uses: ./.github/actions/ansible_collection
+      
+      - name: Install test requirements
+        run: pip3 install -r test-requirements.txt
+   
+      - name: Run pylint
+        run: pylint --verbose -ry plugins
+      
+      - name: Run black
+        run: black -l79 --check .
+      
+      - name: Run ansible-test sanity
+        run: ansible-test sanity --python ${{ matrix.python-version }} --requirements
+        working-directory: /usr/share/ansible/collections/ansible_collections/${{ steps.prepare_collection.outputs.collection_namespace }}/${{ steps.prepare_collection.outputs.collection_name }}

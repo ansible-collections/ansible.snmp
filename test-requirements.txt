@@ -1,7 +1,7 @@
 black
 coverage==4.5.4
-flake8
 pytest-xdist
+pylint
 yamllint
 ansible-navigator
 ansible-core

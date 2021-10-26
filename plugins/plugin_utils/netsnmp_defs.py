@@ -202,7 +202,7 @@ class SnmpConnectionParamMap(Enum):
     priv_pass = "PrivPass"
 
 
-class SnmpResponse(NamedTuple):
+class SnmpResponse(NamedTuple):  # pylint:disable=inherit-non-class
     """Simple structure for the response from an snmp call"""
 
     elapsed: Dict

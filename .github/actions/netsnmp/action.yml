@@ -87,4 +87,3 @@ runs:
         python -c 'import netsnmp'
         echo ::endgroup::
       shell: bash
-

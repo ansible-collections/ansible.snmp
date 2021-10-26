@@ -20,11 +20,15 @@ from ansible.module_utils.basic import missing_required_lib
 from ansible.errors import AnsibleError
 from ansible.utils.display import Display
 
+# pylint: disable=import-error
+
 from .netsnmp_defs import SnmpConfiguration
 from .netsnmp_defs import SnmpResponse
 
 from .netsnmp_instance import SnmpInstance
 from .netsnmp_instance import HAS_NETSNMP
+
+# pylint: enable=import-error
 
 
 class SnmpConnectionBase(ConnectionBase):
