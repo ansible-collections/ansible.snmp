@@ -2,51 +2,34 @@
   file:
     path:  /usr/local/etc/snmp/
     state: directory
-  vars:
-    ansible_connection: local
   become: True
-  run_once: True
 
 - name: Copy snmp configuration file
   ansible.builtin.copy:
-    src: snmpd.conf
+    src: conf_snmpd.conf
     dest: /usr/local/etc/snmp/snmpd.conf
-  vars:
-    ansible_connection: local
   become: True
-  run_once: True
+
+- name: Copy snmp user file
+  ansible.builtin.copy:
+    src: user_snmpd.conf
+    dest: /var/lib/snmp/snmpd.conf
+  become: True
 
 - name: Copy the snmpd service file
   ansible.builtin.copy:
     src: snmpd.service
     dest: /etc/systemd/system/snmpd.service
-  vars:
-    ansible_connection: local
   become: True
-  run_once: True
-
-# - name: Create the snmpv3 user
-#   ansible.builtin.shell:
-#     cmd: net-snmp-create-v3-user -a password -x password -X DES test
-#   vars:
-#     ansible_connection: local
-#   become: True
-#   run_once: True
 
 - name: Run the snmpd daemon
   ansible.builtin.service: 
     name: snmpd
     state: started
-  vars:
-    ansible_connection: local
   become: True
-  run_once: True
 
-- name: Restart the snmpd daemon after add user in conf
+- name: Run the snmpd daemon
   ansible.builtin.service: 
     name: snmpd
     state: restarted
-  vars:
-    ansible_connection: local
   become: True
-  run_once: True

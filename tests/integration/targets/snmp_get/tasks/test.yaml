@@ -1,0 +1,12 @@
+- name: Include the connection vars
+  include_vars:
+    file: "../../prepare_snmp_tests/vars/{{ connection }}.yaml"
+
+- name: Retreive several individual OIDs
+  ansible.snmp.get:
+    oids:
+    - oid: "SNMPv2-MIB::sysContact.0"
+    - oid: "SNMPv2-MIB::sysLocation"
+      iid: '0'
+    numeric: False
+    long_names: True
