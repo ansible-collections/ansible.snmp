@@ -1,35 +1,32 @@
+---
 - name: Build snmpd.conf directory
   file:
     path:  /usr/local/etc/snmp/
     state: directory
   become: True
+  notify: "netsnmp_configuration_change"
 
 - name: Copy snmp configuration file
   ansible.builtin.copy:
     src: conf_snmpd.conf
     dest: /usr/local/etc/snmp/snmpd.conf
   become: True
+  notify: "netsnmp_configuration_change"
 
-- name: Copy snmp user file
+- name: Copy snmp user file if nonexistant
   ansible.builtin.copy:
     src: user_snmpd.conf
     dest: /var/lib/snmp/snmpd.conf
+    force: no
   become: True
+  notify: "netsnmp_configuration_change"
 
 - name: Copy the snmpd service file
   ansible.builtin.copy:
     src: snmpd.service
     dest: /etc/systemd/system/snmpd.service
   become: True
+  notify: "netsnmp_configuration_change"
 
-- name: Run the snmpd daemon
-  ansible.builtin.service: 
-    name: snmpd
-    state: started
-  become: True
-
-- name: Run the snmpd daemon
-  ansible.builtin.service: 
-    name: snmpd
-    state: restarted
-  become: True
+- name: Run handlers if needed
+  meta: flush_handlers

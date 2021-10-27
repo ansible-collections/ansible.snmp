@@ -32,7 +32,7 @@ jobs:
       - name: Run integration tests
         run: ansible-navigator 
         env:
-          # ANSIBLE_VERBOSITY: 4
+          ANSIBLE_VERBOSITY: 4
           ANSIBLE_NAVIGATOR_APP: run
           ANSIBLE_NAVIGATOR_MODE: stdout
           ANSIBLE_NAVIGATOR_LOG_FILE: gh-action-logs/navigator-integration.log
