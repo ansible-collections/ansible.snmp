@@ -7,20 +7,17 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 # pylint: disable=invalid-name
 __metaclass__ = type
 # pylint: enable=invalid-name
 
-from typing import Dict
-from typing import Union
+from typing import Dict, Union
 
 # pylint: disable=import-error
-from ansible_collections.ansible.snmp.plugins.modules.get import (
-    DOCUMENTATION,
-)
-from ansible_collections.ansible.snmp.plugins.plugin_utils.snmp_action_base import (
-    SnmpActionBase,
-)
+from ansible_collections.ansible.snmp.plugins.modules.get import DOCUMENTATION
+from ansible_collections.ansible.snmp.plugins.plugin_utils.snmp_action_base import SnmpActionBase
+
 
 # pylint: enable=import-error
 
@@ -34,9 +31,7 @@ class ActionModule(SnmpActionBase):
         self._result: Dict
         self._task_vars: Dict
 
-    def run(
-        self, tmp: None = None, task_vars: Union[Dict, None] = None
-    ) -> Dict:
+    def run(self, tmp: None = None, task_vars: Union[Dict, None] = None) -> Dict:
         """The std execution entry pt for an action plugin
 
         :param tmp: no longer used
@@ -64,8 +59,6 @@ class ActionModule(SnmpActionBase):
         if response.error:
             self._result.update({"failed": True, "msg": response.error})
         else:
-            self._result.update(
-                {"result": response.result, "raw": response.raw}
-            )
+            self._result.update({"result": response.result, "raw": response.raw})
 
         return self._result

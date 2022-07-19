@@ -1,7 +1,7 @@
 ---
 - name: Build snmpd.conf directory
   file:
-    path:  /usr/local/etc/snmp/
+    path: /usr/local/etc/snmp/
     state: directory
   become: True
   notify: "netsnmp_configuration_change"

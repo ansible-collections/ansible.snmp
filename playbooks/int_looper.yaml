@@ -1,38 +1,38 @@
 - hosts: all
   gather_facts: False
   tasks:
-  - name: Retreive the index and name from the interface table
-    ansible.snmp.walk:
-      oids:
-      - oid: IF-MIB::ifIndex
-      - oid: IF-MIB::ifDescr
-    register: if_indicies
-  
-  - name: Set a timestamp and the regex to use for matching interface names
-    set_fact:
-      ts: "{{ lookup('pipe', 'date -u +\"%Y-%m-%dT%H:%M:%SZ\"') }}"
-      regex: "(Ethernet|Gigabit|Intel).*"
- 
-  - name: Update all matching interfaces
-    ansible.snmp.set:
-      oids:
-      - oid: IF-MIB::ifAlias
-        iid: "{{ iid }}"
-        value: "Configured by ansible @ {{ ts }}"
-    vars:
-      matching_interfaces: "{{ lookup('ansible.utils.index_of', if_indicies.result, 'match', regex, 'ifDescr', wantlist=True) }}"
-      iid: "{{ if_indicies['result'][int_id]['ifIndex'] }}"
-    loop: "{{ matching_interfaces }}"
-    loop_control:
-      loop_var: int_id
-    register: changes
-  
-  - name: Review all changes
-    ansible.utils.fact_diff:
-      before: "{{ interface.before.result|ansible.utils.to_paths }}"
-      after: "{{ interface.after.result|ansible.utils.to_paths }}"
-    loop: "{{ changes.results }}"
-    loop_control:
-      loop_var: interface
-      index_var: idx
-      label: "{{ idx }}"
+    - name: Retreive the index and name from the interface table
+      ansible.snmp.walk:
+        oids:
+          - oid: IF-MIB::ifIndex
+          - oid: IF-MIB::ifDescr
+      register: if_indicies
+
+    - name: Set a timestamp and the regex to use for matching interface names
+      set_fact:
+        ts: '{{ lookup(''pipe'', ''date -u +"%Y-%m-%dT%H:%M:%SZ"'') }}'
+        regex: "(Ethernet|Gigabit|Intel).*"
+
+    - name: Update all matching interfaces
+      ansible.snmp.set:
+        oids:
+          - oid: IF-MIB::ifAlias
+            iid: "{{ iid }}"
+            value: "Configured by ansible @ {{ ts }}"
+      vars:
+        matching_interfaces: "{{ lookup('ansible.utils.index_of', if_indicies.result, 'match', regex, 'ifDescr', wantlist=True) }}"
+        iid: "{{ if_indicies['result'][int_id]['ifIndex'] }}"
+      loop: "{{ matching_interfaces }}"
+      loop_control:
+        loop_var: int_id
+      register: changes
+
+    - name: Review all changes
+      ansible.utils.fact_diff:
+        before: "{{ interface.before.result|ansible.utils.to_paths }}"
+        after: "{{ interface.after.result|ansible.utils.to_paths }}"
+      loop: "{{ changes.results }}"
+      loop_control:
+        loop_var: interface
+        index_var: idx
+        label: "{{ idx }}"

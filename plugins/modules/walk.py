@@ -8,6 +8,7 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 # pylint: disable=invalid-name
 __metaclass__ = type
 # pylint: enable=invalid-name
@@ -57,7 +58,7 @@ options:
         required: True
       iid:
         description:
-        - the dotted-decimal, instance idenfier, for scalar MIB objects use '0'
+        - the dotted-decimal, instance identifier, for scalar MIB objects use '0'
         type: str
   numeric:
     description:

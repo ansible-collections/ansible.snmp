@@ -11,26 +11,26 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-   
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      
+
       - name: Download and build netsnmp ${{ matrix.netsnmp-version }} for python ${{ matrix.python-version }}
         uses: ./.github/actions/netsnmp
         with:
           netsnmp-version: ${{ matrix.netsnmp-version }}
-      
+
       - name: Prepare the collection
         id: prepare_collection
         uses: ./.github/actions/ansible_collection
 
       - name: Install navigator
         run: pip3 install -r test-requirements.txt
-      
+
       - name: Run integration tests
-        run: ansible-navigator 
+        run: ansible-navigator
         env:
           ANSIBLE_VERBOSITY: 4
           ANSIBLE_NAVIGATOR_APP: run
@@ -41,7 +41,7 @@ jobs:
           ANSIBLE_NAVIGATOR_PLAYBOOK_ARTIFACT_SAVE_AS: gh-action-logs/navigator-integration-artifact.json
           ANSIBLE_NAVIGATOR_INVENTORIES: tests/integration/integration_inventory.yaml
           ANSIBLE_NAVIGATOR_EXECUTION_ENVIRONMENT: False
-          COLLECTION_NAMESPACE:  ${{ steps.prepare_collection.outputs.collection_namespace }}
+          COLLECTION_NAMESPACE: ${{ steps.prepare_collection.outputs.collection_namespace }}
           COLLECTION_NAME: ${{ steps.prepare_collection.outputs.collection_name }}
           INTEGRATION_TESTS_PATTERN: "snmp_*"
 
@@ -51,4 +51,3 @@ jobs:
         with:
           name: navigator-artifacts
           path: gh-action-logs/
-          

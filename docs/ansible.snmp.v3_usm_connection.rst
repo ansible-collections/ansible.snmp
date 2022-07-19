@@ -385,7 +385,7 @@ Status
 Authors
 ~~~~~~~
 
-- Ansible Networking Team
+- Bradley Thornton (@cidrblock)
 
 
 .. hint::

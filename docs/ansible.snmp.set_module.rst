@@ -64,7 +64,7 @@ Parameters
                 <td>
                 </td>
                 <td>
-                        <div>The dotted-decimal, instance idenfier, for scalar MIB objects use &#x27;0&#x27;</div>
+                        <div>The dotted-decimal, instance identifier, for scalar MIB objects use &#x27;0&#x27;</div>
                 </td>
             </tr>
             <tr>
@@ -151,6 +151,7 @@ Examples
 
 .. code-block:: yaml
 
+    ---
     # Update 2 individual entries
     - name: Set several individual OIDs
       ansible.snmp.set:
@@ -165,7 +166,7 @@ Examples
         ts: "{{ lookup('pipe', 'date -u +\"%Y-%m-%dT%H:%M:%SZ\"') }}"
 
     # Update the description of all interfaces matching a regex
-    - name: Retreive the index and name from the interface table
+    - name: Retrieve the index and name from the interface table
       ansible.snmp.walk:
         oids:
         - oid: IF-MIB::ifIndex
@@ -228,6 +229,8 @@ Common return values are documented `here <https://docs.ansible.com/ansible/late
                 <td>
                             <div>The result of an SNMP get for the OIDs after the set</div>
                     <br/>
+                        <div style="font-size: smaller"><b>Sample:</b></div>
+                        <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">{&#x27;raw&#x27;: {&#x27;description&#x27;: &#x27;The raw result from the snmp walk&#x27;, &#x27;returned&#x27;: &#x27;always&#x27;, &#x27;type&#x27;: &#x27;list&#x27;, &#x27;elements&#x27;: &#x27;dict&#x27;, &#x27;entries&#x27;: {&#x27;iid&#x27;: {&#x27;description&#x27;: &#x27;The instance id&#x27;, &#x27;returned&#x27;: &#x27;always&#x27;, &#x27;type&#x27;: &#x27;str&#x27;}, &#x27;tag&#x27;: {&#x27;description&#x27;: &#x27;The OID&#x27;, &#x27;returned&#x27;: &#x27;always&#x27;, &#x27;type&#x27;: &#x27;str&#x27;}, &#x27;type&#x27;: {&#x27;description&#x27;: &#x27;The type of the value&#x27;, &#x27;returned&#x27;: &#x27;always&#x27;, &#x27;type&#x27;: &#x27;str&#x27;}, &#x27;value&#x27;: {&#x27;description&#x27;: &#x27;The currently set value for the oid&#x27;, &#x27;returned&#x27;: &#x27;always&#x27;, &#x27;type&#x27;: &#x27;raw&#x27;}}}, &#x27;result&#x27;: {&#x27;description&#x27;: &#x27;The transformed result from the snmp walk&#x27;, &#x27;returned&#x27;: &#x27;always&#x27;, &#x27;type&#x27;: &#x27;list&#x27;, &#x27;elements&#x27;: &#x27;dict&#x27;, &#x27;entries&#x27;: {&#x27;_raw&#x27;: {&#x27;description&#x27;: &#x27;The individual oid entry and the currently set value&#x27;, &#x27;returned&#x27;: &#x27;always&#x27;}}}}</div>
                 </td>
             </tr>
             <tr>
@@ -243,6 +246,8 @@ Common return values are documented `here <https://docs.ansible.com/ansible/late
                 <td>
                             <div>The result of an SNMP get for the OIDs prior to set</div>
                     <br/>
+                        <div style="font-size: smaller"><b>Sample:</b></div>
+                        <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">{&#x27;raw&#x27;: {&#x27;description&#x27;: &#x27;The raw result from the snmp walk&#x27;, &#x27;returned&#x27;: &#x27;always&#x27;, &#x27;type&#x27;: &#x27;list&#x27;, &#x27;elements&#x27;: &#x27;dict&#x27;, &#x27;entries&#x27;: {&#x27;iid&#x27;: {&#x27;description&#x27;: &#x27;The instance id&#x27;, &#x27;returned&#x27;: &#x27;always&#x27;, &#x27;type&#x27;: &#x27;str&#x27;}, &#x27;tag&#x27;: {&#x27;description&#x27;: &#x27;The OID&#x27;, &#x27;returned&#x27;: &#x27;always&#x27;, &#x27;type&#x27;: &#x27;str&#x27;}, &#x27;type&#x27;: {&#x27;description&#x27;: &#x27;The type of the value&#x27;, &#x27;returned&#x27;: &#x27;always&#x27;, &#x27;type&#x27;: &#x27;str&#x27;}, &#x27;value&#x27;: {&#x27;description&#x27;: &#x27;The currently set value for the oid&#x27;, &#x27;returned&#x27;: &#x27;always&#x27;, &#x27;type&#x27;: &#x27;raw&#x27;}}}, &#x27;result&#x27;: {&#x27;description&#x27;: &#x27;The transformed result from the snmp walk&#x27;, &#x27;returned&#x27;: &#x27;always&#x27;, &#x27;type&#x27;: &#x27;list&#x27;, &#x27;elements&#x27;: &#x27;dict&#x27;, &#x27;entries&#x27;: {&#x27;_raw&#x27;: {&#x27;description&#x27;: &#x27;The individual oid entry and the currently set value&#x27;, &#x27;returned&#x27;: &#x27;always&#x27;}}}}</div>
                 </td>
             </tr>
             <tr>
@@ -258,6 +263,8 @@ Common return values are documented `here <https://docs.ansible.com/ansible/late
                 <td>
                             <div>The amount of time in seconds spent for the snmp calls</div>
                     <br/>
+                        <div style="font-size: smaller"><b>Sample:</b></div>
+                        <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">{&#x27;post_set_get&#x27;: {&#x27;description&#x27;: &#x27;The amount of time spent in seconds for the get after the set&#x27;, &#x27;type&#x27;: &#x27;float&#x27;, &#x27;returned&#x27;: &#x27;always&#x27;}, &#x27;pre_set_get&#x27;: {&#x27;description&#x27;: &#x27;The amount of time spent in seconds for the get prior to the set&#x27;, &#x27;type&#x27;: &#x27;float&#x27;, &#x27;returned&#x27;: &#x27;always&#x27;}, &#x27;set&#x27;: {&#x27;description&#x27;: &#x27;The amount of time spent in seconds for the set&#x27;, &#x27;type&#x27;: &#x27;float&#x27;, &#x27;returned&#x27;: &#x27;always&#x27;}, &#x27;total&#x27;: {&#x27;description&#x27;: &#x27;the amount of time spent on all snmp calls&#x27;, &#x27;type&#x27;: &#x27;float&#x27;, &#x27;returned&#x27;: &#x27;always&#x27;}}</div>
                 </td>
             </tr>
     </table>
@@ -271,4 +278,4 @@ Status
 Authors
 ~~~~~~~
 
-- Ansible Networking Team
+- Bradley Thornton (@cidrblock)

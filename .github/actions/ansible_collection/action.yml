@@ -16,37 +16,36 @@ outputs:
     value: ${{ steps.collection_name.outputs.value }}
 
 runs:
-
   using: composite
   steps:
-  - name: Github action python requirements
-    run: pip3 install yq
-    shell: bash
+    - name: Github action python requirements
+      run: pip3 install yq
+      shell: bash
 
-  - name: Extract collection namespace
-    id: collection_namespace
-    run: |
-      echo "::set-output name=value::$(cat galaxy.yml | yq -r .namespace)"
-    shell: bash
+    - name: Extract collection namespace
+      id: collection_namespace
+      run: |
+        echo "::set-output name=value::$(cat galaxy.yml | yq -r .namespace)"
+      shell: bash
 
-  - name: Extract collection name
-    id: collection_name
-    run: |
-      echo "::set-output name=value::$(cat galaxy.yml | yq -r .name)"
-    shell: bash
-  
-  - name: Show the collection namespace
-    run: echo ::notice title=Collection namespace::${{ steps.collection_namespace.outputs.value }}
-    shell: bash
+    - name: Extract collection name
+      id: collection_name
+      run: |
+        echo "::set-output name=value::$(cat galaxy.yml | yq -r .name)"
+      shell: bash
 
-  - name: Show the collection name
-    run: echo ::notice title=Collection name::${{ steps.collection_name.outputs.value }}
-    shell: bash
-  
-  - name: Install ansible-core
-    run: pip3 install ansible-core
-    shell: bash
+    - name: Show the collection namespace
+      run: echo ::notice title=Collection namespace::${{ steps.collection_namespace.outputs.value }}
+      shell: bash
 
-  - name: Install the collection
-    run: ansible-galaxy collection install . -p /usr/share/ansible/collections/ansible_collections
-    shell: bash
+    - name: Show the collection name
+      run: echo ::notice title=Collection name::${{ steps.collection_name.outputs.value }}
+      shell: bash
+
+    - name: Install ansible-core
+      run: pip3 install ansible-core
+      shell: bash
+
+    - name: Install the collection
+      run: ansible-galaxy collection install . -p /usr/share/ansible/collections/ansible_collections
+      shell: bash

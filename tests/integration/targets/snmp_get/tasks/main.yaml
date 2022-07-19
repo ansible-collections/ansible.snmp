@@ -3,8 +3,8 @@
   vars:
     connection: "{{ version }}"
   loop:
-  - v1
-  - v2c
-  - v3usm
+    - v1
+    - v2c
+    - v3usm
   loop_control:
     loop_var: version

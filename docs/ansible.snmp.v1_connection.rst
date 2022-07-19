@@ -60,7 +60,7 @@ Parameters
                                 <div>var: ansible_snmp_community</div>
                     </td>
                 <td>
-                        <div>Specifc the community string for SNMP v1 connections.</div>
+                        <div>Specific the community string for SNMP v1 connections.</div>
                 </td>
             </tr>
             <tr>
@@ -214,7 +214,7 @@ Status
 Authors
 ~~~~~~~
 
-- Ansible Networking Team
+- Bradley Thornton (@cidrblock)
 
 
 .. hint::

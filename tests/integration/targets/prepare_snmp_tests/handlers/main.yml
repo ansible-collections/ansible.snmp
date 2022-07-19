@@ -1,12 +1,12 @@
 - name: Run the snmpd daemon
-  ansible.builtin.service: 
+  ansible.builtin.service:
     name: snmpd
     state: started
   become: True
   listen: "netsnmp_configuration_change"
 
 - name: Run the snmpd daemon
-  ansible.builtin.service: 
+  ansible.builtin.service:
     name: snmpd
     state: restarted
   become: True

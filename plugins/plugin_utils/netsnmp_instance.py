@@ -7,14 +7,14 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 # pylint: disable=invalid-name
 __metaclass__ = type
 # pylint: enable=invalid-name
 
 import time
 
-from typing import List
-from typing import Union
+from typing import List, Union
 
 
 # Note: HAS_SNMP is checked in snmp_connection_base
@@ -26,13 +26,15 @@ except ImportError:
     HAS_NETSNMP = False
 
 
-from .netsnmp_defs import SnmpConfiguration
-from .netsnmp_defs import SnmpConfigurationParamMap
-from .netsnmp_defs import SnmpConnectionParamMap
-from .netsnmp_defs import SnmpResponse
-from .netsnmp_defs import Snmpv1Connection
-from .netsnmp_defs import Snmpv2cConnection
-from .netsnmp_defs import Snmpv3UsmConnection
+from .netsnmp_defs import (
+    SnmpConfiguration,
+    SnmpConfigurationParamMap,
+    SnmpConnectionParamMap,
+    SnmpResponse,
+    Snmpv1Connection,
+    Snmpv2cConnection,
+    Snmpv3UsmConnection,
+)
 
 
 class SnmpInstance:
@@ -52,9 +54,7 @@ class SnmpInstance:
 
     def __init__(
         self,
-        connection: Union[
-            Snmpv1Connection, Snmpv2cConnection, Snmpv3UsmConnection
-        ],
+        connection: Union[Snmpv1Connection, Snmpv2cConnection, Snmpv3UsmConnection],
         configuration: SnmpConfiguration,
     ):
 
@@ -107,7 +107,7 @@ class SnmpInstance:
                 except ValueError:
                     pass
             # This does not handle OCTETSTR correctly
-            # but al least it will be a string
+            # but at least it will be a string
             # OCTETSTR is best handled with "use_sprint_value"
             if isinstance(entry.val, bytes):
                 value = str(value)

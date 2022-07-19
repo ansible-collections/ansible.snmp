@@ -7,6 +7,7 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 # pylint: disable=invalid-name
 __metaclass__ = type
 # pylint: enable=invalid-name
@@ -25,7 +26,7 @@ requirements:
 options:
   community:
     description:
-    - Specifc the community string for SNMP v1 connections.
+    - Specific the community string for SNMP v1 connections.
     default: public
     type: str
     ini:
@@ -107,12 +108,11 @@ options:
 
 # pylint: disable=wrong-import-position
 # pylint: disable=import-error
-from ansible_collections.ansible.snmp.plugins.plugin_utils.netsnmp_defs import (
-    Snmpv1Connection,
-)
+from ansible_collections.ansible.snmp.plugins.plugin_utils.netsnmp_defs import Snmpv1Connection
 from ansible_collections.ansible.snmp.plugins.plugin_utils.snmp_connection_base import (
     SnmpConnectionBase,
 )
+
 
 # pylint: enable=wrong-import-position
 # pylint: enable=import-error

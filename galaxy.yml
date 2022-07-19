@@ -1,8 +1,8 @@
 ---
 authors:
-  - Ansible Network
+  - Ansible Network (ansible-network)
 dependencies:
-  "ansible.utils": '>=2.0.0'
+  "ansible.utils": ">=2.0.0"
 license_file: LICENSE
 name: snmp
 namespace: ansible
@@ -10,5 +10,6 @@ description: The Ansible ansible.snmp collection includes a variety of plugins f
 readme: README.md
 repository: https://github.com/ansible-collections/ansible.snmp
 issues: https://github.com/ansible-collections/ansible.snmp/issues
-tags: [linux, networking, security, cloud, utilities, data, validation, utils]
-version: 0.0.1
+tags:
+  [linux, networking, security, cloud, utilities, data, validation, utils, snmp]
+version: "0.0.1"

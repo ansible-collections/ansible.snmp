@@ -10,49 +10,48 @@
     undesired_contact: "undesired_contact_value"
     undesired_location: "undesired_location_value"
 
-
 - name: Set several individual OIDs to a desired value
   ansible.snmp.set:
     oids:
-    - oid: "SNMPv2-MIB::sysContact"
-      iid: '0'
-      value: "{{ desired_contact }}"
-    - oid: "SNMPv2-MIB::sysLocation"
-      iid: '0'
-      value: "{{ desired_location }}"
+      - oid: "SNMPv2-MIB::sysContact"
+        iid: "0"
+        value: "{{ desired_contact }}"
+      - oid: "SNMPv2-MIB::sysLocation"
+        iid: "0"
+        value: "{{ desired_location }}"
   register: output
 
 - name: Ensure values are set to a desired value
   ansible.builtin.assert:
     that:
-    - output.before.result.0.sysContact != desired_contact
-    - output.before.raw.0.val != desired_contact
-    - output.before.result.0.sysLocation != desired_location
-    - output.before.raw.1.val != desired_location
-    - output.after.result.0.sysContact == desired_contact
-    - output.after.raw.0.val == desired_contact
-    - output.after.result.0.sysLocation == desired_location
-    - output.after.raw.1.val == desired_location
+      - output.before.result.0.sysContact != desired_contact
+      - output.before.raw.0.val != desired_contact
+      - output.before.result.0.sysLocation != desired_location
+      - output.before.raw.1.val != desired_location
+      - output.after.result.0.sysContact == desired_contact
+      - output.after.raw.0.val == desired_contact
+      - output.after.result.0.sysLocation == desired_location
+      - output.after.raw.1.val == desired_location
 
 - name: Set several individual OIDs to an undesired value
   ansible.snmp.set:
     oids:
-    - oid: "SNMPv2-MIB::sysContact"
-      iid: '0'
-      value: "{{ undesired_contact }}"
-    - oid: "SNMPv2-MIB::sysLocation"
-      iid: '0'
-      value: "{{ undesired_location }}"
+      - oid: "SNMPv2-MIB::sysContact"
+        iid: "0"
+        value: "{{ undesired_contact }}"
+      - oid: "SNMPv2-MIB::sysLocation"
+        iid: "0"
+        value: "{{ undesired_location }}"
   register: output
 
 - name: Ensure values are set to an undesired value
   ansible.builtin.assert:
     that:
-    - output.before.result.0.sysContact == desired_contact
-    - output.before.raw.0.val == desired_contact
-    - output.before.result.0.sysLocation == desired_location
-    - output.before.raw.1.val == desired_location
-    - output.after.result.0.sysContact == undesired_contact
-    - output.after.raw.0.val == undesired_contact
-    - output.after.result.0.sysLocation == undesired_location
-    - output.after.raw.1.val == undesired_location
+      - output.before.result.0.sysContact == desired_contact
+      - output.before.raw.0.val == desired_contact
+      - output.before.result.0.sysLocation == desired_location
+      - output.before.raw.1.val == desired_location
+      - output.after.result.0.sysContact == undesired_contact
+      - output.after.raw.0.val == undesired_contact
+      - output.after.result.0.sysLocation == undesired_location
+      - output.after.raw.1.val == undesired_location

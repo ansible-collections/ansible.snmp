@@ -8,6 +8,7 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 # pylint: disable=invalid-name
 __metaclass__ = type
 # pylint: enable=invalid-name
@@ -37,7 +38,7 @@ options:
         - tag
       iid:
         description:
-        - The dotted-decimal, instance idenfier, for scalar MIB objects use '0'
+        - The dotted-decimal, instance identifier, for scalar MIB objects use '0'
         type: str
         required: True
       type:
@@ -87,7 +88,7 @@ EXAMPLES = r"""
     ts: "{{ lookup('pipe', 'date -u +\"%Y-%m-%dT%H:%M:%SZ\"') }}"
 
 # Update the description of all interfaces matching a regex
-- name: Retreive the index and name from the interface table
+- name: Retrieve the index and name from the interface table
   ansible.snmp.walk:
     oids:
     - oid: IF-MIB::ifIndex

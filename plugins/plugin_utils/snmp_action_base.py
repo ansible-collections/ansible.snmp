@@ -7,18 +7,20 @@
 
 from __future__ import absolute_import, division, print_function
 
+
 # pylint: disable=invalid-name
 __metaclass__ = type
 # pylint: enable=invalid-name
 
-from typing import Dict
-from typing import Union
+from typing import Dict, Union
+
 from ansible.plugins.action import ActionBase
 
 # pylint: disable=import-error
 from ansible_collections.ansible.utils.plugins.module_utils.common.argspec_validate import (
     AnsibleArgSpecValidator,
 )
+
 
 # pylint: enable=import-error
 

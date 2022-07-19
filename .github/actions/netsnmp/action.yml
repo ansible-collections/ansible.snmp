@@ -7,10 +7,8 @@ inputs:
     required: true
 
 runs:
-
   using: "composite"
   steps:
-  
     - run: |
         echo ::group::Download the source
         wget http://sourceforge.net/projects/net-snmp/files/net-snmp/${{ inputs.netsnmp-version }}/net-snmp-${{ inputs.netsnmp-version }}.tar.gz 2>&1
@@ -35,7 +33,7 @@ runs:
         echo ::endgroup::
       shell: bash
       working-directory: net-snmp-${{ inputs.netsnmp-version }}
-    
+
     - run: |
         echo ::group::Running make
         make
@@ -52,7 +50,7 @@ runs:
 
     - run: |
         echo ::group::Add the netsnmp library install path to ldconfig
-        sudo ldconfig -v | grep snmp #echo "/usr/local/lib" | sudo tee /etc/ld.so.conf.d/netsnmp.conf && 
+        sudo ldconfig -v | grep snmp #echo "/usr/local/lib" | sudo tee /etc/ld.so.conf.d/netsnmp.conf &&
         echo ::endgroup::
       shell: bash
 
@@ -81,7 +79,7 @@ runs:
         echo ::endgroup::
       shell: bash
       working-directory: net-snmp-${{ inputs.netsnmp-version }}/python
-    
+
     - run: |
         echo ::group::Confirm the python bindings are available
         python -c 'import netsnmp'

@@ -1,104 +1,103 @@
 - hosts: all
   gather_facts: False
   tasks:
-  - name: Retreive several individual OIDs
-    ansible.snmp.get:
-      oids:
-      - oid: "SNMPv2-MIB::sysContact.0"
-      - oid: "SNMPv2-MIB::sysLocation"
-        iid: '0'
-      numeric: False
-      long_names: True
+    - name: Retreive several individual OIDs
+      ansible.snmp.get:
+        oids:
+          - oid: "SNMPv2-MIB::sysContact.0"
+          - oid: "SNMPv2-MIB::sysLocation"
+            iid: "0"
+        numeric: False
+        long_names: True
 
-  - name: Set several individual OIDs
-    ansible.snmp.set:
-      oids:
-      - oid: "SNMPv2-MIB::sysContact"
-        iid: '0'
-        value: "Brad Thornton @ {{ ts }}"
-      - oid: "SNMPv2-MIB::sysLocation"
-        iid: '0'
-        value: "Basement @ {{ ts }}"
-    vars:
-      ts: "{{ lookup('pipe', 'date -u +\"%Y-%m-%dT%H:%M:%SZ\"') }}"
-    ignore_errors: True
+    - name: Set several individual OIDs
+      ansible.snmp.set:
+        oids:
+          - oid: "SNMPv2-MIB::sysContact"
+            iid: "0"
+            value: "Brad Thornton @ {{ ts }}"
+          - oid: "SNMPv2-MIB::sysLocation"
+            iid: "0"
+            value: "Basement @ {{ ts }}"
+      vars:
+        ts: '{{ lookup(''pipe'', ''date -u +"%Y-%m-%dT%H:%M:%SZ"'') }}'
+      ignore_errors: True
 
-  - name: Retrieve an entire table, cell by cell
-    ansible.snmp.walk:
-      oids:
-      - oid: IF-MIB::ifTable
-  - name: Retrieve an entire table, row by row
-    ansible.snmp.walk:
-      oids:
-      - oid: IF-MIB::ifIndex
-      - oid: IF-MIB::ifDescr
-      - oid: IF-MIB::ifType
-      - oid: IF-MIB::ifMtu
-      - oid: IF-MIB::ifSpeed
-      - oid: IF-MIB::ifPhysAddress
-      - oid: IF-MIB::ifAdminStatus
-      - oid: IF-MIB::ifOperStatus
-      - oid: IF-MIB::ifLastChange
-      - oid: IF-MIB::ifInOctets
-      - oid: IF-MIB::ifInUcastPkts
-      - oid: IF-MIB::ifInDiscards
-      - oid: IF-MIB::ifInErrors
-      - oid: IF-MIB::ifInUnknownProtos
-      - oid: IF-MIB::ifOutOctets
-      - oid: IF-MIB::ifOutUcastPkts
-      - oid: IF-MIB::ifOutDiscards
-      - oid: IF-MIB::ifOutErrors
-      - oid: IF-MIB::ifSpecific
-  - name: Retrieve the route table row by row
-    ansible.snmp.walk:
-      oids:
-      - oid: RFC1213-MIB::ipRouteDest
-      - oid: RFC1213-MIB::ipRouteIfIndex
-      - oid: RFC1213-MIB::ipRouteMetric1
-      - oid: RFC1213-MIB::ipRouteMetric2
-      - oid: RFC1213-MIB::ipRouteMetric3
-      - oid: RFC1213-MIB::ipRouteMetric4
-      - oid: RFC1213-MIB::ipRouteNextHop
-      - oid: RFC1213-MIB::ipRouteType
-      - oid: RFC1213-MIB::ipRouteProto
-      - oid: RFC1213-MIB::ipRouteAge
-      - oid: RFC1213-MIB::ipRouteMask
-      - oid: RFC1213-MIB::ipRouteMetric5
-      - oid: RFC1213-MIB::ipRouteInfo
+    - name: Retrieve an entire table, cell by cell
+      ansible.snmp.walk:
+        oids:
+          - oid: IF-MIB::ifTable
+    - name: Retrieve an entire table, row by row
+      ansible.snmp.walk:
+        oids:
+          - oid: IF-MIB::ifIndex
+          - oid: IF-MIB::ifDescr
+          - oid: IF-MIB::ifType
+          - oid: IF-MIB::ifMtu
+          - oid: IF-MIB::ifSpeed
+          - oid: IF-MIB::ifPhysAddress
+          - oid: IF-MIB::ifAdminStatus
+          - oid: IF-MIB::ifOperStatus
+          - oid: IF-MIB::ifLastChange
+          - oid: IF-MIB::ifInOctets
+          - oid: IF-MIB::ifInUcastPkts
+          - oid: IF-MIB::ifInDiscards
+          - oid: IF-MIB::ifInErrors
+          - oid: IF-MIB::ifInUnknownProtos
+          - oid: IF-MIB::ifOutOctets
+          - oid: IF-MIB::ifOutUcastPkts
+          - oid: IF-MIB::ifOutDiscards
+          - oid: IF-MIB::ifOutErrors
+          - oid: IF-MIB::ifSpecific
+    - name: Retrieve the route table row by row
+      ansible.snmp.walk:
+        oids:
+          - oid: RFC1213-MIB::ipRouteDest
+          - oid: RFC1213-MIB::ipRouteIfIndex
+          - oid: RFC1213-MIB::ipRouteMetric1
+          - oid: RFC1213-MIB::ipRouteMetric2
+          - oid: RFC1213-MIB::ipRouteMetric3
+          - oid: RFC1213-MIB::ipRouteMetric4
+          - oid: RFC1213-MIB::ipRouteNextHop
+          - oid: RFC1213-MIB::ipRouteType
+          - oid: RFC1213-MIB::ipRouteProto
+          - oid: RFC1213-MIB::ipRouteAge
+          - oid: RFC1213-MIB::ipRouteMask
+          - oid: RFC1213-MIB::ipRouteMetric5
+          - oid: RFC1213-MIB::ipRouteInfo
 
-  # Round trip set get demonstration follows
+    # Round trip set get demonstration follows
 
-  - name: Roundtrip get/set (get)
-    ansible.snmp.get:
-      oids:
-      - oid: "SNMPv2-MIB::sysContact.0"
-      - oid: "SNMPv2-MIB::sysLocation"
-        iid: '0'
-      sprint_value: False
-    register: get_result
-  
-  - name: Set a fact for the result
-    set_fact:
-      set_values: "{{ get_result.raw }}"
-    
-  - name: Update the set_values
-    ansible.utils.update_fact:
-      updates:
-      - path: set_values.0.val
-        value:  "Brad Thornton @ {{ ts }}"
-      - path: set_values.1.val
-        value: "Basement @ {{ ts }}"
-    vars:
-      ts: "{{ lookup('pipe', 'date -u +\"%Y-%m-%dT%H:%M:%SZ\"') }}"
-    register: updated
+    - name: Roundtrip get/set (get)
+      ansible.snmp.get:
+        oids:
+          - oid: "SNMPv2-MIB::sysContact.0"
+          - oid: "SNMPv2-MIB::sysLocation"
+            iid: "0"
+        sprint_value: False
+      register: get_result
 
+    - name: Set a fact for the result
+      set_fact:
+        set_values: "{{ get_result.raw }}"
 
-  - name: Roundtrip get/set (set)
-    ansible.snmp.set:
-      oids: "{{ updated.set_values }}"
-    register: set_result
-  
-  - name: Compare the before and after
-    ansible.utils.fact_diff:
-      before: "{{ set_result.before|ansible.utils.to_paths }}"
-      after: "{{ set_result.after|ansible.utils.to_paths }}"
+    - name: Update the set_values
+      ansible.utils.update_fact:
+        updates:
+          - path: set_values.0.val
+            value: "Brad Thornton @ {{ ts }}"
+          - path: set_values.1.val
+            value: "Basement @ {{ ts }}"
+      vars:
+        ts: '{{ lookup(''pipe'', ''date -u +"%Y-%m-%dT%H:%M:%SZ"'') }}'
+      register: updated
+
+    - name: Roundtrip get/set (set)
+      ansible.snmp.set:
+        oids: "{{ updated.set_values }}"
+      register: set_result
+
+    - name: Compare the before and after
+      ansible.utils.fact_diff:
+        before: "{{ set_result.before|ansible.utils.to_paths }}"
+        after: "{{ set_result.after|ansible.utils.to_paths }}"
