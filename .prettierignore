@@ -13,7 +13,7 @@ venv.bak/
 # A linked collection directory created by pytest-ansible-units
 
 collections/
-
+tests/output/
 # Tracked but not manually edited
 
 # Tracked but manually formatted

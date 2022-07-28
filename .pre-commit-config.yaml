@@ -45,3 +45,8 @@ repos:
     hooks:
       - id: isort
         name: Sort import statements using isort
+
+  - repo: https://github.com/ansible-network/collection_prep
+    rev: 1.0.0
+    hooks:
+      - id: update-docs

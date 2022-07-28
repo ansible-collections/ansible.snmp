@@ -13,7 +13,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 # pylint: enable=invalid-name
 
-DOCUMENTATION = """
+DOCUMENTATION = r"""
 ---
 module: get
 author: Bradley Thornton (@cidrblock)
@@ -74,7 +74,8 @@ options:
     default: True
 
 notes:
-
+- Tested against ubuntu 18.04 using net-snmp.
+- This module works with connection C(v1), C(v2c), C(v3_usm).
 """
 
 EXAMPLES = r"""

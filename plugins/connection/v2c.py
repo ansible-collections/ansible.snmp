@@ -15,7 +15,7 @@ __metaclass__ = type
 DOCUMENTATION = """
 ---
 author: Bradley Thornton (@cidrblock)
-connection: v2c
+name: v2c
 short_description: Make SNMP v2c connections to a device
 description:
 - Make SNMP v2c connections to a device.

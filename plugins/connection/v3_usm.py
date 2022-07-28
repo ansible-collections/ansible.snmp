@@ -15,7 +15,7 @@ __metaclass__ = type
 DOCUMENTATION = """
 ---
 author: Bradley Thornton (@cidrblock)
-connection: v3_usm
+name: v3_usm
 short_description: Make SNMP v3 user-based security model (USM) connections to a device.
 description:
 - Make SNMP v3 user-based security model (USM) connections to a device.

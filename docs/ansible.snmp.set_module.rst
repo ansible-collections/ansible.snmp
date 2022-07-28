@@ -108,7 +108,7 @@ Parameters
                                     <li>UINTEGER</li>
                                     <li>TICKS</li>
                                     <li>OPAQUE</li>
-                                    <li>None</li>
+                                    <li>NULL</li>
                         </ul>
                 </td>
                 <td>
@@ -143,6 +143,8 @@ Notes
 
 .. note::
    - The SNMP set task will always return 'changed'
+   - Tested against ubuntu 18.04 using net-snmp.
+   - This module works with connection ``v1``, ``v2c``, ``v3_usm``.
 
 
 

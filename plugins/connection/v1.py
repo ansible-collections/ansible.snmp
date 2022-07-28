@@ -15,7 +15,7 @@ __metaclass__ = type
 DOCUMENTATION = """
 ---
 author: Bradley Thornton (@cidrblock)
-connection: v1
+name: v1
 short_description: Make SNMP v1 connections to a device
 description:
 - Make SNMP v1 connections to a device.

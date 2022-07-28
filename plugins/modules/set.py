@@ -46,18 +46,18 @@ options:
         - The type of value
         type: str
         choices:
-        - OBJECTID
-        - OCTETSTR
-        - INTEGER
-        - NETADDR
-        - IPADDR
-        - COUNTER
-        - COUNTER64
-        - GAUGE
-        - UINTEGER
-        - TICKS
-        - OPAQUE
-        - NULL
+        - "OBJECTID"
+        - "OCTETSTR"
+        - "INTEGER"
+        - "NETADDR"
+        - "IPADDR"
+        - "COUNTER"
+        - "COUNTER64"
+        - "GAUGE"
+        - "UINTEGER"
+        - "TICKS"
+        - "OPAQUE"
+        - "NULL"
       value:
         description:
         - The value to be set for the OID.
@@ -70,6 +70,8 @@ options:
 
 notes:
 - The SNMP set task will always return 'changed'
+- Tested against ubuntu 18.04 using net-snmp.
+- This module works with connection C(v1), C(v2c), C(v3_usm).
 """
 
 EXAMPLES = r"""
