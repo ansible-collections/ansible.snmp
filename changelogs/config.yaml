@@ -28,5 +28,5 @@ sections:
     - Known Issues
   - - doc_changes
     - Documentation Changes
-title: Cisco Ios Collection
+title: Ansible Snmp Collection
 trivial_section_name: trivial
