@@ -2,7 +2,7 @@ name: Collection integration tests
 on: [push, pull_request]
 jobs:
   deps:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         netsnmp-version: [5.9.1]
