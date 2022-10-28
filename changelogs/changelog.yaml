@@ -25,3 +25,11 @@ releases:
           name: v3_usm
           namespace: null
     release_date: "2022-10-06"
+  1.0.1:
+    changes:
+      bugfixes:
+        - Re-release post migration from https://github.com/ansible-network/ansible.snmp
+          to https://github.com/ansible-collections/ansible.snmp
+    fragments:
+      - rerelease.yaml
+    release_date: "2022-10-28"

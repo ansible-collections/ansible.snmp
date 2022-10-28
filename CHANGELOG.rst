@@ -5,6 +5,14 @@ Ansible Snmp Collection Release Notes
 .. contents:: Topics
 
 
+v1.0.1
+======
+
+Bugfixes
+--------
+
+- Re-release post migration from https://github.com/ansible-network/ansible.snmp to https://github.com/ansible-collections/ansible.snmp
+
 v1.0.0
 ======
 
