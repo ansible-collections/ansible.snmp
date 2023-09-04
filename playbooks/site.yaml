@@ -1,5 +1,5 @@
 - hosts: all
-  gather_facts: False
+  gather_facts: false
   tasks:
     - name: Retreive several individual OIDs
       ansible.snmp.get:
@@ -7,8 +7,8 @@
           - oid: "SNMPv2-MIB::sysContact.0"
           - oid: "SNMPv2-MIB::sysLocation"
             iid: "0"
-        numeric: False
-        long_names: True
+        numeric: false
+        long_names: true
 
     - name: Set several individual OIDs
       ansible.snmp.set:
@@ -21,12 +21,13 @@
             value: "Basement @ {{ ts }}"
       vars:
         ts: '{{ lookup(''pipe'', ''date -u +"%Y-%m-%dT%H:%M:%SZ"'') }}'
-      ignore_errors: True
+      ignore_errors: true
 
     - name: Retrieve an entire table, cell by cell
       ansible.snmp.walk:
         oids:
           - oid: IF-MIB::ifTable
+
     - name: Retrieve an entire table, row by row
       ansible.snmp.walk:
         oids:
@@ -49,6 +50,7 @@
           - oid: IF-MIB::ifOutDiscards
           - oid: IF-MIB::ifOutErrors
           - oid: IF-MIB::ifSpecific
+
     - name: Retrieve the route table row by row
       ansible.snmp.walk:
         oids:
@@ -74,7 +76,7 @@
           - oid: "SNMPv2-MIB::sysContact.0"
           - oid: "SNMPv2-MIB::sysLocation"
             iid: "0"
-        sprint_value: False
+        sprint_value: false
       register: get_result
 
     - name: Set a fact for the result
@@ -99,5 +101,5 @@
 
     - name: Compare the before and after
       ansible.utils.fact_diff:
-        before: "{{ set_result.before|ansible.utils.to_paths }}"
-        after: "{{ set_result.after|ansible.utils.to_paths }}"
+        before: "{{ set_result.before | ansible.utils.to_paths }}"
+        after: "{{ set_result.after | ansible.utils.to_paths }}"

@@ -1,5 +1,5 @@
 - hosts: all
-  gather_facts: False
+  gather_facts: false
   tasks:
     - name: Retrieve the index and name from the interface table
       ansible.snmp.walk:

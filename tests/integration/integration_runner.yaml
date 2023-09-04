@@ -1,7 +1,8 @@
 ---
-- hosts: localhost
+- name: Find and run snmp integration test
+  hosts: localhost
   # serial: 1
-  gather_facts: no
+  gather_facts: false
   vars:
     collection_path: /usr/share/ansible/collections/ansible_collections
     collection_namespace: "{{ lookup('env', 'COLLECTION_NAMESPACE') }}"
@@ -10,13 +11,14 @@
     integration_tests_pattern: "{{ lookup('env', 'INTEGRATION_TESTS_PATTERN') }}"
     integration_target_failures: []
   tasks:
-    - set_fact:
+    - name: Set integration facts
+      when: ansible_test_do_number is undefined or ansible_test_split_in is undefined
+      ansible.builtin.set_fact:
         ansible_test_split_in: 1
         ansible_test_do_number: 1
-      when: ansible_test_do_number is undefined or ansible_test_split_in is undefined
 
     - name: Find integration test targets
-      find:
+      ansible.builtin.find:
         file_type: directory
         paths: "{{ integration_tests_path }}"
         pattern: "{{ integration_tests_pattern }}"
@@ -25,39 +27,40 @@
       delegate_to: localhost
 
     - name: Format integration targets
-      set_fact:
+      ansible.builtin.set_fact:
         _integration_targets: "{{ _targets.files | map(attribute='path') | list | sort }}"
 
     - name: Test targets found
-      debug:
+      ansible.builtin.debug:
         msg: "{{ _integration_targets }}"
 
     - name: Set total number of test targets
-      set_fact:
-        number_entries: "{{ _integration_targets|length }}"
+      ansible.builtin.set_fact:
+        number_entries: "{{ _integration_targets | length }}"
 
     - name: Set subset of test targets to run
-      set_fact:
-        targets_to_test: "{{ targets_to_test | default([]) + [ _integration_targets[item] ] }}"
-      when: item % ansible_test_split_in == ansible_test_do_number|int - 1
-      loop: "{{ range(0,number_entries|int)|list }}"
+      ansible.builtin.set_fact:
+        targets_to_test: "{{ targets_to_test | default([]) + [_integration_targets[item]] }}"
+      when: item % ansible_test_split_in == ansible_test_do_number | int - 1
+      loop: "{{ range(0, number_entries | int) | list }}"
 
-    - debug:
+    - name: Check targets to test
+      ansible.builtin.debug:
         var: targets_to_test
 
     - name: Run integration tests
-      include_tasks:
+      ansible.builtin.include_tasks:
         file: include_role.yaml
       with_items:
         - "{{ targets_to_test }}"
 
     - name: Integration tests failed
+      when: integration_target_failures
       block:
         - name: Show target failures
-          debug:
+          ansible.builtin.debug:
             msg: "{{ integration_target_failures }}"
 
         - name: We have a problem
-          fail:
+          ansible.builtin.fail:
             msg: "One or more integration tests failed!"
-      when: integration_target_failures
