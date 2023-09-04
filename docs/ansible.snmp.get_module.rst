@@ -198,12 +198,6 @@ Notes
 
 
 
-Examples
---------
-
-.. code-block:: yaml
-
-    ---
 
 
 
