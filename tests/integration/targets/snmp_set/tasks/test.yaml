@@ -1,7 +1,7 @@
 ---
-- name: Include the connection vars
-  include_vars:
-    file: "../../prepare_snmp_tests/vars/{{ connection }}.yaml"
+- name: Include the snmp connection vars
+  ansible.builtin.include_vars:
+    file: "../../prepare_snmp_tests/vars/{{ snmp_connection }}.yaml"
 
 - name: Set a fact for the desired values
   ansible.builtin.set_fact:

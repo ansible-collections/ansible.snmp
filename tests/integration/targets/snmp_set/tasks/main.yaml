@@ -1,7 +1,8 @@
+---
 - name: Include the test file
-  include: test.yaml
+  ansible.builtin.include_tasks: test.yaml
   vars:
-    connection: "{{ version }}"
+    snmp_connection: "{{ version }}"
   loop:
     # - v1 No SNMP v1 set support on Ubuntu
     - v2c
