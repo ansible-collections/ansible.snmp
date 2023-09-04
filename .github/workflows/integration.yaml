@@ -1,12 +1,13 @@
+---
 name: Collection integration tests
-on: [push, pull_request]
+on: [push, pull_request]  # yamllint disable-line rule:truthy
 jobs:
   deps:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         netsnmp-version: [5.9.1]
-        python-version: [3.8]
+        python-version: [3.12.0-rc.1]
     name: "Integration: netsnmp ${{ matrix.netsnmp-version }} - python ${{ matrix.python-version }}"
     steps:
       - name: Checkout
