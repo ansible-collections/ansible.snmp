@@ -1,4 +1,6 @@
-- hosts: all
+---
+- name: Test playbook for ansible.snmp
+  hosts: all
   gather_facts: false
   tasks:
     - name: Retrieve the index and name from the interface table
@@ -9,7 +11,7 @@
       register: if_indicies
 
     - name: Set a timestamp and the regex to use for matching interface names
-      set_fact:
+      ansible.builtin.set_fact:
         ts: '{{ lookup(''pipe'', ''date -u +"%Y-%m-%dT%H:%M:%SZ"'') }}'
         regex: "(Ethernet|Gigabit|Intel).*"
 
@@ -29,8 +31,8 @@
 
     - name: Review all changes
       ansible.utils.fact_diff:
-        before: "{{ interface.before.result|ansible.utils.to_paths }}"
-        after: "{{ interface.after.result|ansible.utils.to_paths }}"
+        before: "{{ interface.before.result | ansible.utils.to_paths }}"
+        after: "{{ interface.after.result | ansible.utils.to_paths }}"
       loop: "{{ changes.results }}"
       loop_control:
         loop_var: interface

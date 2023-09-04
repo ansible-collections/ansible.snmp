@@ -1,4 +1,6 @@
-- hosts: all
+---
+- name: Test site playbook for ansible.snmp
+  hosts: all
   gather_facts: false
   tasks:
     - name: Retreive several individual OIDs
@@ -21,7 +23,7 @@
             value: "Basement @ {{ ts }}"
       vars:
         ts: '{{ lookup(''pipe'', ''date -u +"%Y-%m-%dT%H:%M:%SZ"'') }}'
-      ignore_errors: true
+      failed_when: "'FAILED' in command_result.stderr"
 
     - name: Retrieve an entire table, cell by cell
       ansible.snmp.walk:
@@ -80,7 +82,7 @@
       register: get_result
 
     - name: Set a fact for the result
-      set_fact:
+      ansible.builtin.set_fact:
         set_values: "{{ get_result.raw }}"
 
     - name: Update the set_values
