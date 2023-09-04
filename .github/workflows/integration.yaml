@@ -6,8 +6,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        netsnmp-version: [5.9.1]
-        python-version: [3.12.0-rc.1]
+        netsnmp-version: [5.9.4]
+        python-version: [3.12]
     name: "Integration: netsnmp ${{ matrix.netsnmp-version }} - python ${{ matrix.python-version }}"
     steps:
       - name: Checkout

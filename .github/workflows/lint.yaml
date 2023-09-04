@@ -1,34 +1,35 @@
-name: Collection lint tests
-on: [push, pull_request]
+---
+name: test_collection
+
+concurrency:
+  group: ${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+on:  # yamllint disable-line rule:truthy
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
 jobs:
-  deps:
+  ansible-lint:
+    uses: ansible-network/github_actions/.github/workflows/ansible-lint.yml@main
+  changelog:
+    uses: ansible-network/github_actions/.github/workflows/changelog.yml@main
+    if: github.event_name != 'schedule'
+  sanity:
+    uses: ansible-network/github_actions/.github/workflows/sanity.yml@main
+  all_green:
+    if: ${{ always() && (github.event_name != 'schedule') }}
+    needs:
+      - ansible-lint
+      - changelog
+      - sanity
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.8]
-    name: "Lint: python ${{ matrix.python-version }}"
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Prepare the collection
-        id: prepare_collection
-        uses: ./.github/actions/ansible_collection
-
-      - name: Install test requirements
-        run: pip3 install -r test-requirements.txt
-
-      - name: Run pylint
-        run: pylint --verbose -ry plugins
-
-      - name: Run black
-        run: black -l100 --check .
-
-      - name: Run ansible-test sanity
-        run: ansible-test sanity --python ${{ matrix.python-version }} --requirements
-        working-directory: /usr/share/ansible/collections/ansible_collections/${{ steps.prepare_collection.outputs.collection_namespace }}/${{ steps.prepare_collection.outputs.collection_name }}
+      - run: >-
+          python -c "assert 'failure' not in
+          set([
+          '${{ needs.ansible-lint.result }}',
+          '${{ needs.changelog.result }}',
+          '${{ needs.sanity.result }}',
+          ])"
