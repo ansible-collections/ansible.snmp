@@ -4,8 +4,6 @@
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-# pylint: disable=missing-module-docstring
-
 from __future__ import absolute_import, division, print_function
 
 
@@ -14,7 +12,6 @@ __metaclass__ = type
 # pylint: enable=invalid-name
 
 DOCUMENTATION = r"""
----
 module: get
 author: Bradley Thornton (@cidrblock)
 short_description: Perform an SNMP get against a remote device for one or more OIDs
@@ -79,11 +76,9 @@ notes:
 """
 
 EXAMPLES = r"""
----
 """
 
 RETURN = """
----
 elapsed:
   description: The amount of time in seconds spent for the snmp calls
   returned: always
