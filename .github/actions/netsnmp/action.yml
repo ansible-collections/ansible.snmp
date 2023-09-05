@@ -87,3 +87,9 @@ runs:
         python -c 'import netsnmp'
         echo ::endgroup::
       shell: bash
+
+    - run: |
+        echo ::group::Confirm the snmp walk works
+        snmpwalk -Os -c public -v 1 192.168.0.38
+        echo ::endgroup::
+      shell: bash
