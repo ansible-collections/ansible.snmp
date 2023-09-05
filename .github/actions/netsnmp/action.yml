@@ -90,6 +90,6 @@ runs:
 
     - run: |
         echo ::group::Confirm the snmp walk works
-        snmpwalk -Os -c public -v 1 192.168.0.38
+        snmpwalk -Os -c public -v 1 localhost
         echo ::endgroup::
       shell: bash
