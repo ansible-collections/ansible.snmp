@@ -42,7 +42,7 @@
 
 - name: Enable ports in firewall
   ansible.builtin.shell:
-    cmd: sudo ufw allow 161/udp\
+    cmd: sudo ufw allow 161/udp
   ignore_errors: true
 
 - name: Execute the snmp command in local shell
