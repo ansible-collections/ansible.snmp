@@ -32,6 +32,7 @@ except ImportError:
     from mock import MagicMock
 
 from ansible.module_utils._text import to_bytes
+
 from ansible_collections.ansible.snmp.plugins.cliconf import ios
 from ansible_collections.ansible.snmp.tests.unit.compat import unittest
 
