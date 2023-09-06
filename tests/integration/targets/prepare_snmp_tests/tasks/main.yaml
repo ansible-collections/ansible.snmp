@@ -46,7 +46,8 @@
 #   ignore_errors: true
 
 - name: Status snmpd
-  ansible.builtin.shell: cmd:systemctl status snmpd.service
+  ansible.builtin.shell:
+    cmd: systemctl status snmpd.service
 
 - name: Restart snmpd
   ansible.builtin.shell:
