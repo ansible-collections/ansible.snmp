@@ -36,6 +36,10 @@
   ansible.builtin.shell:
     cmd: pwd
 
+- name: check the snmpd.conf file
+  ansible.builtin.shell:
+    cmd: nano /etc/snmp/snmpd.conf
+
 - name: Execute the snmp command in local shell
   ansible.builtin.shell:
     cmd: snmpwalk -v2c -c public localhost 1.3.6.1.2.1.1
