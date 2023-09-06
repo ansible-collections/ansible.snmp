@@ -45,6 +45,9 @@
 #     cmd: sudo ufw allow 161/udp
 #   ignore_errors: true
 
+- name: Status snmpd
+  ansible.builtin.shell: cmd:systemctl status snmpd.service
+
 - name: Restart snmpd
   ansible.builtin.shell:
     cmd: sudo service snmpd restart
