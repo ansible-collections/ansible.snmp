@@ -3,7 +3,7 @@
   ansible.builtin.file:
     path: /usr/local/etc/snmp/
     state: directory
-    mode: u+rw,g-wx,o-rwx
+    mode: u+rw,g-wx,o-rw
   become: true
   notify: "netsnmp_configuration_change"
 
@@ -11,7 +11,7 @@
   ansible.builtin.copy:
     src: conf_snmpd.conf
     dest: /usr/local/etc/snmp/snmpd.conf
-    mode: u+rw,g-wx,o-rwx
+    mode: u+rw,g-wx,o-rw
   become: true
   notify: "netsnmp_configuration_change"
 
@@ -20,7 +20,7 @@
     src: user_snmpd.conf
     dest: /var/lib/snmp/snmpd.conf
     force: false
-    mode: u+rw,g-wx,o-rwx
+    mode: u+rw,g-wx,o-rw
   become: true
   notify: "netsnmp_configuration_change"
 
@@ -28,7 +28,7 @@
   ansible.builtin.copy:
     src: snmpd.service
     dest: /etc/systemd/system/snmpd.service
-    mode: u+rw,g-wx,o-rwx
+    mode: u+rw,g-wx,o-rw
   become: true
   notify: "netsnmp_configuration_change"
 
@@ -38,7 +38,7 @@
 
 - name: check the snmpd.conf file
   ansible.builtin.shell:
-    cmd: cat /usr/local/etc/snmp/snmpd.conf
+    cmd: sudo cat /usr/local/etc/snmp/snmpd.conf
 
 - name: Enable ports in firewall
   ansible.builtin.shell:
