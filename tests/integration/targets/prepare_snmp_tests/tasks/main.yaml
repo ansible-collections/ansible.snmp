@@ -36,14 +36,18 @@
   ansible.builtin.shell:
     cmd: pwd
 
-- name: check the snmpd.conf file
+- name: Check the snmpd.conf file
   ansible.builtin.shell:
     cmd: sudo cat /usr/local/etc/snmp/snmpd.conf
 
-- name: Enable ports in firewall
+# - name: Enable ports in firewall
+#   ansible.builtin.shell:
+#     cmd: sudo ufw allow 161/udp
+#   ignore_errors: true
+
+- name: Restart snmpd
   ansible.builtin.shell:
-    cmd: sudo ufw allow 161/udp
-  ignore_errors: true
+    cmd: sudo service snmpd restart
 
 - name: Execute the snmp command in local shell
   ansible.builtin.shell:

@@ -23,6 +23,9 @@ jobs:
         with:
           netsnmp-version: ${{ matrix.netsnmp-version }}
 
+      - name: Enable snmpd (test)
+        uses: ./.github/actions/snmpd
+
       - name: Prepare the collection
         id: prepare_collection
         uses: ./.github/actions/ansible_collection
