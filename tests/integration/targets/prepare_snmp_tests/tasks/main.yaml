@@ -32,5 +32,13 @@
   become: true
   notify: "netsnmp_configuration_change"
 
+- name: Execute the command in local shell
+  ansible.builtin.shell:
+    cmd: pwd
+
+- name: Execute the snmp command in local shell
+  ansible.builtin.shell:
+    cmd: snmpwalk -Os -c public -v 1 localhost
+
 - name: Run handlers if needed
   ansible.builtin.meta: flush_handlers
