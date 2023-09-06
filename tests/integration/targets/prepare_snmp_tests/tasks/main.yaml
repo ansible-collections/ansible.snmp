@@ -38,7 +38,7 @@
 
 - name: Execute the snmp command in local shell
   ansible.builtin.shell:
-    cmd: snmpwalk -Os -c public -v 1 localhost
+    cmd: snmpwalk -v2c -c public localhost 1.3.6.1.2.1.1
 
 - name: Run handlers if needed
   ansible.builtin.meta: flush_handlers
