@@ -1,7 +1,0 @@
----
-all:
-  127.0.0.1:
-    localhost:
-      ansible_connection: local
-  vars:
-    ansible_snmp_timeout: 5000000
