@@ -5,6 +5,14 @@ Ansible Snmp Collection Release Notes
 .. contents:: Topics
 
 
+v1.2.0
+======
+
+Minor Changes
+-------------
+
+- Update the supported net-snmp version from 5.9.1 to 5.9.4 for the collection.
+
 v1.0.1
 ======
 
