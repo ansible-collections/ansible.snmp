@@ -1,0 +1,20 @@
+- name: Include the connection vars
+  include_vars:
+    file: "../../prepare_snmp_tests/vars/{{ connection }}.yaml"
+
+- name: Retrieve several individual OIDs
+  ansible.snmp.get:
+    oids:
+      - oid: "SNMPv2-MIB::sysDescr.0"
+      - oid: "SNMPv2-MIB::sysDescr"
+        iid: "0"
+    numeric: False
+    long_names: True
+  register: output
+
+- name: Ensure the output is valid
+  assert:
+    that:
+      - "'Ubuntu' in output.result.0.sysDescr"
+      - "'Ubuntu' in output.raw.0.val"
+      - "'Ubuntu' in output.raw.1.val"

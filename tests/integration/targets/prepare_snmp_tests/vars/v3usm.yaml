@@ -1,0 +1,5 @@
+ansible_connection: ansible.snmp.v3_usm
+ansible_snmp_sec_name: test
+ansible_snmp_auth_pass: password
+ansible_snmp_priv_pass: password
+ansible_snmp_sec_level: authPriv
