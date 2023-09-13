@@ -1,19 +1,20 @@
+---
 name: Collection integration tests
-on: [push, pull_request]
+on: [push, pull_request]  # yamllint disable-line rule:truthy
 jobs:
   deps:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        netsnmp-version: [5.9.1]
-        python-version: [3.8]
-    name: "Integration: netsnmp ${{ matrix.netsnmp-version }} - python ${{ matrix.python-version }}"
+        netsnmp-version: [5.9.4]
+        python-version: [3.11.5]
+    name: "Integration"  # : netsnmp ${{ matrix.netsnmp-version }} - python ${{ matrix.python-version }}"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -21,6 +22,9 @@ jobs:
         uses: ./.github/actions/netsnmp
         with:
           netsnmp-version: ${{ matrix.netsnmp-version }}
+
+      - name: Enable snmpd (test)
+        uses: ./.github/actions/snmpd
 
       - name: Prepare the collection
         id: prepare_collection
@@ -40,7 +44,7 @@ jobs:
           ANSIBLE_NAVIGATOR_PLAYBOOK: tests/integration/integration_runner.yaml
           ANSIBLE_NAVIGATOR_PLAYBOOK_ARTIFACT_SAVE_AS: gh-action-logs/navigator-integration-artifact.json
           ANSIBLE_NAVIGATOR_INVENTORIES: tests/integration/integration_inventory.yaml
-          ANSIBLE_NAVIGATOR_EXECUTION_ENVIRONMENT: False
+          ANSIBLE_NAVIGATOR_EXECUTION_ENVIRONMENT: False  # yamllint disable-line rule:truthy
           COLLECTION_NAMESPACE: ${{ steps.prepare_collection.outputs.collection_namespace }}
           COLLECTION_NAME: ${{ steps.prepare_collection.outputs.collection_name }}
           INTEGRATION_TESTS_PATTERN: "snmp_*"

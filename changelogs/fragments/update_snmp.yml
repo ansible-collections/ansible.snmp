@@ -1,0 +1,9 @@
+---
+minor_changes:
+  - Update the supported net-snmp version from 5.9.1 to 5.9.4 for the collection.
+trivial:
+  - Fix lint errors.
+  - Fix integration test.
+  - Optimise GitHub actions.
+  - Run Sanity test on PR.
+  - Enable GitHub action based release.

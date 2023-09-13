@@ -1,3 +1,4 @@
+---
 name: netsnmp build
 description: Build netsnmp
 
@@ -24,6 +25,7 @@ runs:
     - run: |
         echo ::group::Install dependancies
         sudo apt-get install libperl-dev
+        pip install --upgrade setuptools
         echo ::endgroup::
       shell: bash
 
