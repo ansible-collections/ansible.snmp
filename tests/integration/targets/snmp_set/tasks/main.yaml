@@ -1,0 +1,11 @@
+---
+- name: Include the test file
+  ansible.builtin.import_tasks: test.yaml
+  vars:
+    snmpconnection: "{{ version }}"
+  loop:
+    # - v1 No SNMP v1 set support on Ubuntu
+    - v2c
+    - v3usm
+  loop_control:
+    loop_var: version

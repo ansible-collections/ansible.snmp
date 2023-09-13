@@ -12,7 +12,12 @@ on:  # yamllint disable-line rule:truthy
 
 jobs:
   ansible-lint:
-    uses: ./.github/actions/ansible-lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ansible-network/github_actions/.github/actions/checkout_dependency@main
+
+      - name: Run ansible-lint
+        uses: ./.github/actions/ansible-lint
   changelog:
     uses: ansible-network/github_actions/.github/workflows/changelog.yml@main
     if: github.event_name != 'schedule'

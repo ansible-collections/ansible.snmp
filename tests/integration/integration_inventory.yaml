@@ -1,0 +1,7 @@
+---
+all:
+  hosts:
+    localhost:
+      ansible_connection: local
+  vars:
+    ansible_snmp_timeout: 5000000

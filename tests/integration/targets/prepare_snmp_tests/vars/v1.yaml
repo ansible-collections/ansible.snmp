@@ -1,0 +1,3 @@
+---
+ansible_connection: ansible.snmp.v1
+ansible_snmp_community: private

@@ -1,0 +1,10 @@
+---
+- name: Include roles
+  block:
+    - name: Run target role
+      ansible.builtin.include_role:
+        name: "{{ item }}"
+  rescue:
+    - name: Report target failure
+      ansible.builtin.set_fact:
+        integration_target_failures: "{{ integration_target_failures + [item.split('/')[-1]] }}"

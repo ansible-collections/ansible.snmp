@@ -145,4 +145,3 @@ mypy_tmp_dir/
 *.code-workspace
 .vscode/
 .DS_Store
-tests/integration/
