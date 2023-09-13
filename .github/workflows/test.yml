@@ -12,7 +12,7 @@ on:  # yamllint disable-line rule:truthy
 
 jobs:
   ansible-lint:
-    uses: ./.github/actions/ansible-lint
+    uses: ./.github/actions/ansible-lint@main
   changelog:
     uses: ansible-network/github_actions/.github/workflows/changelog.yml@main
     if: github.event_name != 'schedule'
