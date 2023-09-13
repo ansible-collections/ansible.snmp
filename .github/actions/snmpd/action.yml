@@ -16,9 +16,3 @@ runs:
         sudo apt-get install snmp
         echo ::endgroup::
       shell: bash
-
-    # - run: |
-    #     echo ::group::Confirm the snmp walk works
-    #     snmpwalk -Os -c public -v 1 localhost
-    #     echo ::endgroup::
-    #   shell: bash
