@@ -153,39 +153,38 @@ Examples
 
 .. code-block:: yaml
 
-    ---
     # Update 2 individual entries
     - name: Set several individual OIDs
       ansible.snmp.set:
         oids:
-        - oid: "SNMPv2-MIB::sysContact"
-          iid: '0'
-          value: "cidrblock @ {{ ts }}"
-        - oid: "SNMPv2-MIB::sysLocation"
-          iid: '0'
-          value: "Office @ {{ ts }}"
+          - oid: "SNMPv2-MIB::sysContact"
+            iid: "0"
+            value: "cidrblock @ {{ ts }}"
+          - oid: "SNMPv2-MIB::sysLocation"
+            iid: "0"
+            value: "Office @ {{ ts }}"
       vars:
-        ts: "{{ lookup('pipe', 'date -u +\"%Y-%m-%dT%H:%M:%SZ\"') }}"
+        ts: '{{ lookup(''pipe'', ''date -u +"%Y-%m-%dT%H:%M:%SZ"'') }}'
 
     # Update the description of all interfaces matching a regex
     - name: Retrieve the index and name from the interface table
       ansible.snmp.walk:
         oids:
-        - oid: IF-MIB::ifIndex
-        - oid: IF-MIB::ifDescr
+          - oid: IF-MIB::ifIndex
+          - oid: IF-MIB::ifDescr
       register: if_indicies
 
     - name: Set a timestamp and the regex to use for matching interface names
       set_fact:
-        ts: "{{ lookup('pipe', 'date -u +\"%Y-%m-%dT%H:%M:%SZ\"') }}"
+        ts: '{{ lookup(''pipe'', ''date -u +"%Y-%m-%dT%H:%M:%SZ"'') }}'
         regex: "(Ethernet|Gigabit|Intel).*"
 
     - name: Update all matching interfaces
       ansible.snmp.set:
         oids:
-        - oid: IF-MIB::ifAlias
-          iid: "{{ iid }}"
-          value: "Configured by ansible @ {{ ts }}"
+          - oid: IF-MIB::ifAlias
+            iid: "{{ iid }}"
+            value: "Configured by ansible @ {{ ts }}"
       vars:
         matching_interfaces: "{{ lookup('ansible.utils.index_of', if_indicies.result, 'match', regex, 'ifDescr', wantlist=True) }}"
         iid: "{{ if_indicies['result'][int_id]['ifIndex'] }}"
