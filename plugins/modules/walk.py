@@ -82,7 +82,6 @@ EXAMPLES = r"""
 """
 
 RETURN = """
----
 elapsed:
   description: The amount of time in seconds spent for the snmp calls
   returned: always
