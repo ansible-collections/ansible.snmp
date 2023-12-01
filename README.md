@@ -1,3 +1,4 @@
+[![CI](https://github.com/ansible-collections/ansible.snmp/actions/workflows/tests.yml/badge.svg?branch=main&event=schedule)](https://github.com/ansible-collections/ansible.snmp/actions/workflows/tests.yml)
 # Ansible SNMP Collection
 
 The Ansible `ansible.snmp` collection includes a variety of plugins for using SNMP on the control node to make SNMP connections to a device.
