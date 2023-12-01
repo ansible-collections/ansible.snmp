@@ -1,5 +1,5 @@
 ---
 profile: production
-
 exclude_paths:
-  - changelogs/changelog.yaml
+- changelogs/changelog.yaml
+- playbooks/int_looper.yml
