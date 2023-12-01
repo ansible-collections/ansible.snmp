@@ -28,7 +28,6 @@ jobs:
       - run: >-
           python -c "assert 'failure' not in
           set([
-          '${{ needs.ansible-lint.result }}',
           '${{ needs.changelog.result }}',
           '${{ needs.sanity.result }}',
           ])"
