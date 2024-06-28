@@ -18,6 +18,12 @@ runs:
       shell: bash
 
     - run: |
+        echo ::group::Install libsnmp-dev
+        sudo apt-get install libsnmp-dev
+        echo ::endgroup::
+      shell: bash
+
+    - run: |
         echo ::group::Start snmpd service
         sudo systemctl restart snmpd
         echo ::endgroup::
