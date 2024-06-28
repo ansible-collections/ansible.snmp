@@ -25,7 +25,7 @@ runs:
 
     - run: |
         echo ::group::echo snmpd conf status
-        cat /etc/snmp/snmpd.conf
+        sudo cat /etc/snmp/snmpd.conf
         echo ::endgroup::
       shell: bash
 
