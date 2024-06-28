@@ -17,11 +17,11 @@ runs:
         echo ::endgroup::
       shell: bash
 
-    - run: |
-        echo ::group::Start snmpd service
-        sudo systemctl start snmpd
-        echo ::endgroup::
-      shell: bash
+    # - run: |
+    #     echo ::group::Start snmpd service
+    #     sudo systemctl start snmpd
+    #     echo ::endgroup::
+    #   shell: bash
 
     - run: |
         echo ::group::Check snmpd service status
