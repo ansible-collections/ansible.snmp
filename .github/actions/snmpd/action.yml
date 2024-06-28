@@ -5,17 +5,17 @@ description: Build snmpd
 runs:
   using: "composite"
   steps:
-    - run: |
-        echo ::group::Download the source
-        sudo apt-get install snmpd
-        echo ::endgroup::
-      shell: bash
+    # - run: |
+    #     echo ::group::Download the source
+    #     sudo apt-get install snmpd
+    #     echo ::endgroup::
+    #   shell: bash
 
-    - run: |
-        echo ::group::Extract the contents
-        sudo apt-get install snmp
-        echo ::endgroup::
-      shell: bash
+    # - run: |
+    #     echo ::group::Extract the contents
+    #     sudo apt-get install snmp
+    #     echo ::endgroup::
+    #   shell: bash
 
     # - run: |
     #     echo ::group::Start snmpd service
