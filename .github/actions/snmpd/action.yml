@@ -17,22 +17,23 @@ runs:
         echo ::endgroup::
       shell: bash
 
-    - run: |
-        echo ::group::Start snmpd service
-        sudo systemctl start snmpd
-        echo ::endgroup::
-      shell: bash
+    # - run: |
+    #     echo ::group::Start snmpd service
+    #     sudo systemctl start snmpd
+    #     echo ::endgroup::
+    #   shell: bash
 
     - run: |
+        echo ::group::echo snmpd conf status
         echo /etc/snmp/snmpd.conf
         echo ::endgroup::
       shell: bash
 
-    - run: |
-        echo ::group::Check snmpd service status
-        sudo systemctl status snmpd.service
-        echo ::endgroup::
-      shell: bash
+    # - run: |
+    #     echo ::group::Check snmpd service status
+    #     sudo systemctl status snmpd.service
+    #     echo ::endgroup::
+    #   shell: bash
 
     - run: |
         echo ::group::Check snmpd service logs
