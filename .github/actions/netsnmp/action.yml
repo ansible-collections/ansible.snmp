@@ -87,3 +87,21 @@ runs:
         python -c 'import netsnmp'
         echo ::endgroup::
       shell: bash
+
+    - run: |
+        echo ::group::Start snmpd service
+        sudo systemctl start snmpd
+        echo ::endgroup::
+      shell: bash
+
+    - run: |
+        echo ::group::Check snmpd service status
+        sudo systemctl status snmpd.service
+        echo ::endgroup::
+      shell: bash
+
+    - run: |
+        echo ::group::Check snmpd service logs
+        sudo journalctl -xeu snmpd.service
+        echo ::endgroup::
+      shell: bash
