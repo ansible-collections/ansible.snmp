@@ -12,4 +12,4 @@ repository: https://github.com/ansible-collections/ansible.snmp
 issues: https://github.com/ansible-collections/ansible.snmp/issues
 tags:
   [linux, networking, security, cloud, utilities, data, validation, utils, snmp]
-version: "2.0.0"
+version: "3.0.0"
