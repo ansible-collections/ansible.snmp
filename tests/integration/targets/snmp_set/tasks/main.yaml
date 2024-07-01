@@ -1,6 +1,6 @@
 ---
 - name: Include the test file
-  ansible.builtin.import_tasks: test.yaml
+  ansible.builtin.include_tasks: test.yaml
   vars:
     snmpconnection: "{{ version }}"
   loop:
