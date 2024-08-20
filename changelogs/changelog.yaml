@@ -2,53 +2,64 @@ ancestor: null
 releases:
   1.0.0:
     modules:
-      - description: Perform an SNMP get against a remote device for one or more OIDs
-        name: get
-        namespace: ""
-      - description: Perform an SNMP set against a remote device for one or more OIDs
-        name: set
-        namespace: ""
-      - description: Perform an SNMP walk against a remote device for one or more OIDs
-        name: walk
-        namespace: ""
+    - description: Perform an SNMP get against a remote device for one or more OIDs
+      name: get
+      namespace: ''
+    - description: Perform an SNMP set against a remote device for one or more OIDs
+      name: set
+      namespace: ''
+    - description: Perform an SNMP walk against a remote device for one or more OIDs
+      name: walk
+      namespace: ''
     plugins:
       connection:
-        - description: Make SNMP v1 connections to a device
-          name: v1
-          namespace: null
-        - description: Make SNMP v2c connections to a device
-          name: v2c
-          namespace: null
-        - description:
-            Make SNMP v3 user-based security model (USM) connections to a
-            device.
-          name: v3_usm
-          namespace: null
-    release_date: "2022-10-06"
+      - description: Make SNMP v1 connections to a device
+        name: v1
+        namespace: null
+      - description: Make SNMP v2c connections to a device
+        name: v2c
+        namespace: null
+      - description: Make SNMP v3 user-based security model (USM) connections to a
+          device.
+        name: v3_usm
+        namespace: null
+    release_date: '2022-10-06'
   1.0.1:
     changes:
       bugfixes:
-        - Re-release post migration from https://github.com/ansible-network/ansible.snmp
-          to https://github.com/ansible-collections/ansible.snmp
+      - Re-release post migration from https://github.com/ansible-network/ansible.snmp
+        to https://github.com/ansible-collections/ansible.snmp
     fragments:
-      - rerelease.yaml
-    release_date: "2022-10-28"
+    - rerelease.yaml
+    release_date: '2022-10-28'
   1.2.0:
     changes:
       minor_changes:
-        - Update the supported net-snmp version from 5.9.1 to 5.9.4 for the collection.
+      - Update the supported net-snmp version from 5.9.1 to 5.9.4 for the collection.
     fragments:
-      - update_snmp.yml
-    release_date: "2023-09-14"
+    - update_snmp.yml
+    release_date: '2023-09-14'
   2.0.0:
     changes:
       major_changes:
-        - Bumping `requires_ansible` to `>=2.14.0`, since previous ansible-core versions
-          are EoL now.
-      release_summary:
-        Starting from this release, the minimum `ansible-core` version
+      - Bumping `requires_ansible` to `>=2.14.0`, since previous ansible-core versions
+        are EoL now.
+      release_summary: Starting from this release, the minimum `ansible-core` version
         this collection requires is `2.14.0`. The last known version compatible with
         ansible-core<2.14 is `v1.2.0`.
     fragments:
-      - release_200.yml
-    release_date: "2023-12-01"
+    - release_200.yml
+    release_date: '2023-12-01'
+  3.0.0:
+    changes:
+      major_changes:
+      - Bumping `requires_ansible` to `>=2.15.0`, since previous ansible-core versions
+        are EoL now.
+      release_summary: 'Starting from this release, the minimum `ansible-core` version
+        this collection requires is `2.15.0`. The last known version compatible with
+        ansible-core<2.15 is v2.0.0.
+
+        '
+    fragments:
+    - ming_215.yaml
+    release_date: '2024-08-20'
