@@ -16,3 +16,33 @@ runs:
         sudo apt-get install snmp
         echo ::endgroup::
       shell: bash
+
+    - run: |
+        echo ::group::Install libsnmp-dev
+        sudo apt-get install libsnmp-dev
+        echo ::endgroup::
+      shell: bash
+
+    - run: |
+        echo ::group::Start snmpd service
+        sudo systemctl restart snmpd
+        echo ::endgroup::
+      shell: bash
+
+    - run: |
+        echo ::group::echo snmpd conf status
+        sudo cat /etc/snmp/snmpd.conf
+        echo ::endgroup::
+      shell: bash
+
+    - run: |
+        echo ::group::install netsnmp python3
+        pip install python3-netsnmp
+        echo ::endgroup::
+      shell: bash
+
+    - run: |
+        echo ::group::Check snmpd service logs
+        sudo journalctl -xeu snmpd.service
+        echo ::endgroup::
+      shell: bash
