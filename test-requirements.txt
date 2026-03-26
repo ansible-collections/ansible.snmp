@@ -4,7 +4,7 @@ flake8
 yamllint
 
 # Unit test runner
-pytest-ansible ; python_version >= '3.9'
+pytest-ansible ; python_version >= '3.10'
 git+https://github.com/ansible-community/pytest-ansible-units.git ; python_version < '3.9'
 pytest-xdist
 ansible-navigator
