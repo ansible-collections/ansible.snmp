@@ -4,6 +4,24 @@ Ansible Snmp Collection Release Notes
 
 .. contents:: Topics
 
+v3.1.0
+======
+
+Release Summary
+---------------
+
+With this release, the minimum required version of `ansible-core` for this collection is `2.16.0`. The last version known to be compatible with `ansible-core` versions below `2.16` is v3.0.0
+
+Minor Changes
+-------------
+
+- Update minimum required ansible-core version to 2.16
+
+Documentation Changes
+---------------------
+
+- Includes a new support related section in the README.
+
 v3.0.0
 ======
 
