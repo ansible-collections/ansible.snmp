@@ -115,6 +115,7 @@ options:
     default: DES
     choices:
     - DES
+    - AES
     - AES128
     - AES256
     type: str
